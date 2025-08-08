@@ -1,6 +1,5 @@
 """
 extract_directives.py
-Author: Dev 2 (Joel) — AI/NLP – LangChain, prompt design, parsing logic
 
 Purpose:
 - Provide the Week 1 "EO directives extraction" pipeline that works purely with STRINGS.
