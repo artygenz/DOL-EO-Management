@@ -4,3 +4,6 @@ celery
 redis
 psycopg2-binary
 python-dotenv
+langchain
+langchain-openai
+pydantic
