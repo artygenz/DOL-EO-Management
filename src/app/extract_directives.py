@@ -7,7 +7,7 @@ Purpose:
 - Orchestrate LangChain (gpt-4.1) to extract a list of tasks (without assignees).
 - Implement assign_tasks(...) to map category/dept to a role and randomly choose a member.
 
-IMPORTANT IMPLEMENTATION RULES (per team lead):
+IMPORTANT IMPLEMENTATION RULES:
 1) This file does NOT care where strings originate (Gmail, S3, DB). It only consumes strings.
 2) Primary function extract_directives(...) expects two string parameters: eo_pdf_text and roles_text.
 3) The LLM MUST return assignee as an empty string (""). Actual assignment is performed here by assign_tasks(...).
