@@ -43,12 +43,7 @@ if __package__ is None or __package__ == "":
     import sys
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-try:
-    # Preferred absolute import (works from project root)
-    from app.langchain_utils import extract_tasks as lc_extract_tasks, TasksModel
-except ImportError:
-    # Fallback when running from inside the 'app' directory
-    from langchain_utils import extract_tasks as lc_extract_tasks, TasksModel
+from .langchain_utils import TasksModel, extract_tasks as lc_extract_tasks
 
 # --------------------------------------------------------------------------------------
 # HARDCODED DEMO INPUTS (for Week 1 testing only)
@@ -250,7 +245,7 @@ Agency Heads with authority under 31 U.S.C. 3321(b)
 # --------------------------------------------------------------------------------------
 
 
-def extract_directives(eo_pdf_text: str, roles_text: str) -> Dict:
+def extract_directives(eo_pdf_text: str, roles_text: str = ROLES_WITH_MEMBERS_DEMO) -> Dict:
     """
     Extract a list of tasks from the EO text using LangChain + OpenAI (gpt-4.1).
 

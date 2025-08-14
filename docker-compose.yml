@@ -1,24 +1,17 @@
 version: "3.9"
 
 services:
-  app:
-    build: .
-    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - db
 
   worker:
     build: .
-    command: celery -A celery_app.app worker --loglevel=info
+    command: celery -A src.workflow.celery_app worker --loglevel=info -Q ingest,ai,db
     volumes:
       - .:/app
     env_file:
       - .env
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
     depends_on:
       - redis
       - db
@@ -31,8 +24,27 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: email_tasks
+      POSTGRES_USER: dol_user
+      POSTGRES_PASSWORD: artygenz
+      POSTGRES_DB: dol_db
     ports:
       - "5433:5432"
+
+  api:
+    build: .
+    ports: ["8000:8000"]
+    env_file:
+      - .env
+    depends_on: [db, redis]
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes: 
+      - .:/app
+    working_dir: /app
+    
+  migrate:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      - db
+    command: alembic upgrade head

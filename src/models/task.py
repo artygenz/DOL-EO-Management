@@ -18,7 +18,7 @@ class Task(Base):
     assignee_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), index=True)
     status: Mapped[str] = mapped_column(Enum(*TASK_STATUS, name="task_status", native_enum=False), default="pending")
     due_date: Mapped[dt.date | None]  # <-- changed annotation only
-    priority: Mapped[str] = mapped_column(Enum(*TASK_PRIORITY, name="task_priority", native_enum=False), default="medium")
+    category: Mapped[str | None] = mapped_column(String(255), index=True)  # NEW
 
     created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

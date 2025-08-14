@@ -6,7 +6,7 @@ from logging.config import fileConfig
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy import pool
+from sqlalchemy import pool, engine_from_config
 from alembic import context
 
 # --- Make project importable ---
@@ -18,13 +18,16 @@ load_dotenv()  # load .env before importing settings
 
 from src.core.settings import settings
 from src.db.base import Base  # imports all models so metadata is populated
+import src.models
+
+target_metadata = Base.metadata
 
 # Alembic Config
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-target_metadata = Base.metadata
+
 
 def run_migrations_offline() -> None:
     url = settings.SQLALCHEMY_SYNC_URL

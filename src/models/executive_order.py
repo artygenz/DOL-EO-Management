@@ -1,7 +1,7 @@
 # app/models/executive_order.py
 import uuid
 import datetime as dt
-from sqlalchemy import String, Text, DateTime, Enum, func
+from sqlalchemy import String, Text, DateTime, Enum, Column, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.base import Base
 
@@ -11,6 +11,7 @@ class ExecutiveOrder(Base):
     __tablename__ = "executive_orders"
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    message_id: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
     title: Mapped[str] = mapped_column(String(255), index=True)
     description: Mapped[str | None] = mapped_column(Text)
     source_email: Mapped[str | None] = mapped_column(String(320), index=True)

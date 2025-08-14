@@ -36,11 +36,8 @@ if __package__ is None or __package__ == "":
     # Add project root to sys.path so 'import app.*' works when running 'python app/xyz.py'
     sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-try:
-    from app.prompts import EO_EXTRACTION_SYSTEM_PROMPT, EO_EXTRACTION_HUMAN_TEMPLATE
-except ImportError:
-    # Fallback when running inside the 'app' directory
-    from prompts import EO_EXTRACTION_SYSTEM_PROMPT, EO_EXTRACTION_HUMAN_TEMPLATE
+
+from .prompts import EO_EXTRACTION_SYSTEM_PROMPT, EO_EXTRACTION_HUMAN_TEMPLATE
 
 # Load environment variables from .env if present
 load_dotenv()
