@@ -27,5 +27,3 @@ def extract_tasks(body_text: str) -> List:
             print(f"[AI] skip malformed task item: {e!r} :: {raw!r}")
             continue
     return items
-
-    

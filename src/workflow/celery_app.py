@@ -22,4 +22,5 @@ celery_app.conf.update(
         "src.workflow.tasks.ai_extract_tasks": {"queue": "ai"},
         "src.workflow.tasks.persist_tasks": {"queue": "db"},
     },
+
 )
