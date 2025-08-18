@@ -3,9 +3,7 @@ rewire_tasks.py
 
 Standalone functions for EO task rewiring, update extraction, and summary generation.
 Each function is parameterized and can be called independently. All AI prompt logic is in prompts.py,
-and LLM orchestration is in langchain_utils.py.
-
-Author: DOL EO Automation Team
+and LLM orchestration is in langchain_utils.py
 """
 
 from typing import Dict, List, Any
