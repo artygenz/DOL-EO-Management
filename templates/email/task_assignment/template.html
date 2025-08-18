@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ task_title | classification_header(compliance_level) }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+        <header style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; margin-bottom: 20px;">
+            <h1 style="color: #0066cc; margin: 0;">U.S. Department of Labor</h1>
+            <p style="margin: 5px 0 0 0; color: #666;">Task Assignment Notification</p>
+        </header>
+        
+        <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #0066cc; margin-bottom: 20px;">
+            <h2 style="margin-top: 0; color: #0066cc;">Task Assignment: {{ task_title }}</h2>
+            <p><strong>Task ID:</strong> {{ task_id }}</p>
+            <p><strong>Priority:</strong> {{ priority_level }}</p>
+            <p><strong>Due Date:</strong> {{ due_date | government_date }}</p>
+            <p><strong>Project:</strong> {{ project_name }}</p>
+        </div>
+        
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #0066cc;">Task Description</h3>
+            <p>{{ task_description | sanitize_content }}</p>
+        </section>
+        
+        {% if requirements %}
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #0066cc;">Requirements</h3>
+            <ul>
+            {% for requirement in requirements %}
+                <li>{{ requirement | sanitize_content }}</li>
+            {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        
+        {% if deliverables %}
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #0066cc;">Expected Deliverables</h3>
+            <ul>
+            {% for deliverable in deliverables %}
+                <li>{{ deliverable | sanitize_content }}</li>
+            {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #0066cc;">Assignment Details</h3>
+            <p><strong>Assigned to:</strong> {{ recipient_name }}</p>
+            <p><strong>Assigned by:</strong> {{ sender_name }}, {{ sender_title }}</p>
+            <p><strong>Organization:</strong> {{ organization }}</p>
+            <p><strong>Assignment Date:</strong> {{ date | government_date }}</p>
+        </section>
+        
+        <footer style="border-top: 1px solid #ddd; padding-top: 15px; margin-top: 30px; font-size: 12px; color: #666;">
+            <p><strong>Correlation ID:</strong> {{ correlation_id }}</p>
+            <p>This is an official communication from the U.S. Department of Labor. Please respond within 24 hours to confirm receipt.</p>
+            <p>For questions or concerns, please contact your supervisor or the PMO.</p>
+        </footer>
+    </div>
+</body>
+</html>

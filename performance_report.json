@@ -1,0 +1,1427 @@
+{
+  "timestamp": "2025-08-17T19:19:16.650705",
+  "performance_status": {
+    "timestamp": "2025-08-17T19:19:16.650709",
+    "resource_utilization": {
+      "cpu": 33.3,
+      "memory": 58.1,
+      "disk_io": 100.0,
+      "network_io": 503.26513671875,
+      "queue_depth": 215,
+      "processing_time": 909.918220837911
+    },
+    "active_bottlenecks": 56,
+    "bottleneck_summary": [
+      {
+        "id": "BTL_1755472693_0",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472693_1",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472696_2",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472696_3",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472699_4",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472699_5",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472702_6",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472702_7",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472705_8",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472705_9",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472708_10",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472708_11",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472711_12",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472711_13",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472714_14",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472714_15",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472714_16",
+        "type": "queue_congestion",
+        "severity": "high",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472717_17",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472717_18",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472717_19",
+        "type": "queue_congestion",
+        "severity": "high",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472720_20",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472720_21",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472720_22",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472723_23",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472723_24",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472723_25",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472726_26",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472726_27",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472726_28",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472729_29",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472729_30",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472729_31",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472732_32",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472732_33",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472732_34",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472735_35",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472735_36",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472735_37",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472738_38",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472738_39",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472738_40",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472741_41",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472741_42",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472741_43",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472744_44",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472745_45",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472745_46",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472748_47",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472748_48",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472748_49",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472751_50",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472751_51",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472751_52",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      },
+      {
+        "id": "BTL_1755472754_53",
+        "type": "io_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472754_54",
+        "type": "network_bound",
+        "severity": "critical",
+        "component": "system"
+      },
+      {
+        "id": "BTL_1755472754_55",
+        "type": "queue_congestion",
+        "severity": "critical",
+        "component": "queue:email_intake"
+      }
+    ],
+    "queue_status": {
+      "email_intake": {
+        "depth": 215,
+        "congestion": "CRITICAL",
+        "processing_rate": 0
+      },
+      "email_processing": {
+        "depth": 0,
+        "congestion": "LOW",
+        "processing_rate": 0
+      }
+    },
+    "overall_health": "CRITICAL"
+  },
+  "bottleneck_history": [
+    {
+      "id": "BTL_1755472693_0",
+      "timestamp": "2025-08-17T19:18:13.603394",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472693_1",
+      "timestamp": "2025-08-17T19:18:13.603840",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.22mbps",
+      "current_value": 503.2193603515625,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472696_2",
+      "timestamp": "2025-08-17T19:18:16.609615",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472696_3",
+      "timestamp": "2025-08-17T19:18:16.609775",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.23mbps",
+      "current_value": 503.22998046875,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472699_4",
+      "timestamp": "2025-08-17T19:18:19.617003",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472699_5",
+      "timestamp": "2025-08-17T19:18:19.617176",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.23mbps",
+      "current_value": 503.2308349609375,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472702_6",
+      "timestamp": "2025-08-17T19:18:22.628992",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472702_7",
+      "timestamp": "2025-08-17T19:18:22.629170",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.24mbps",
+      "current_value": 503.2447509765625,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472705_8",
+      "timestamp": "2025-08-17T19:18:25.639099",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472705_9",
+      "timestamp": "2025-08-17T19:18:25.639352",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.25mbps",
+      "current_value": 503.2491455078125,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472708_10",
+      "timestamp": "2025-08-17T19:18:28.649672",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472708_11",
+      "timestamp": "2025-08-17T19:18:28.649839",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.25mbps",
+      "current_value": 503.2532958984375,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472711_12",
+      "timestamp": "2025-08-17T19:18:31.657839",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472711_13",
+      "timestamp": "2025-08-17T19:18:31.658077",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.25mbps",
+      "current_value": 503.25390625,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472714_14",
+      "timestamp": "2025-08-17T19:18:34.667098",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472714_15",
+      "timestamp": "2025-08-17T19:18:34.667264",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.25mbps",
+      "current_value": 503.2545166015625,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472714_16",
+      "timestamp": "2025-08-17T19:18:34.667360",
+      "type": "queue_congestion",
+      "severity": "high",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 39.00items",
+      "current_value": 39,
+      "threshold_value": 30,
+      "recommendations": [
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472717_17",
+      "timestamp": "2025-08-17T19:18:37.670877",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472717_18",
+      "timestamp": "2025-08-17T19:18:37.671214",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.255126953125,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472717_19",
+      "timestamp": "2025-08-17T19:18:37.671367",
+      "type": "queue_congestion",
+      "severity": "high",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 65.00items",
+      "current_value": 65,
+      "threshold_value": 30,
+      "recommendations": [
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472720_20",
+      "timestamp": "2025-08-17T19:18:40.679454",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472720_21",
+      "timestamp": "2025-08-17T19:18:40.679934",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2598876953125,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472720_22",
+      "timestamp": "2025-08-17T19:18:40.680078",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472723_23",
+      "timestamp": "2025-08-17T19:18:43.691410",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472723_24",
+      "timestamp": "2025-08-17T19:18:43.691733",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.260498046875,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472723_25",
+      "timestamp": "2025-08-17T19:18:43.691881",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472726_26",
+      "timestamp": "2025-08-17T19:18:46.701993",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472726_27",
+      "timestamp": "2025-08-17T19:18:46.702272",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2608642578125,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472726_28",
+      "timestamp": "2025-08-17T19:18:46.702391",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472729_29",
+      "timestamp": "2025-08-17T19:18:49.712013",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472729_30",
+      "timestamp": "2025-08-17T19:18:49.712533",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2613525390625,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472729_31",
+      "timestamp": "2025-08-17T19:18:49.712674",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472732_32",
+      "timestamp": "2025-08-17T19:18:52.720849",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472732_33",
+      "timestamp": "2025-08-17T19:18:52.721065",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.26171875,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472732_34",
+      "timestamp": "2025-08-17T19:18:52.721211",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472735_35",
+      "timestamp": "2025-08-17T19:18:55.725466",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472735_36",
+      "timestamp": "2025-08-17T19:18:55.725774",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2628173828125,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472735_37",
+      "timestamp": "2025-08-17T19:18:55.725893",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472738_38",
+      "timestamp": "2025-08-17T19:18:58.731614",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472738_39",
+      "timestamp": "2025-08-17T19:18:58.731797",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.26318359375,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472738_40",
+      "timestamp": "2025-08-17T19:18:58.731903",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472741_41",
+      "timestamp": "2025-08-17T19:19:01.746607",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472741_42",
+      "timestamp": "2025-08-17T19:19:01.801374",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2635498046875,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472741_43",
+      "timestamp": "2025-08-17T19:19:01.870091",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472744_44",
+      "timestamp": "2025-08-17T19:19:04.969600",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472745_45",
+      "timestamp": "2025-08-17T19:19:05.103963",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2640380859375,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472745_46",
+      "timestamp": "2025-08-17T19:19:05.135468",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472748_47",
+      "timestamp": "2025-08-17T19:19:08.227910",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472748_48",
+      "timestamp": "2025-08-17T19:19:08.228352",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2645263671875,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472748_49",
+      "timestamp": "2025-08-17T19:19:08.228547",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472751_50",
+      "timestamp": "2025-08-17T19:19:11.240510",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472751_51",
+      "timestamp": "2025-08-17T19:19:11.240714",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.26mbps",
+      "current_value": 503.2647705078125,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472751_52",
+      "timestamp": "2025-08-17T19:19:11.240821",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472754_53",
+      "timestamp": "2025-08-17T19:19:14.252632",
+      "type": "io_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "disk_io usage at 100.00percentage",
+      "current_value": 100.0,
+      "threshold_value": 80.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize database queries and add appropriate indexes",
+        "Implement connection pooling for database connections",
+        "Consider using SSD storage for better I/O performance",
+        "Batch database operations where possible"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472754_54",
+      "timestamp": "2025-08-17T19:19:14.252837",
+      "type": "network_bound",
+      "severity": "critical",
+      "component": "system",
+      "description": "network_io usage at 503.27mbps",
+      "current_value": 503.26513671875,
+      "threshold_value": 100.0,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Optimize network calls and implement request batching",
+        "Add network-level caching and compression",
+        "Consider using faster network infrastructure",
+        "Implement connection keep-alive and pooling"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "BTL_1755472754_55",
+      "timestamp": "2025-08-17T19:19:14.252910",
+      "type": "queue_congestion",
+      "severity": "critical",
+      "component": "queue:email_intake",
+      "description": "queue_depth usage at 215.00items",
+      "current_value": 215,
+      "threshold_value": 30,
+      "recommendations": [
+        "IMMEDIATE ACTION REQUIRED: Consider emergency scaling",
+        "Increase queue processing capacity by adding workers",
+        "Implement priority queues for critical emails",
+        "Add queue partitioning to distribute load",
+        "Monitor and optimize queue processing algorithms"
+      ],
+      "status": "OPEN"
+    }
+  ],
+  "optimization_recommendations": [
+    {
+      "id": "OPT_io_bound_1755472756",
+      "type": "io_bound",
+      "priority": "high",
+      "title": "Address Recurring Io Bound Issues",
+      "description": "Detected 21 instances of io_bound bottlenecks in the last 24 hours",
+      "steps": [
+        "Analyze and optimize system performance"
+      ],
+      "improvement": "Reduce io_bound bottlenecks by 70-90%",
+      "effort": "MEDIUM",
+      "risk": "LOW"
+    },
+    {
+      "id": "OPT_network_bound_1755472756",
+      "type": "network_bound",
+      "priority": "high",
+      "title": "Address Recurring Network Bound Issues",
+      "description": "Detected 21 instances of network_bound bottlenecks in the last 24 hours",
+      "steps": [
+        "Analyze and optimize system performance"
+      ],
+      "improvement": "Reduce network_bound bottlenecks by 70-90%",
+      "effort": "MEDIUM",
+      "risk": "LOW"
+    },
+    {
+      "id": "OPT_queue_congestion_1755472756",
+      "type": "queue_congestion",
+      "priority": "high",
+      "title": "Address Recurring Queue Congestion Issues",
+      "description": "Detected 14 instances of queue_congestion bottlenecks in the last 24 hours",
+      "steps": [
+        "Increase queue processing workers",
+        "Implement priority queues",
+        "Add queue partitioning",
+        "Optimize queue processing algorithms"
+      ],
+      "improvement": "Reduce queue_congestion bottlenecks by 70-90%",
+      "effort": "MEDIUM",
+      "risk": "LOW"
+    }
+  ],
+  "system_metrics": {
+    "total_metrics_collected": 146,
+    "total_bottlenecks_detected": 56,
+    "monitored_queues": [
+      "email_intake",
+      "email_processing"
+    ],
+    "monitoring_active": true
+  }
+}

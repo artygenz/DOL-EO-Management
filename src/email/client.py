@@ -1,7 +1,7 @@
 # src/email/client.py
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from email.message import EmailMessage
+from email.message import EmailMessage as StdEmailMessage
 
 class EmailClient(ABC):
     @abstractmethod
@@ -10,7 +10,7 @@ class EmailClient(ABC):
         pass
 
     @abstractmethod
-    def fetch_unread_emails(self) -> List[EmailMessage]:
+    def fetch_unread_emails(self) -> List[StdEmailMessage]:
         """Fetch unread emails, ideally filtering PDFs or specific criteria."""
         pass
 

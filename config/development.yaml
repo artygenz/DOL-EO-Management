@@ -1,0 +1,116 @@
+# Development Environment Configuration
+# Email Agent System Configuration
+
+environment: development
+
+# Email account configurations
+email_accounts:
+  eo_intake_account:
+    account_id: "eo_intake_account"
+    account_type: "eo_intake"
+    username: "eo-intake@example.com"
+    password: "DevPassword123!"
+    imap_settings:
+      host: "imap.secureserver.net"
+      port: 993
+      use_ssl: true
+      timeout: 30
+      idle_timeout: 1740
+      max_connections: 3
+      connection_retry_attempts: 3
+      connection_retry_delay: 5
+    smtp_settings:
+      host: "smtpout.secureserver.net"
+      port: 465
+      use_ssl: true
+      use_tls: false
+      timeout: 30
+      max_connections: 2
+      retry_attempts: 3
+      retry_delay: 5
+    security_level: "standard"
+    monitoring_enabled: true
+    rate_limit_per_hour: 500
+    priority_weight: 1
+
+  pmo_account:
+    account_id: "pmo_account"
+    account_type: "pmo"
+    username: "pmo@example.com"
+    password: "DevPassword123!"
+    imap_settings:
+      host: "imap.secureserver.net"
+      port: 993
+      use_ssl: true
+      timeout: 30
+      idle_timeout: 1740
+      max_connections: 2
+      connection_retry_attempts: 3
+      connection_retry_delay: 5
+    smtp_settings:
+      host: "smtpout.secureserver.net"
+      port: 465
+      use_ssl: true
+      use_tls: false
+      timeout: 30
+      max_connections: 2
+      retry_attempts: 3
+      retry_delay: 5
+    security_level: "standard"
+    monitoring_enabled: true
+    rate_limit_per_hour: 300
+    priority_weight: 2
+
+# Database configuration
+database:
+  host: "localhost"
+  port: 5432
+  database: "email_agent_dev"
+  username: "dev_user"
+  password: "dev_password"
+  pool_size: 5
+  max_overflow: 10
+  pool_timeout: 30
+  pool_recycle: 3600
+  ssl_mode: "prefer"
+
+# Redis configuration
+redis:
+  host: "localhost"
+  port: 6379
+  database: 0
+  password: null
+  ssl: false
+  socket_timeout: 30
+  connection_pool_size: 5
+  retry_attempts: 3
+
+# Security settings
+security:
+  encryption_key_path: "./keys/dev_encryption.key"
+  credential_rotation_days: 30
+  require_sender_validation: false
+  enable_attachment_scanning: false
+  enable_content_filtering: true
+  allowed_domains:
+    - "example.com"
+    - "test.com"
+    - "localhost"
+  blocked_domains:
+    - "spam.com"
+    - "malicious.com"
+  max_attachment_size_mb: 10
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  metrics_port: 8080
+  health_check_interval: 60
+  performance_monitoring: true
+  audit_logging: true
+  log_level: "DEBUG"
+  log_file_path: "./logs/email-agent-dev.log"
+  metrics_retention_days: 7
+
+# Hot reload configuration
+hot_reload_enabled: true

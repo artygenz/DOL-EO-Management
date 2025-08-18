@@ -1,0 +1,117 @@
+================================================================================
+                        U.S. DEPARTMENT OF LABOR
+                        EXECUTIVE SUMMARY REPORT
+================================================================================
+
+REPORT TITLE: {{ report_title | upper }}
+REPORTING PERIOD: {{ reporting_period }}
+CLASSIFICATION: {{ compliance_level.value.upper() }}
+
+================================================================================
+KEY PERFORMANCE INDICATORS
+================================================================================
+
+{% if key_metrics %}
+{% for metric_name, metric_data in key_metrics.items() %}
+{{ metric_name.replace('_', ' ').title() }}: {{ metric_data.value if metric_data is mapping else metric_data }}
+{% if metric_data is mapping and metric_data.trend %}
+  Trend: {{ metric_data.trend.upper() }} {{ metric_data.change if metric_data.change else '' }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+================================================================================
+EXECUTIVE SUMMARY
+================================================================================
+
+This report provides a comprehensive overview of operations and performance 
+for the {{ reporting_period }} period. The following sections detail key 
+achievements, challenges encountered, and strategic recommendations for 
+continued success.
+
+{% if achievements %}
+================================================================================
+KEY ACHIEVEMENTS
+================================================================================
+
+{% for achievement in achievements %}
+✓ {{ achievement | sanitize_content }}
+
+{% endfor %}
+{% endif %}
+
+{% if challenges %}
+================================================================================
+CHALLENGES AND ISSUES
+================================================================================
+
+{% for challenge in challenges %}
+⚠ {{ challenge | sanitize_content }}
+
+{% endfor %}
+{% endif %}
+
+{% if recommendations %}
+================================================================================
+STRATEGIC RECOMMENDATIONS
+================================================================================
+
+{% for recommendation in recommendations %}
+{{ loop.index }}. {{ recommendation | sanitize_content }}
+
+{% endfor %}
+{% endif %}
+
+{% if next_steps %}
+================================================================================
+NEXT STEPS AND ACTION ITEMS
+================================================================================
+
+{% for step in next_steps %}
+→ {{ step | sanitize_content }}
+
+{% endfor %}
+{% endif %}
+
+{% if attachments %}
+================================================================================
+SUPPORTING DOCUMENTS
+================================================================================
+
+The following documents are attached to this executive summary:
+
+{% for attachment in attachments %}
+📄 {{ attachment | sanitize_content }}
+   Executive Report Attachment
+
+{% endfor %}
+{% endif %}
+
+================================================================================
+REPORT INFORMATION
+================================================================================
+
+Prepared for: {{ recipient_name }}
+Prepared by: {{ sender_name }}, {{ sender_title }}
+Organization: {{ organization }}
+Report Date: {{ date | government_date }}
+Reporting Period: {{ reporting_period }}
+Classification: {{ compliance_level.value.upper() }}
+
+================================================================================
+OFFICIAL GOVERNMENT COMMUNICATION
+================================================================================
+
+Correlation ID: {{ correlation_id }}
+
+This executive summary is prepared for official government use and contains 
+sensitive operational information.
+
+U.S. Department of Labor
+Executive Reporting System
+{{ date.strftime('%Y') }} - All Rights Reserved
+
+This report is generated automatically by the DOL Email Agent system and 
+requires executive review and approval.
+
+================================================================================

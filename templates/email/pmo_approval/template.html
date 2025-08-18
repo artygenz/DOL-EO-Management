@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ request_type | classification_header(compliance_level) }} - Approval Request</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+        <header style="border-bottom: 2px solid #dc3545; padding-bottom: 10px; margin-bottom: 20px;">
+            <h1 style="color: #dc3545; margin: 0;">U.S. Department of Labor</h1>
+            <p style="margin: 5px 0 0 0; color: #666;">PMO Approval Request</p>
+        </header>
+        
+        <div style="background-color: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+            <h2 style="margin-top: 0; color: #856404;">APPROVAL REQUIRED</h2>
+            <p><strong>Request ID:</strong> {{ request_id }}</p>
+            <p><strong>Request Type:</strong> {{ request_type }}</p>
+            <p><strong>Approval Deadline:</strong> {{ approval_deadline | government_date }}</p>
+        </div>
+        
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #dc3545;">Request Summary</h3>
+            <p>{{ request_summary | sanitize_content }}</p>
+        </section>
+        
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #dc3545;">Justification</h3>
+            <p>{{ justification | sanitize_content }}</p>
+        </section>
+        
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #dc3545;">Impact Assessment</h3>
+            {% if estimated_cost %}
+            <p><strong>Estimated Cost:</strong> ${{ "{:,.2f}".format(estimated_cost) }}</p>
+            {% endif %}
+            <p><strong>Estimated Timeline:</strong> {{ estimated_timeline }}</p>
+            <p><strong>Risk Assessment:</strong> {{ risk_assessment | sanitize_content }}</p>
+        </section>
+        
+        {% if supporting_documents %}
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #dc3545;">Supporting Documents</h3>
+            <ul>
+            {% for document in supporting_documents %}
+                <li>{{ document | sanitize_content }}</li>
+            {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        
+        <section style="margin-bottom: 20px;">
+            <h3 style="color: #dc3545;">Request Details</h3>
+            <p><strong>Requested by:</strong> {{ sender_name }}, {{ sender_title }}</p>
+            <p><strong>Organization:</strong> {{ organization }}</p>
+            <p><strong>Request Date:</strong> {{ date | government_date }}</p>
+            <p><strong>PMO Contact:</strong> {{ recipient_name }}</p>
+        </section>
+        
+        <div style="background-color: #f8d7da; padding: 15px; border-left: 4px solid #dc3545; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #721c24;">Action Required</h3>
+            <p>This request requires PMO approval before proceeding. Please review all documentation and provide approval or rejection with comments.</p>
+            <p><strong>Response required by:</strong> {{ approval_deadline | government_date }}</p>
+        </div>
+        
+        <footer style="border-top: 1px solid #ddd; padding-top: 15px; margin-top: 30px; font-size: 12px; color: #666;">
+            <p><strong>Correlation ID:</strong> {{ correlation_id }}</p>
+            <p>This is an official PMO approval request from the U.S. Department of Labor.</p>
+            <p>All approvals must be documented and tracked for audit compliance.</p>
+        </footer>
+    </div>
+</body>
+</html>

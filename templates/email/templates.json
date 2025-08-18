@@ -1,0 +1,75 @@
+[
+  {
+    "template_id": "task_assignment_v1",
+    "template_type": "task_assignment",
+    "name": "Developer Task Assignment",
+    "subject_template": "Task Assignment: {{ task_title }} - {{ task_id }} ({{ priority_level }} Priority)",
+    "body_template": "task_assignment/template.html",
+    "compliance_level": "unclassified",
+    "required_fields": [
+      "task_id",
+      "task_title",
+      "task_description",
+      "priority_level",
+      "due_date",
+      "project_name"
+    ],
+    "optional_fields": [
+      "requirements",
+      "deliverables"
+    ],
+    "government_approved": true,
+    "version": "1.0",
+    "created_date": "2025-08-17T18:00:55.101158",
+    "last_modified": "2025-08-17T18:00:55.101175"
+  },
+  {
+    "template_id": "pmo_approval_v1",
+    "template_type": "pmo_approval_request",
+    "name": "PMO Approval Request",
+    "subject_template": "PMO Approval Required: {{ request_type }} ({{ request_id }})",
+    "body_template": "pmo_approval/template.html",
+    "compliance_level": "sensitive",
+    "required_fields": [
+      "request_id",
+      "request_type",
+      "request_summary",
+      "justification",
+      "estimated_timeline",
+      "risk_assessment",
+      "approval_deadline"
+    ],
+    "optional_fields": [
+      "estimated_cost",
+      "supporting_documents"
+    ],
+    "government_approved": true,
+    "version": "1.0",
+    "created_date": "2025-08-17T18:00:55.101178",
+    "last_modified": "2025-08-17T18:00:55.101179"
+  },
+  {
+    "template_id": "executive_summary_v1",
+    "template_type": "executive_summary",
+    "name": "Executive Summary Report",
+    "subject_template": "Executive Summary: {{ report_title }} - {{ reporting_period }} [{{ compliance_level.value.upper() }}]",
+    "body_template": "executive_summary/template.html",
+    "compliance_level": "sensitive",
+    "required_fields": [
+      "report_title",
+      "reporting_period"
+    ],
+    "optional_fields": [
+      "key_metrics",
+      "achievements",
+      "challenges",
+      "recommendations",
+      "attachments",
+      "next_steps"
+    ],
+    "government_approved": true,
+    "version": "1.0",
+    "created_date": "2025-08-17T18:00:55.101180",
+    "last_modified": "2025-08-17T18:00:55.101181"
+  }
+]

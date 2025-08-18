@@ -1,0 +1,44 @@
+U.S. DEPARTMENT OF LABOR
+PMO Approval Request
+
+*** APPROVAL REQUIRED ***
+
+Request ID: {{ request_id }}
+Request Type: {{ request_type }}
+Approval Deadline: {{ approval_deadline | government_date }}
+
+REQUEST SUMMARY:
+{{ request_summary | sanitize_content }}
+
+JUSTIFICATION:
+{{ justification | sanitize_content }}
+
+IMPACT ASSESSMENT:
+{% if estimated_cost %}
+Estimated Cost: ${{ "{:,.2f}".format(estimated_cost) }}
+{% endif %}
+Estimated Timeline: {{ estimated_timeline }}
+Risk Assessment: {{ risk_assessment | sanitize_content }}
+
+{% if supporting_documents %}
+SUPPORTING DOCUMENTS:
+{% for document in supporting_documents %}
+- {{ document | sanitize_content }}
+{% endfor %}
+{% endif %}
+
+REQUEST DETAILS:
+Requested by: {{ sender_name }}, {{ sender_title }}
+Organization: {{ organization }}
+Request Date: {{ date | government_date }}
+PMO Contact: {{ recipient_name }}
+
+ACTION REQUIRED:
+This request requires PMO approval before proceeding. Please review all 
+documentation and provide approval or rejection with comments.
+Response required by: {{ approval_deadline | government_date }}
+
+Correlation ID: {{ correlation_id }}
+
+This is an official PMO approval request from the U.S. Department of Labor.
+All approvals must be documented and tracked for audit compliance.

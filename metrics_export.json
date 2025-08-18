@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-08-17T19:07:33.713081",
+  "processing_latency": {
+    "average_latency_ms": 153.88824939727783,
+    "median_latency_ms": 126.35993957519531,
+    "p95_latency_ms": 285.65096855163574,
+    "p99_latency_ms": 285.65096855163574,
+    "max_latency_ms": 285.65096855163574,
+    "min_latency_ms": 64.91804122924805,
+    "total_processed": 20
+  },
+  "throughput": {
+    "emails_per_hour": 200.0,
+    "emails_per_minute": 20.0,
+    "total_emails": 20,
+    "time_window_hours": 0.0055483005555555555
+  },
+  "classification_accuracy": {
+    "overall_accuracy": 53.333333333333336,
+    "by_type": {
+      "EXECUTIVE_REQUEST": 66.66666666666666,
+      "PMO_RESPONSE": 75.0,
+      "NEW_EO": 16.666666666666664,
+      "DEVELOPER_UPDATE": 25.0
+    },
+    "total_classifications": 30
+  },
+  "connection_health": {
+    "imap_primary": {
+      "status": "HEALTHY",
+      "uptime_percentage": 100.0,
+      "average_response_time_ms": 407.96613348050266,
+      "total_errors": 7,
+      "last_successful_operation": "2025-08-17T19:07:31.699658",
+      "connection_type": "IMAP"
+    },
+    "imap_backup": {
+      "status": "FAILED",
+      "uptime_percentage": 99.9944302,
+      "average_response_time_ms": 554.3065936917766,
+      "total_errors": 9,
+      "last_successful_operation": "2025-08-17T19:07:29.700694",
+      "connection_type": "IMAP"
+    },
+    "smtp_outbound": {
+      "status": "HEALTHY",
+      "uptime_percentage": 100.0,
+      "average_response_time_ms": 138.04344917523665,
+      "total_errors": 0,
+      "last_successful_operation": "2025-08-17T19:07:31.699616",
+      "connection_type": "SMTP"
+    }
+  },
+  "security_incidents": {
+    "total_incidents": 5,
+    "resolved_incidents": 3,
+    "unresolved_incidents": 2,
+    "by_type": {
+      "malware_detected": 1,
+      "phishing_attempt": 1,
+      "unauthorized_sender": 1,
+      "suspicious_content": 1,
+      "attachment_threat": 1
+    },
+    "by_severity": {
+      "CRITICAL": 1,
+      "HIGH": 2,
+      "MEDIUM": 1,
+      "LOW": 1
+    },
+    "resolution_rate": 60.0
+  },
+  "system_uptime": {
+    "uptime_seconds": 20.039307117462158,
+    "uptime_hours": 0.005566474199295044,
+    "uptime_days": 0.00023193642497062683,
+    "start_time": "2025-08-17T19:07:13.674065",
+    "current_time": "2025-08-17T19:07:33.713372"
+  },
+  "raw_data": {
+    "processing_metrics_count": 30,
+    "classification_metrics_count": 30,
+    "security_incidents_count": 5,
+    "connection_count": 3
+  }
+}

@@ -4,3 +4,12 @@ celery
 redis
 psycopg2-binary
 python-dotenv
+# Configuration management dependencies
+pyyaml>=6.0
+watchdog>=3.0.0
+# Security dependencies
+cryptography>=41.0.0
+bleach>=6.0.0
+# Testing dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0

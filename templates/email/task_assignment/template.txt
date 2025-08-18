@@ -1,0 +1,38 @@
+U.S. DEPARTMENT OF LABOR
+Task Assignment Notification
+
+TASK ASSIGNMENT: {{ task_title | upper }}
+
+Task ID: {{ task_id }}
+Priority: {{ priority_level }}
+Due Date: {{ due_date | government_date }}
+Project: {{ project_name }}
+
+TASK DESCRIPTION:
+{{ task_description | sanitize_content }}
+
+{% if requirements %}
+REQUIREMENTS:
+{% for requirement in requirements %}
+- {{ requirement | sanitize_content }}
+{% endfor %}
+{% endif %}
+
+{% if deliverables %}
+EXPECTED DELIVERABLES:
+{% for deliverable in deliverables %}
+- {{ deliverable | sanitize_content }}
+{% endfor %}
+{% endif %}
+
+ASSIGNMENT DETAILS:
+Assigned to: {{ recipient_name }}
+Assigned by: {{ sender_name }}, {{ sender_title }}
+Organization: {{ organization }}
+Assignment Date: {{ date | government_date }}
+
+Correlation ID: {{ correlation_id }}
+
+This is an official communication from the U.S. Department of Labor.
+Please respond within 24 hours to confirm receipt.
+For questions or concerns, please contact your supervisor or the PMO.

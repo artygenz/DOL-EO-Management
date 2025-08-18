@@ -1,0 +1,146 @@
+# Production Environment Configuration
+# Email Agent System Configuration - Federal Grade
+
+environment: production
+
+# Email account configurations
+email_accounts:
+  eo_intake_primary:
+    account_id: "eo_intake_primary"
+    account_type: "eo_intake"
+    username: "eo-intake@agency.gov"
+    password: "FederalSecurePassword123!@#"
+    imap_settings:
+      host: "imap.secureserver.net"
+      port: 993
+      use_ssl: true
+      timeout: 30
+      idle_timeout: 1740
+      max_connections: 10
+      connection_retry_attempts: 5
+      connection_retry_delay: 10
+    smtp_settings:
+      host: "smtpout.secureserver.net"
+      port: 465
+      use_ssl: true
+      use_tls: false
+      timeout: 30
+      max_connections: 5
+      retry_attempts: 5
+      retry_delay: 10
+    security_level: "federal"
+    monitoring_enabled: true
+    rate_limit_per_hour: 2000
+    priority_weight: 1
+
+  pmo_primary:
+    account_id: "pmo_primary"
+    account_type: "pmo"
+    username: "pmo@agency.gov"
+    password: "FederalSecurePassword456!@#"
+    imap_settings:
+      host: "imap.secureserver.net"
+      port: 993
+      use_ssl: true
+      timeout: 30
+      idle_timeout: 1740
+      max_connections: 8
+      connection_retry_attempts: 5
+      connection_retry_delay: 10
+    smtp_settings:
+      host: "smtpout.secureserver.net"
+      port: 465
+      use_ssl: true
+      use_tls: false
+      timeout: 30
+      max_connections: 4
+      retry_attempts: 5
+      retry_delay: 10
+    security_level: "federal"
+    monitoring_enabled: true
+    rate_limit_per_hour: 1500
+    priority_weight: 2
+
+  executive_primary:
+    account_id: "executive_primary"
+    account_type: "executive"
+    username: "executive@agency.gov"
+    password: "FederalSecurePassword789!@#"
+    imap_settings:
+      host: "imap.secureserver.net"
+      port: 993
+      use_ssl: true
+      timeout: 30
+      idle_timeout: 1740
+      max_connections: 5
+      connection_retry_attempts: 5
+      connection_retry_delay: 10
+    smtp_settings:
+      host: "smtpout.secureserver.net"
+      port: 465
+      use_ssl: true
+      use_tls: false
+      timeout: 30
+      max_connections: 3
+      retry_attempts: 5
+      retry_delay: 10
+    security_level: "federal"
+    monitoring_enabled: true
+    rate_limit_per_hour: 500
+    priority_weight: 10
+
+# Database configuration - Production PostgreSQL
+database:
+  host: "prod-db.agency.gov"
+  port: 5432
+  database: "email_agent_prod"
+  username: "email_agent_user"
+  password: "ProductionDBPassword123!@#"
+  pool_size: 20
+  max_overflow: 40
+  pool_timeout: 60
+  pool_recycle: 1800
+  ssl_mode: "require"
+
+# Redis configuration - Production Redis Cluster
+redis:
+  host: "prod-redis.agency.gov"
+  port: 6379
+  database: 0
+  password: "ProductionRedisPassword123!@#"
+  ssl: true
+  socket_timeout: 30
+  connection_pool_size: 20
+  retry_attempts: 5
+
+# Security settings - Federal Grade
+security:
+  encryption_key_path: "/etc/email-agent/keys/production_encryption.key"
+  credential_rotation_days: 90
+  require_sender_validation: true
+  enable_attachment_scanning: true
+  enable_content_filtering: true
+  allowed_domains:
+    - "agency.gov"
+    - "dol.gov"
+    - "whitehouse.gov"
+    - "gsa.gov"
+    - "nist.gov"
+  blocked_domains:
+    - "suspicious-domain.com"
+    - "phishing-site.net"
+  max_attachment_size_mb: 25
+
+# Monitoring configuration - Production Grade
+monitoring:
+  enabled: true
+  metrics_port: 8080
+  health_check_interval: 30
+  performance_monitoring: true
+  audit_logging: true
+  log_level: "INFO"
+  log_file_path: "/var/log/email-agent/email-agent-prod.log"
+  metrics_retention_days: 90
+
+# Hot reload configuration - Disabled in production for security
+hot_reload_enabled: false

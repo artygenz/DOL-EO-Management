@@ -1,0 +1,43 @@
+{
+  "connection_state": "disconnected",
+  "consecutive_failures": 2,
+  "metrics": {
+    "total_connections": 0,
+    "successful_connections": 0,
+    "failed_connections": 2,
+    "reconnection_attempts": 1,
+    "successful_reconnections": 0,
+    "average_connection_time": 0.0,
+    "uptime_percentage": 100.0,
+    "last_successful_connection": null,
+    "last_failure": "2025-08-17T14:09:33.442586",
+    "current_uptime": 0.0
+  },
+  "failure_history": [
+    {
+      "failure_type": "network_error",
+      "timestamp": "2025-08-17T14:09:33.336188",
+      "error_message": "Temporary network error",
+      "retry_count": 1,
+      "backoff_duration": 0.10087527941677857,
+      "is_persistent": false
+    },
+    {
+      "failure_type": "network_error",
+      "timestamp": "2025-08-17T14:09:33.442579",
+      "error_message": "Temporary network error",
+      "retry_count": 2,
+      "backoff_duration": 0.21749271369638595,
+      "is_persistent": false
+    }
+  ],
+  "current_failure": {
+    "failure_type": "network_error",
+    "timestamp": "2025-08-17T14:09:33.442579",
+    "error_message": "Temporary network error",
+    "retry_count": 2,
+    "backoff_duration": 0.21749271369638595,
+    "is_persistent": false
+  },
+  "timestamp": "2025-08-17T14:09:38.430630"
+}
