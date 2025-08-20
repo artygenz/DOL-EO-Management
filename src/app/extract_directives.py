@@ -45,6 +45,7 @@ if __package__ is None or __package__ == "":
 
 from .langchain_utils import TasksModel, extract_tasks as lc_extract_tasks
 
+
 # --------------------------------------------------------------------------------------
 # HARDCODED DEMO INPUTS (for Week 1 testing only)
 # In production, these will be passed in as strings from the calling layer (e.g., Gmail/S3/DB).
@@ -481,6 +482,7 @@ def _demo_run() -> None:
     - Assign members based on category_dept
     - Print the final JSON payload
     """
+
     # Step 1: extract tasks (assignee fields will be "")
     tasks_no_assignees = extract_directives(EO_PDF_DEMO, ROLES_DEMO)
 

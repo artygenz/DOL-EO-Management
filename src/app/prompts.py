@@ -27,11 +27,14 @@ EO_EXTRACTION_SYSTEM_PROMPT = dedent(
     - ALL communications are email-based; however, you only produce the initial structured task list.
 
     Roles Catalog:
-    The system will pass a "roles_text" string that enumerates responsible parties (e.g., Secretary of the Treasury,
-    OMB Director, All Agency Heads, etc.). You MUST choose a category/dept value from the provided roles_text
-    verbatim whenever possible. If the EO names multiple parties together (e.g., "Secretary of the Treasury, in
-    consultation with OMB Director"), preserve the intent and prefer a merged label that exists in roles_text.
-    If an exact merged label is not present, choose the primary named responsible party from roles_text.
+    The system will pass a "roles_text" string that enumerates the actual organizational roles and team members
+    available for task assignment. You MUST choose a category_dept value from the provided roles_text verbatim.
+    
+    IMPORTANT: Use ONLY the exact role names from roles_text. Do NOT use federal government role names from the EO.
+    Analyze the EO directives and map them to the most appropriate organizational roles based on:
+    - The nature of the directive (financial, compliance, process, reporting, etc.)
+    - The responsibility alignment with available roles
+    - The scope and authority level required
 
     Scheduling Rules:
     - The system provides:

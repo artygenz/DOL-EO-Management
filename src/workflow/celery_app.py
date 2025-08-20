@@ -21,6 +21,10 @@ celery_app.conf.update(
         "src.workflow.tasks.store_email": {"queue": "ingest"},
         "src.workflow.tasks.ai_extract_tasks": {"queue": "ai"},
         "src.workflow.tasks.persist_tasks": {"queue": "db"},
+        "src.workflow.tasks.send_pmo_review_email": {"queue": "email"},
+        "src.workflow.tasks.process_pmo_response": {"queue": "review"},
+        "src.workflow.tasks.notify_assignees": {"queue": "email"},
+        "src.workflow.tasks.handle_rejected_tasks": {"queue": "ai"},
     },
 
 )

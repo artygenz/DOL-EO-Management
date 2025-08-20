@@ -4,9 +4,10 @@ services:
 
   worker:
     build: .
-    command: celery -A src.workflow.celery_app worker --loglevel=info -Q ingest,ai,db
+    command: celery -A src.workflow.celery_app worker --loglevel=info -Q ingest,ai,db,email,review
     volumes:
       - .:/app
+      - ./outbox:/tmp/outbox
     env_file:
       - .env
     environment:
@@ -55,3 +56,20 @@ services:
     depends_on:
       - db
     command: alembic upgrade head
+    volumes:
+      - .:/app
+    working_dir: /app
+
+  pytest:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - db
+      - redis
+    command: pytest -q tests
+    volumes:
+      - .:/app
+    working_dir: /app
