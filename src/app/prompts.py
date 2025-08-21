@@ -1,5 +1,5 @@
 """
-Prompt templates for EO directive extraction.
+Prompt templates for EO directive extraction and task rewiring.
 
 This module centralizes all prompt strings used by the LangChain pipeline so that
 they can be versioned, reviewed, and updated independently of the calling code.
@@ -7,12 +7,9 @@ they can be versioned, reviewed, and updated independently of the calling code.
 
 from textwrap import dedent
 
+# ---------------- Existing Prompts ----------------
+
 # System prompt for extracting actionable tasks from an Executive Order (EO)
-# IMPORTANT:
-# - The LLM MUST produce structured output that matches the Pydantic schema provided via
-#   langchain.with_structured_output in app/langchain.py (TasksModel -> List[TaskModel]).
-# - Assignee MUST be an empty string ("") for all tasks. Assignment is handled later
-#   by the deterministic `assign_tasks` function, not by the LLM.
 EO_EXTRACTION_SYSTEM_PROMPT = dedent(
     """
     You are Agent 1, an expert policy and software delivery analyst supporting the U.S. Department of Labor (DOL).
@@ -68,7 +65,6 @@ EO_EXTRACTION_SYSTEM_PROMPT = dedent(
         due_date: string (YYYY-MM-DD or "TBD")
         created_at: string (ISO 8601 datetime)
     - The top-level object is: {{"tasks"}}: [Task, Task, ...]
-
     Failure Handling:
     - If the EO contains no actionable tasks (unlikely), return an empty list: {{"tasks"}}: [].
     - Never include commentary outside the schema. The downstream system parses strictly.
@@ -78,13 +74,6 @@ EO_EXTRACTION_SYSTEM_PROMPT = dedent(
     """
 ).strip()
 
-
-# Human message template that injects the EO text, the roles catalog, and scheduling context.
-# Variables provided by the caller:
-# - eo_text:      The full EO content as a string (PDF content already converted to text).
-# - roles_text:   The newline-delimited list of roles relevant for category/dept mapping.
-# - eo_date:      The EO's official date (YYYY-MM-DD) if detected, else may be empty string.
-# - now_utc:      Current timestamp in UTC, ISO 8601 string.
 EO_EXTRACTION_HUMAN_TEMPLATE = dedent(
     """
     Executive Order (EO) Text:
@@ -111,3 +100,178 @@ EO_EXTRACTION_HUMAN_TEMPLATE = dedent(
     """
 ).strip()
 
+# ---------------- New Prompts for Task Rewiring & Updates ----------------
+
+# 1. Prompt for rewire_tasks_with_remarks (first LLM call: rewrite tasks and summarize changes)
+REWIRE_TASKS_SYSTEM_PROMPT = dedent(
+    """
+    You are an expert AI assistant for the U.S. Department of Labor, specializing in Executive Order (EO) task management.
+    Your job is to revise a set of development tasks for an EO based on remarks from the PMO, ensuring all feedback is addressed.
+    After rewriting the tasks, provide a concise summary of what was changed in response to the remarks.
+    Output must be a JSON object with:
+      - "tasks": the revised list of tasks (same schema as before)
+      - "summary": a short paragraph describing the main changes made due to the remarks.
+    """
+).strip()
+
+REWIRE_TASKS_HUMAN_TEMPLATE = dedent(
+    """
+    Executive Order (EO) Text:
+    ---
+    {eo}
+    ---
+
+    PMO Remarks:
+    ---
+    {remarks}
+    ---
+
+    Original Tasks:
+    ---
+    {tasks}
+    ---
+
+    Please rewrite the tasks to address the remarks, and provide a summary of the changes.
+    Output format:
+    {{
+      "tasks": [...],
+      "summary": "..."
+    }}
+    """
+).strip()
+
+# 1b. Prompt for rewire_tasks_with_remarks (second LLM call: check for hallucination/conscience)
+REWIRE_TASKS_CHECK_SYSTEM_PROMPT = dedent(
+    """
+    You are an expert AI reviewer. Your job is to check if a set of revised EO tasks (with a summary of changes) accurately reflects the PMO's remarks and the original EO, without hallucination or omission.
+    Score the "conscience" of the revision from 0 to 100%:
+      - 80-100%: Tasks are accurate and changes are well-aligned with remarks and EO.
+      - 41-79%: Some issues, partial alignment, or minor hallucination.
+      - 10-40%: Major issues, hallucination, or disregard for remarks/EO.
+    If the score is below 80%, suggest a corrected set of tasks and a new summary.
+    Output format:
+    {{
+      "score": <int>,
+      "verdict": "<short explanation>",
+      "tasks": [...],   # Only if score < 80
+      "summary": "..."  # Only if score < 80
+    }}
+    """
+).strip()
+
+REWIRE_TASKS_CHECK_HUMAN_TEMPLATE = dedent(
+    """
+    Executive Order (EO) Text:
+    ---
+    {eo}
+    ---
+
+    PMO Remarks:
+    ---
+    {remarks}
+    ---
+
+    Original Tasks:
+    ---
+    {original_tasks}
+    ---
+
+    Summary of Changes:
+    ---
+    {summary}
+    ---
+
+    Revised Tasks:
+    ---
+    {revised_tasks}
+    ---
+
+    Please check if the revised tasks and summary accurately reflect the remarks and EO. Score the conscience and suggest corrections if needed.
+    """
+).strip()
+
+# 2. Prompt for generate_task_update_from_update_email
+TASK_UPDATE_SYSTEM_PROMPT = dedent(
+    """
+    You are an AI assistant for the DOL. Your job is to extract a structured task update from an employee's email update, given their role and the original task.
+    Output a JSON object with:
+      - Task_title (text)
+      - assignee (text)
+      - progress_pct (int)
+      - hours_spent (numeric)
+      - status_note (text)
+      - blockers (list)
+      - risks (list)
+      - next_actions (list)
+      - extraction_confidence (numeric, 0-100)
+      - created_at (ISO 8601)
+    """
+).strip()
+
+TASK_UPDATE_HUMAN_TEMPLATE = dedent(
+    """
+    Employee Role: {employee_role}
+
+    Task:
+    {task}
+
+    Raw Update Email:
+    {raw_update}
+
+    Extract a structured task update as described.
+    """
+).strip()
+
+# 3. Prompt for generate_summary_from_list_of_task_updates
+TASK_SUMMARY_SYSTEM_PROMPT = dedent(
+    """
+    You are an AI assistant for the DOL PMO. Your job is to summarize a list of structured task updates for a single EO, providing a short summary for each task to help the PMO understand progress and risks.
+    Output: For each task, add a "summary" field (1-2 sentences) that highlights key progress, blockers, and risks.
+    """
+).strip()
+
+TASK_SUMMARY_HUMAN_TEMPLATE = dedent(
+    """
+    Executive Order (EO) Text:
+    {EO}
+
+    Task Updates:
+    {task_update_list}
+
+    For each task, add a "summary" field as described.
+    """
+).strip()
+
+# 4. Prompt for EO weekly summary
+EO_WEEKLY_SUMMARY_SYSTEM_PROMPT = dedent(
+    """
+    You are an AI executive assistant for the DOL CFO. Your job is to generate a comprehensive weekly summary report for a single EO, based on a week's worth of daily task summaries, the EO text, and the original assigned tasks.
+    Output a JSON object with:
+      - eo_id
+      - eo_title
+      - reporting_period (start, end)
+      - report_generated_at
+      - progress (avg_progress_pct, change_from_last_week, tasks_total, tasks_active, hours_logged)
+      - risk_overview (high_risk_tasks, medium_risk_tasks, low_risk_tasks, top_blockers)
+      - tasks_updated_this_week
+      - common_blockers
+      - common_risks
+      - priority_next_actions
+      - executive_summary (detailed, multi-paragraph)
+    """
+).strip()
+
+EO_WEEKLY_SUMMARY_HUMAN_TEMPLATE = dedent(
+    """
+    Executive Order (EO) Text:
+    {EO}
+
+    Original Assigned Tasks:
+    {tasks}
+
+    Week's Daily Summaries:
+    {six_day_summary}
+
+    Please generate the weekly summary report as described.
+    """
+).strip()
