@@ -11,18 +11,33 @@ def clean_eo_text(body_text: str) -> str:
     cleaned_lines = []
     skip_mode = False
     
-    for line in lines:
+    for i, line in enumerate(lines):
+        # Debug: Print the first few lines to see what we're dealing with
+        if i < 5:
+            print(f"[DEBUG] Line {i}: {line[:100]}")
+        
         # Stop processing if we hit role-related markers
-        if any(marker in line for marker in ['ROLES_DEMO', 'ROLES_WITH_MEMBERS_DEMO', 'Newline-delimited ROLES']):
+        if any(marker in line for marker in ['ROLES_DEMO =', 'ROLES_WITH_MEMBERS_DEMO =', 'ROLES_DEMO =']):
+            print(f"[DEBUG] Found ROLES marker on line {i}: {line}")
+            skip_mode = True
+            continue
+        # Look for the specific pattern that indicates the start of hardcoded roles
+        if 'Newline-delimited ROLES catalog used by the LLM' in line:
+            print(f"[DEBUG] Found ROLES catalog marker on line {i}: {line}")
             skip_mode = True
             continue
         if skip_mode and line.strip() == '':
+            print(f"[DEBUG] Stopping skip mode on line {i} (empty line)")
             skip_mode = False
             continue
         if not skip_mode:
             cleaned_lines.append(line)
     
-    return '\n'.join(cleaned_lines)
+    result = '\n'.join(cleaned_lines)
+    print(f"[DEBUG] Original text length: {len(body_text)}")
+    print(f"[DEBUG] Cleaned text length: {len(result)}")
+    print(f"[DEBUG] First 200 chars of cleaned text: {result[:200]}")
+    return result
 
 def extract_tasks(body_text: str) -> List:
     """
@@ -32,8 +47,9 @@ def extract_tasks(body_text: str) -> List:
     """
     
     try:
-        # Clean the EO text to remove any hardcoded role information
-        cleaned_body_text = clean_eo_text(body_text)
+        # TEMPORARILY: Skip cleaning to see the raw EO text
+        cleaned_body_text = body_text
+        print(f"[DEBUG] SKIPPING CLEANING - Using raw body text")
         
         # Get real org roles from database instead of hardcoded demo
         roles_text = build_roles_with_members_text()
@@ -56,8 +72,11 @@ Agency Heads with authority under 31 U.S.C. 3321(b)"""
             print(f"[DEBUG] Using fallback roles:\n{roles_text}")
         
         # Step 1: Extract tasks with empty assignees
+        print(f"[DEBUG] Calling extract_directives with cleaned body text length: {len(cleaned_body_text)}")
+        print(f"[DEBUG] Roles text length: {len(roles_text)}")
         data = extract_directives(cleaned_body_text, roles_text)
         print(f"[DEBUG] LLM extracted {len(data.get('tasks', []))} tasks")
+        print(f"[DEBUG] Raw data from extract_directives: {data}")
         
         # Step 2: Assign team members to tasks
         data = assign_tasks(data, roles_text)
