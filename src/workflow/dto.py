@@ -58,3 +58,42 @@ class UserCreate(BaseModel):
     email: str
     role: Literal["admin", "reviewer", "executor"] = "executor"
     org_role: Optional[str] = None
+
+class UserLogin(BaseModel):
+    email: str = Field(..., description="User email address")
+    password: str = Field(..., description="User password")
+
+class UserLoginResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: dict
+
+# Dashboard DTOs
+class DailyUpdateCreate(BaseModel):
+    task_id: str
+    update_text: str
+    progress_pct: Optional[int] = Field(None, ge=0, le=100)
+    hours_spent: Optional[float] = Field(None, ge=0)
+    status_note: Optional[str] = None
+    blockers: Optional[dict] = None
+    risks: Optional[dict] = None
+    next_actions: Optional[dict] = None
+
+class DailyUpdateResponse(BaseModel):
+    id: str
+    task_id: str
+    user_id: str
+    update_text: str
+    progress_pct: Optional[int]
+    hours_spent: Optional[float]
+    status_note: Optional[str]
+    blockers: Optional[dict]
+    risks: Optional[dict]
+    next_actions: Optional[dict]
+    created_at: datetime
+
+class TaskAssigneeUpdate(BaseModel):
+    assignee_id: str
+
+class EOPMOUpdate(BaseModel):
+    pmo_ids: list[str]

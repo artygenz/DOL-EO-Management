@@ -29,3 +29,4 @@ class Task(Base):
     assignee = relationship("User", back_populates="assigned_tasks")
     logs = relationship("TaskLog", back_populates="task", cascade="all,delete-orphan")
     confirmations = relationship("TaskConfirmation", back_populates="task", cascade="all,delete-orphan")
+    daily_updates = relationship("DailyUpdate", back_populates="task")

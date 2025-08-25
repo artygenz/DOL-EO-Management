@@ -7,3 +7,5 @@ from .attachment import Attachment  # noqa: F401
 from .task_log import TaskLog  # noqa: F401
 from .task_confirmation import TaskConfirmation  # noqa: F401
 from .auth_token import AuthToken  # noqa: F401
+from .token_blacklist import TokenBlacklist  # noqa: F401
+from .daily_update import DailyUpdate  # noqa: F401

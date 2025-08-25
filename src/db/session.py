@@ -30,3 +30,11 @@ def get_session_maker(engine=None):
 
 # Optional convenience if you like to import directly:
 SessionLocal = _SessionLocal
+
+def get_db():
+    """Get database session generator for FastAPI dependency injection."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
