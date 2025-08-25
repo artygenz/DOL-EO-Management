@@ -6,5 +6,7 @@ outbox
 __pycache__/
 */__pycache__/
 **/__pycache__/
+***/__pycache__/
 *.py[cod]
 *$py.class
+alembic/__pycache__
