@@ -10,3 +10,4 @@ __pycache__/
 *.py[cod]
 *$py.class
 alembic/__pycache__
+__pycache__/
