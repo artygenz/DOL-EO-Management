@@ -39,29 +39,72 @@ from sqlalchemy.exc import IntegrityError
 @app.post("/webhook/pmo_email", status_code=status.HTTP_202_ACCEPTED)
 def webhook_pmo_email(email: PMOEmailIn):
     from src.workflow.tasks import process_pmo_response
-    # Persist inbound PMO email for audit, try to associate EO if provided
+    from src.workflow.parse_pmo import extract_eo_id_from_subject
+    
+    # Extract EO ID from subject if not provided
+    related_eo_id = email.related_eo_id or extract_eo_id_from_subject(email.subject)
+    
+    # Validate EO exists before processing
+    if related_eo_id:
+        eo = repo.get_executive_order(related_eo_id)
+        if not eo:
+            error_msg = f"EO with ID '{related_eo_id}' not found in database. Please check the EO ID and try again."
+            print(f"ERROR: {error_msg}")
+            raise HTTPException(
+                status_code=404, 
+                detail={
+                    "error": "EO not found",
+                    "message": error_msg,
+                    "eo_id": related_eo_id
+                }
+            )
+        print(f"Validated EO exists: {related_eo_id} - {eo.title}")
+    else:
+        error_msg = "No EO ID found in PMO email (neither in related_eo_id nor subject). Cannot process PMO response."
+        print(f"ERROR: {error_msg}")
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": "Missing EO ID",
+                "message": error_msg
+            }
+        )
+    
+    # Persist inbound PMO email for audit
+    email_log_id = None
     try:
-        repo.save_email_log(
+        email_log = repo.save_email_log(
             direction="incoming",
             subject=email.subject,
             sender=email.sender,
             recipients=email.recipients,
             raw_content=email.body_text,
-            related_eo_id=email.related_eo_id,
+            related_eo_id=related_eo_id,
         )
-    except Exception as _:
+        email_log_id = str(email_log.id)
+        print(f"Saved PMO email log with ID: {email_log_id}")
+    except Exception as e:
+        print(f"Warning: Could not save PMO email log: {e}")
         # Non-fatal: still try to process
-        pass
+    
+    # Add email log ID to the payload for organized file structure
+    email_payload = email.model_dump()
+    email_payload["email_log_id"] = email_log_id
+    email_payload["related_eo_id"] = related_eo_id  # Ensure EO ID is set
+    
     try:
-        process_pmo_response.delay(email.model_dump())
-    except Exception:
+        process_pmo_response.delay(email_payload)
+    except Exception as e:
+        print(f"ERROR: Failed to queue PMO email for processing: {e}")
         raise HTTPException(status_code=500, detail="Failed to queue PMO email for processing")
+    
     return {
         "success": True,
         "message": "PMO email queued for processing",
         "data": {
             "message_id": email.message_id,
-            "related_eo_id": email.related_eo_id
+            "related_eo_id": related_eo_id,
+            "email_log_id": email_log_id
         }
     }
 

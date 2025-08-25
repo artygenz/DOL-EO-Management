@@ -25,6 +25,7 @@ celery_app.conf.update(
         "src.workflow.tasks.process_pmo_response": {"queue": "review"},
         "src.workflow.tasks.notify_assignees": {"queue": "email"},
         "src.workflow.tasks.handle_rejected_tasks": {"queue": "ai"},
+        "src.workflow.tasks.send_improved_tasks_to_pmo": {"queue": "email"},
     },
 
 )
