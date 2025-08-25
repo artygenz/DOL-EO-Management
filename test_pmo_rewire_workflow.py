@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+"""
+Test script for PMO response workflow and task rewiring functionality.
+"""
+
+import os
+import sys
+import uuid
+from datetime import datetime, timezone
+
+# Add src to path
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+
+def create_test_eo_payload():
+    """Create a test EO payload with the provided data."""
+    return {
+        "message_id": "msg-2001@sample",
+        "subject": "EO: Modernize Workforce Data",
+        "sender": "sec@agency.gov",
+        "recipients": ["ops@dol.gov"],
+        "received_at": datetime(2025, 8, 13, 15, 0, tzinfo=timezone.utc),
+        "body_text": """Presidential Actions
+Protecting America's Bank Account Against Fraud, Waste, and Abuse
+Executive Orders
+March 25, 2025
+
+By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered:
+
+Section 1. Purpose. Promoting financial integrity and operational efficiency are critical responsibilities of the Federal Government. The Federal Government processes trillions of dollars annually in disbursements to individuals, businesses, and organizations, and in receipts from taxes, fees, and other payments to finance daily and long-term Government operations.
+
+Section 2. Policy. It is the policy of the United States to defend against financial fraud and improper payments, increase transparency and accountability around the Federal Government's operations and financial condition, increase efficiency, reduce costs, and enhance the security of Federal payments.
+
+Section 3. Modernization Requirements. (a) All agencies shall transition to electronic payment methods for all disbursements to the greatest extent practicable. (b) The Secretary of the Treasury shall develop and implement a comprehensive plan to modernize Federal payment systems. (c) Agencies shall provide support and alternatives for populations that may face challenges with electronic payments.""",
+        "raw_mime_s3_key": None
+    }
+
+def create_test_pmo_response():
+    """Create a test PMO response email."""
+    return {
+        "message_id": "msg-2002@sample",
+        "subject": "Re: EO: Modernize Workforce Data - PMO Review Response",
+        "sender": "pmo@dol.gov",
+        "recipients": ["ops@dol.gov"],
+        "received_at": datetime.now(timezone.utc),
+        "body_text": """Dear Team,
+
+I have reviewed the tasks for EO: Modernize Workforce Data (EO ID: 43394687-ab0f-4fef-8fb2-a48c3697af7a) and provide the following decisions:
+
+APPROVED TASKS:
+#task_approve TASK_ID=1 REMARKS=Clear scope and timeline, good to proceed
+#task_approve TASK_ID=2 REMARKS=Well-defined transition plan
+#task_approve TASK_ID=3 REMARKS=Straightforward elimination process
+#task_approve TASK_ID=4 REMARKS=Comprehensive support framework
+#task_approve TASK_ID=10 REMARKS=Critical security consideration, approved
+#task_approve TASK_ID=11 REMARKS=Standard compliance requirement
+#task_approve TASK_ID=12 REMARKS=Proper reporting timeline
+
+REJECTED TASKS - NEED REVISION:
+#task_reject TASK_ID=5 REMARKS=Exception procedures too vague, need specific criteria and approval workflows
+#task_reject TASK_ID=6 REMARKS=Alternative options not clearly defined, specify what alternatives will be available
+#task_reject TASK_ID=7 REMARKS=Campaign scope too broad, need targeted audience segments and messaging strategy
+#task_reject TASK_ID=8 REMARKS=Coordination approach unclear, need specific agency engagement plan
+#task_reject TASK_ID=9 REMARKS=Unbanked population solution insufficient, need partnership with financial institutions
+
+GLOBAL REMARKS:
+The rejected tasks need more specificity and actionable details. Focus on concrete deliverables, timelines, and stakeholder responsibilities. Ensure all tasks have clear success criteria and measurable outcomes.
+
+Please revise the rejected tasks and resubmit for review.
+
+Best regards,
+PMO Review Team""",
+        "related_eo_id": "43394687-ab0f-4fef-8fb2-a48c3697af7a"
+    }
+
+def test_pmo_workflow():
+    """Test the complete PMO workflow including task rewiring."""
+    
+    print("=== Testing PMO Response Workflow ===")
+    
+    try:
+        # Step 1: Create and store the original EO
+        print("\n1. Creating original EO...")
+        from src.workflow.tasks import store_email
+        
+        eo_payload = create_test_eo_payload()
+        eo_result = store_email(eo_payload)
+        print(f"✅ EO created: {eo_result}")
+        
+        # Step 2: Simulate PMO response
+        print("\n2. Processing PMO response...")
+        from src.workflow.tasks import process_pmo_response
+        
+        pmo_response = create_test_pmo_response()
+        pmo_result = process_pmo_response(pmo_response)
+        print(f"✅ PMO response processed: {pmo_result}")
+        
+        # Step 3: Test task rewiring for rejected tasks
+        print("\n3. Testing task rewiring...")
+        from src.workflow.tasks import handle_rejected_tasks
+        
+        # Get the rejected task IDs from the PMO response
+        rejected_ids = ["5", "6", "7", "8", "9"]  # Based on the PMO response
+        global_remarks = "The rejected tasks need more specificity and actionable details."
+        per_task_remarks = {
+            "5": "Exception procedures too vague, need specific criteria and approval workflows",
+            "6": "Alternative options not clearly defined, specify what alternatives will be available",
+            "7": "Campaign scope too broad, need targeted audience segments and messaging strategy",
+            "8": "Coordination approach unclear, need specific agency engagement plan",
+            "9": "Unbanked population solution insufficient, need partnership with financial institutions"
+        }
+        
+        rewire_result = handle_rejected_tasks(
+            eo_id=eo_result["eo_id"],
+            rejected_ids=rejected_ids,
+            global_remarks=global_remarks,
+            per_task_remarks=per_task_remarks
+        )
+        print(f"✅ Task rewiring result: {rewire_result}")
+        
+    except Exception as e:
+        print(f"❌ Error during workflow testing: {e}")
+        import traceback
+        traceback.print_exc()
+
+def test_parse_pmo_response():
+    """Test the PMO response parsing functionality."""
+    
+    print("\n=== Testing PMO Response Parsing ===")
+    
+    try:
+        from src.workflow.parse_pmo import parse_pmo_email
+        
+        pmo_response = create_test_pmo_response()
+        parsed = parse_pmo_email(pmo_response["body_text"])
+        
+        print(f"✅ Parsed intent: {parsed.get('intent')}")
+        print(f"✅ Approved tasks: {parsed.get('approve_task_ids')}")
+        print(f"✅ Rejected tasks: {parsed.get('reject_task_ids')}")
+        print(f"✅ Global remarks: {parsed.get('remarks')}")
+        print(f"✅ Per-task remarks: {parsed.get('per_task_remarks')}")
+        
+    except Exception as e:
+        print(f"❌ Error during parsing test: {e}")
+
+def test_rewire_tasks_directly():
+    """Test the rewire tasks functionality directly."""
+    
+    print("\n=== Testing Direct Task Rewiring ===")
+    
+    try:
+        from src.app.rewire_tasks import rewire_tasks_with_remarks
+        from src.db.users import build_roles_with_members_text
+        
+        # Create test tasks that match the rejected ones
+        test_tasks = {
+            "tasks": [
+                {
+                    "id": 5,
+                    "title": "Review and Revise Exception Procedures for Non-Electronic Payments",
+                    "description": "Develop procedures for handling cases where electronic payments are not feasible.",
+                    "category_dept": "Director of Compliance",
+                    "assignee": "",
+                    "status": "Pending",
+                    "due_date": "TBD",
+                    "created_at": "2025-08-19T20:00:00Z",
+                    "remarks": "Exception procedures too vague, need specific criteria and approval workflows"
+                },
+                {
+                    "id": 6,
+                    "title": "Provide Alternative Payment Options for Exception Cases",
+                    "description": "Establish alternative payment methods for cases where standard electronic payments cannot be used.",
+                    "category_dept": "Director of Compliance",
+                    "assignee": "",
+                    "status": "Pending",
+                    "due_date": "TBD",
+                    "created_at": "2025-08-19T20:00:00Z",
+                    "remarks": "Alternative options not clearly defined, specify what alternatives will be available"
+                }
+            ]
+        }
+        
+        # Get roles from database
+        roles_text = build_roles_with_members_text()
+        if not roles_text.strip():
+            roles_text = "CFO\n1. Jack Smith\n\nDeputy CFO\n1. Kevin Brown\n\nDirector of Compliance\n1. Dylan Sachetti"
+        
+        # Test rewiring
+        eo_text = create_test_eo_payload()["body_text"]
+        global_remarks = "The rejected tasks need more specificity and actionable details."
+        
+        print("Testing task rewiring with PMO feedback...")
+        rewire_tasks_with_remarks(
+            eo=eo_text,
+            remarks=global_remarks,
+            tasks=test_tasks,
+            roles_text=roles_text
+        )
+        
+    except Exception as e:
+        print(f"❌ Error during direct rewiring test: {e}")
+        import traceback
+        traceback.print_exc()
+
+if __name__ == "__main__":
+    test_parse_pmo_response()
+    test_rewire_tasks_directly()
+    test_pmo_workflow()
+    
+    print("\n=== Summary ===")
+    print("PMO workflow test completed!")
+    print("The system should:")
+    print("1. Parse PMO response with approvals/rejections")
+    print("2. Update task statuses in database")
+    print("3. Trigger rewiring for rejected tasks")
+    print("4. Generate improved task versions based on feedback") 

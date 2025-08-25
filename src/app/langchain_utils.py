@@ -134,6 +134,7 @@ def rewire_tasks_llm(
     eo: str,
     remarks: str,
     tasks: dict,
+    roles_text: str,
     model_name: Optional[str] = None,
 ) -> dict:
     """
@@ -147,6 +148,7 @@ def rewire_tasks_llm(
         "eo": eo,
         "remarks": remarks,
         "tasks": tasks,
+        "roles_text": roles_text,
     })
     # Ensure result is a dict, not AIMessage
     if hasattr(result, "content"):
