@@ -73,3 +73,42 @@ services:
     volumes:
       - .:/app
     working_dir: /app
+
+  export-db:
+    image: postgres:13
+    depends_on:
+      - db
+    command: >
+      sh -c "
+        echo 'Waiting for database to be ready...' &&
+        until pg_isready -h db -U dol_user -d dol_db; do sleep 2; done &&
+        echo 'Exporting database data...' &&
+        pg_dump -h db -U dol_user -d dol_db --data-only --inserts > /workspace/database_seed.sql &&
+        echo 'Database export completed successfully!' &&
+        echo 'File saved as: database_seed.sql'
+      "
+    environment:
+      POSTGRES_PASSWORD: artygenz
+      PGPASSWORD: artygenz
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+
+  import-db:
+    image: postgres:13
+    depends_on:
+      - db
+    command: >
+      sh -c "
+        echo 'Waiting for database to be ready...' &&
+        until pg_isready -h db -U dol_user -d dol_db; do sleep 2; done &&
+        echo 'Importing database seed data...' &&
+        psql -h db -U dol_user -d dol_db < /workspace/database_seed.sql &&
+        echo 'Database import completed successfully!'
+      "
+    environment:
+      POSTGRES_PASSWORD: artygenz
+      PGPASSWORD: artygenz
+    volumes:
+      - .:/workspace
+    working_dir: /workspace

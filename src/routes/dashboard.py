@@ -8,7 +8,8 @@ from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
 from src.models.email_log import EmailLog
 from src.models.daily_update import DailyUpdate
-from src.workflow.dto import DailyUpdateCreate, TaskAssigneeUpdate, EOPMOUpdate
+from src.workflow.dto import DailyUpdateCreate, TaskAssigneeUpdate, EOPMOUpdate, EOPMOAssignmentResponse
+from src.db.eo_pmo_operations import assign_pmos_to_eo, get_pmos_for_eo, remove_pmo_from_eo
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
@@ -818,3 +819,105 @@ def create_daily_update(
             "created_at": daily_update.created_at.isoformat()
         }
     }
+
+# PMO Assignment Endpoints
+@router.post("/cfo/assign-pmos/{eo_id}", status_code=status.HTTP_201_CREATED)
+def assign_pmos_to_executive_order(
+    eo_id: str,
+    pmo_assignment: EOPMOUpdate,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Assign PMOs to an Executive Order - CFO/Admin only"""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied - Admin role required")
+    
+    try:
+        # Assign PMOs to the EO
+        assignments = assign_pmos_to_eo(
+            db=db,
+            eo_id=eo_id,
+            pmo_ids=pmo_assignment.pmo_ids,
+            assigned_by=str(current_user.id),
+            primary_pmo_id=pmo_assignment.primary_pmo_id
+        )
+        
+        return {
+            "success": True,
+            "message": f"Successfully assigned {len(assignments)} PMO(s) to Executive Order",
+            "data": {
+                "eo_id": eo_id,
+                "assignments": [
+                    {
+                        "id": str(assignment.id),
+                        "pmo_id": str(assignment.pmo_id),
+                        "pmo_name": assignment.pmo.name,
+                        "pmo_email": assignment.pmo.email,
+                        "assigned_at": assignment.assigned_at.isoformat(),
+                        "assigned_by": str(assignment.assigned_by) if assignment.assigned_by else None,
+                        "is_primary": assignment.is_primary
+                    }
+                    for assignment in assignments
+                ]
+            }
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to assign PMOs: {str(e)}")
+
+@router.get("/cfo/eo-pmo-assignments/{eo_id}", status_code=status.HTTP_200_OK)
+def get_eo_pmo_assignments(
+    eo_id: str,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Get all PMO assignments for an Executive Order - CFO/Admin only"""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied - Admin role required")
+    
+    assignments = get_pmos_for_eo(db, eo_id)
+    
+    return {
+        "success": True,
+        "message": f"Retrieved {len(assignments)} PMO assignment(s)",
+        "data": {
+            "eo_id": eo_id,
+            "assignments": [
+                {
+                    "id": str(assignment.id),
+                    "pmo_id": str(assignment.pmo_id),
+                    "pmo_name": assignment.pmo.name,
+                    "pmo_email": assignment.pmo.email,
+                    "assigned_at": assignment.assigned_at.isoformat(),
+                    "assigned_by": str(assignment.assigned_by) if assignment.assigned_by else None,
+                    "is_primary": assignment.is_primary
+                }
+                for assignment in assignments
+            ]
+        }
+    }
+
+@router.delete("/cfo/remove-pmo/{eo_id}/{pmo_id}", status_code=status.HTTP_200_OK)
+def remove_pmo_from_eo_endpoint(
+    eo_id: str,
+    pmo_id: str,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Remove a PMO from an Executive Order - CFO/Admin only"""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied - Admin role required")
+    
+    try:
+        success = remove_pmo_from_eo(db, eo_id, pmo_id)
+        
+        if success:
+            return {
+                "success": True,
+                "message": "PMO successfully removed from Executive Order"
+            }
+        else:
+            raise HTTPException(status_code=404, detail="PMO assignment not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to remove PMO: {str(e)}")
