@@ -97,3 +97,14 @@ class TaskAssigneeUpdate(BaseModel):
 
 class EOPMOUpdate(BaseModel):
     pmo_ids: list[str]
+    primary_pmo_id: Optional[str] = None
+
+class EOPMOAssignmentResponse(BaseModel):
+    id: str
+    eo_id: str
+    pmo_id: str
+    pmo_name: str
+    pmo_email: str
+    assigned_at: datetime
+    assigned_by: Optional[str] = None
+    is_primary: bool

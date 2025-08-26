@@ -55,7 +55,11 @@ def create_users_bulk(users: Iterable[dict]) -> List[User]:
 def build_roles_with_members_text() -> str:
     """Build roles-with-members text for LLM assignment from DB users."""
     with SessionLocal() as db:
-        rows = db.execute(select(User.org_role, User.name).where(User.is_active == True)).all()  # noqa: E712
+        # Only include executor users for task assignment
+        rows = db.execute(select(User.org_role, User.name).where(
+            User.is_active == True,  # noqa: E712
+            User.role == "executor"
+        )).all()
     role_to_members: dict[str, list[str]] = {}
     for org_role, name in rows:
         if not org_role or not name:
