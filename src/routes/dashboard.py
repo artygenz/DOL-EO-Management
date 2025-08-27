@@ -8,6 +8,7 @@ from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
 from src.models.email_log import EmailLog
 from src.models.daily_update import DailyUpdate
+from src.models.eo_pmo_assignment import EOPMOAssignment
 from src.workflow.dto import DailyUpdateCreate, TaskAssigneeUpdate, EOPMOUpdate, EOPMOAssignmentResponse
 from src.db.eo_pmo_operations import assign_pmos_to_eo, get_pmos_for_eo, remove_pmo_from_eo
 
@@ -45,8 +46,8 @@ def get_executive_orders(
         # Admins can see all EOs
         pass
     elif current_user.role == "reviewer":
-        # Reviewers can see EOs assigned to their org role
-        query = query.join(Task).filter(Task.assignee_id == current_user.id)
+        # Reviewers should see EOs assigned to them via eo_pmo_assignments
+        query = query.join(EOPMOAssignment).filter(EOPMOAssignment.pmo_id == current_user.id)
     else:
         # Executors can only see their assigned tasks
         query = query.join(Task).filter(Task.assignee_id == current_user.id)
@@ -276,7 +277,16 @@ def get_dashboard_stats(
     task_query = db.query(Task)
     
     # Apply role-based filtering
-    if current_user.role != "admin":
+    if current_user.role == "admin":
+        # Admins can see all EOs and tasks
+        pass
+    elif current_user.role == "reviewer":
+        # Reviewers see EOs assigned to them via eo_pmo_assignments
+        eo_query = eo_query.join(EOPMOAssignment).filter(EOPMOAssignment.pmo_id == current_user.id)
+        # Reviewers can see tasks they've assigned to others
+        task_query = task_query.filter(Task.assignee_id != current_user.id)
+    else:
+        # Executors see EOs where they have assigned tasks
         eo_query = eo_query.join(Task).filter(Task.assignee_id == current_user.id)
         task_query = task_query.filter(Task.assignee_id == current_user.id)
     
@@ -497,17 +507,15 @@ def get_pmo_tasks(
     limit: int = 50,
     offset: int = 0
 ):
-    """Get tasks related to PMO's EOs only"""
+    """Get all tasks for EOs assigned to the current PMO"""
     if current_user.role != "reviewer":
         raise HTTPException(status_code=403, detail="Access denied - PMO role required")
     
     # Get tasks for EOs that this PMO is managing
-    # This is a simplified version - you might need to implement proper PMO-EO assignment logic
-    query = db.query(Task).join(ExecutiveOrder)
-    
-    # For now, we'll get tasks where the PMO's org_role matches the task category
-    # This is a placeholder - implement proper PMO-EO assignment logic
-    query = query.filter(Task.category == current_user.org_role)
+    # Use proper PMO-EO assignment logic via EOPMOAssignment table
+    query = db.query(Task).join(ExecutiveOrder).join(EOPMOAssignment).filter(
+        EOPMOAssignment.pmo_id == current_user.id
+    )
     
     total = query.count()
     tasks = query.offset(offset).limit(limit).all()
@@ -921,3 +929,193 @@ def remove_pmo_from_eo_endpoint(
             raise HTTPException(status_code=404, detail="PMO assignment not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to remove PMO: {str(e)}")
+
+@router.get("/pmo/assigned-eos", status_code=status.HTTP_200_OK)
+def get_pmo_assigned_eos(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+    limit: int = 50,
+    offset: int = 0
+):
+    """Get all Executive Orders assigned to the current PMO"""
+    if current_user.role != "reviewer":
+        raise HTTPException(status_code=403, detail="Access denied - PMO role required")
+    
+    # Get EOs assigned to this PMO
+    query = db.query(ExecutiveOrder).join(EOPMOAssignment).filter(
+        EOPMOAssignment.pmo_id == current_user.id
+    )
+    
+    total = query.count()
+    eos = query.offset(offset).limit(limit).all()
+    
+    return {
+        "success": True,
+        "message": f"Retrieved {len(eos)} Executive Orders assigned to PMO",
+        "data": {
+            "executive_orders": [
+                {
+                    "id": str(eo.id),
+                    "title": eo.title,
+                    "description": eo.description,
+                    "status": eo.status,
+                    "message_id": eo.message_id,
+                    "created_at": eo.created_at.isoformat(),
+                    "updated_at": eo.updated_at.isoformat(),
+                    "task_count": len(eo.tasks) if hasattr(eo, 'tasks') else 0,
+                    "pmo_assignment": {
+                        "assigned_at": eo.pmo_assignments[0].assigned_at.isoformat(),
+                        "is_primary": eo.pmo_assignments[0].is_primary,
+                        "assigned_by": eo.pmo_assignments[0].assigned_by
+                    } if hasattr(eo, 'pmo_assignments') and eo.pmo_assignments else None
+                }
+                for eo in eos
+            ],
+            "pagination": {
+                "total": total,
+                "limit": limit,
+                "offset": offset,
+                "has_more": (offset + limit) < total
+            }
+        }
+    }
+
+@router.get("/pmo/assigned-eos/{eo_id}/tasks", status_code=status.HTTP_200_OK)
+def get_pmo_eo_tasks(
+    eo_id: str,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+    limit: int = 50,
+    offset: int = 0
+):
+    """Get all tasks for a specific EO assigned to the current PMO"""
+    if current_user.role != "reviewer":
+        raise HTTPException(status_code=403, detail="Access denied - PMO role required")
+    
+    # Verify the PMO is assigned to this EO
+    assignment = db.query(EOPMOAssignment).filter(
+        EOPMOAssignment.eo_id == eo_id,
+        EOPMOAssignment.pmo_id == current_user.id
+    ).first()
+    
+    if not assignment:
+        raise HTTPException(status_code=403, detail="Access denied - PMO not assigned to this EO")
+    
+    # Get the EO and its tasks
+    eo = db.query(ExecutiveOrder).filter(ExecutiveOrder.id == eo_id).first()
+    if not eo:
+        raise HTTPException(status_code=404, detail="Executive Order not found")
+    
+    # Get tasks for this EO
+    query = db.query(Task).filter(Task.eo_id == eo_id)
+    total = query.count()
+    tasks = query.offset(offset).limit(limit).all()
+    
+    return {
+        "success": True,
+        "message": f"Retrieved {len(tasks)} tasks for EO {eo.title}",
+        "data": {
+            "executive_order": {
+                "id": str(eo.id),
+                "title": eo.title,
+                "description": eo.description,
+                "status": eo.status,
+                "message_id": eo.message_id,
+                "created_at": eo.created_at.isoformat()
+            },
+            "tasks": [
+                {
+                    "id": str(task.id),
+                    "title": task.title,
+                    "description": task.description,
+                    "status": task.status,
+                    "category": task.category,
+                    "due_date": task.due_date.isoformat() if task.due_date else None,
+                    "remarks": task.remarks,
+                    "assignee": {
+                        "id": str(task.assignee.id),
+                        "name": task.assignee.name,
+                        "email": task.assignee.email,
+                        "org_role": task.assignee.org_role
+                    } if task.assignee else None
+                }
+                for task in tasks
+            ],
+            "pagination": {
+                "total": total,
+                "limit": limit,
+                "offset": offset,
+                "has_more": (offset + limit) < total
+            }
+        }
+    }
+
+@router.get("/pmo/assigned-eos-with-tasks", status_code=status.HTTP_200_OK)
+def get_pmo_assigned_eos_with_tasks(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+    limit: int = 20,
+    offset: int = 0
+):
+    """Get all Executive Orders assigned to the current PMO with their tasks"""
+    if current_user.role != "reviewer":
+        raise HTTPException(status_code=403, detail="Access denied - PMO role required")
+    
+    # Get EOs assigned to this PMO with eager loading of tasks
+    from sqlalchemy.orm import joinedload
+    
+    query = db.query(ExecutiveOrder).join(EOPMOAssignment).filter(
+        EOPMOAssignment.pmo_id == current_user.id
+    ).options(joinedload(ExecutiveOrder.tasks))
+    
+    total = query.count()
+    eos = query.offset(offset).limit(limit).all()
+    
+    return {
+        "success": True,
+        "message": f"Retrieved {len(eos)} Executive Orders with tasks for PMO",
+        "data": {
+            "executive_orders": [
+                {
+                    "id": str(eo.id),
+                    "title": eo.title,
+                    "description": eo.description,
+                    "status": eo.status,
+                    "message_id": eo.message_id,
+                    "created_at": eo.created_at.isoformat(),
+                    "updated_at": eo.updated_at.isoformat(),
+                    "tasks": [
+                        {
+                            "id": str(task.id),
+                            "title": task.title,
+                            "description": task.description,
+                            "status": task.status,
+                            "category": task.category,
+                            "due_date": task.due_date.isoformat() if task.due_date else None,
+                            "remarks": task.remarks,
+                            "assignee": {
+                                "id": str(task.assignee.id),
+                                "name": task.assignee.name,
+                                "email": task.assignee.email,
+                                "org_role": task.assignee.org_role
+                            } if task.assignee else None
+                        }
+                        for task in eo.tasks
+                    ],
+                    "task_count": len(eo.tasks),
+                    "pmo_assignment": {
+                        "assigned_at": eo.pmo_assignments[0].assigned_at.isoformat(),
+                        "is_primary": eo.pmo_assignments[0].is_primary,
+                        "assigned_by": eo.pmo_assignments[0].assigned_by
+                    } if hasattr(eo, 'pmo_assignments') and eo.pmo_assignments else None
+                }
+                for eo in eos
+            ],
+            "pagination": {
+                "total": total,
+                "limit": limit,
+                "offset": offset,
+                "has_more": (offset + limit) < total
+            }
+        }
+    }

@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict LmPlZQYnS6NpVZCKkbofpGObfhDyoHDhrOgq03N4mdek7bBGaVNg7UaYR5dBHlx
+\restrict tAplqhac0BrrBtZHd63lYXYLvVLYqmJVmBmXPTuvXlj1jdoNXrpbRMnMUdGyTFh
 
 -- Dumped from database version 13.22 (Debian 13.22-1.pgdg13+1)
 -- Dumped by pg_dump version 13.22 (Debian 13.22-1.pgdg13+1)
@@ -338,5 +338,5 @@ INSERT INTO public.token_blacklist VALUES ('677b9cc6-52af-444c-95ee-f1b8935984bd
 -- PostgreSQL database dump complete
 --
 
-\unrestrict LmPlZQYnS6NpVZCKkbofpGObfhDyoHDhrOgq03N4mdek7bBGaVNg7UaYR5dBHlx
+\unrestrict tAplqhac0BrrBtZHd63lYXYLvVLYqmJVmBmXPTuvXlj1jdoNXrpbRMnMUdGyTFh
 
