@@ -28,9 +28,9 @@ except ImportError:
 
 # -------------------- 1. Rewire Tasks With Remarks --------------------
 
-def rewire_tasks_with_remarks(eo: str, remarks: str, tasks: dict) -> None:
+def rewire_tasks_with_remarks(eo: str, remarks: str, tasks: dict, roles_text: str) -> dict:
     """
-    Rewrites EO tasks based on PMO remarks, checks for hallucination/conscience, and prints results.
+    Rewrites EO tasks based on PMO remarks, checks for hallucination/conscience, and returns results.
 
     Parameters
     ----------
@@ -40,14 +40,16 @@ def rewire_tasks_with_remarks(eo: str, remarks: str, tasks: dict) -> None:
         PMO's remarks (unstructured, from email body).
     tasks : dict
         Original tasks dict (see example in doc).
+    roles_text : str
+        The roles catalog string for task assignment.
 
-    Prints
-    ------
-    - The final dict with revised tasks and summary.
-    - Which LLM call produced the final output and the conscience score.
+    Returns
+    -------
+    dict
+        The final dict with revised tasks and summary.
     """
     # First LLM call: rewrite tasks and summarize changes
-    first_result = rewire_tasks_llm(eo, remarks, tasks)
+    first_result = rewire_tasks_llm(eo, remarks, tasks, roles_text)
     revised_tasks = first_result.get("tasks", [])
     summary = first_result.get("summary", "")
 
@@ -66,6 +68,7 @@ def rewire_tasks_with_remarks(eo: str, remarks: str, tasks: dict) -> None:
         print("=== Final Output (from first LLM call, conscience score: {}%) ===".format(score))
         print(first_result)
         print("Source: first LLM call, conscience score: {}%".format(score))
+        return first_result
     else:
         print("=== Final Output (from second LLM call, conscience score: {}%) ===".format(score))
         # Use the corrected tasks/summary from the check LLM
@@ -75,6 +78,7 @@ def rewire_tasks_with_remarks(eo: str, remarks: str, tasks: dict) -> None:
         }
         print(output)
         print("Source: second LLM call, conscience score: {}%".format(score))
+        return output
 
 # -------------------- 2. Generate Task Update From Update Email --------------------
 
@@ -275,7 +279,7 @@ THE WHITE HOUSE,
         {
           "id": 1,
           "title": "Update guidance and enhance payment verification systems",
-          "description": "Update guidance and enhance systems to ensure all Treasury-disbursed payments are subject to pre-certification verification, including compliance with Do Not Pay and other validation programs. Per Sec. 3(a).",
+          "description": "Per Sec. 3(a), update guidance and enhance systems to ensure all Treasury-disbursed payments are subject to pre-certification verification, including compliance with Do Not Pay and other validation programs.",
           "category_dept": "Secretary of the Treasury (in consultation with OMB Director)",
           "assignee": "Jordan Kim",
           "status": "Pending",
@@ -305,8 +309,21 @@ THE WHITE HOUSE,
       ]
     }
 
+    # Add some per-task remarks to demonstrate the functionality
+    tasks_dict["tasks"][0]["remarks"] = "Task is too vague, needs more specific deliverables"
+    tasks_dict["tasks"][1]["remarks"] = "Should be assigned to Director of Compliance instead of CFO"
+    tasks_dict["tasks"][2]["remarks"] = "Missing timeline and success criteria"
+
     print("\n--- DEMO: rewire_tasks_with_remarks ---")
-    rewire_tasks_with_remarks(EOstring, remarks, tasks_dict)
+    # Use database roles instead of hardcoded ones
+    from src.db.users import build_roles_with_members_text
+    roles_text = build_roles_with_members_text()
+    if not roles_text.strip():
+        # Fallback for demo if no users in DB
+        roles_text = "CFO\n1. Jack Smith\n\nDeputy CFO\n1. Kevin Brown\n\nDirector of Compliance\n1. Dylan Sachetti"
+    
+    improved_tasks = rewire_tasks_with_remarks(EOstring, remarks, tasks_dict, roles_text)
+    print("Improved tasks:", improved_tasks)
 
     # 2. Demo for generate_task_update_from_update_email
     employee_role = "Secretary of the Treasury (in consultation with OMB Director)"

@@ -118,15 +118,38 @@ def extract_tasks(
     prompt = _build_prompt(EO_EXTRACTION_SYSTEM_PROMPT, EO_EXTRACTION_HUMAN_TEMPLATE)
     structured_llm = _build_llm(model_name=model_name).with_structured_output(TasksModel)
     chain = prompt | structured_llm
-    result: TasksModel = chain.invoke({
-        "eo_text": eo_text,
-        "roles_text": roles_text,
-        "eo_date": eo_date_final or "",
-        "now_utc": now_utc_final,
-    })
-    for t in result.tasks:
-        t.assignee = ""
-    return result
+    
+    # Log the input parameters for debugging
+    print(f"[DEBUG] EO Date: {eo_date_final}")
+    print(f"[DEBUG] Now UTC: {now_utc_final}")
+    print(f"[DEBUG] EO Text length: {len(eo_text)} characters")
+    print(f"[DEBUG] Roles Text length: {len(roles_text)} characters")
+    
+    try:
+        result: TasksModel = chain.invoke({
+            "eo_text": eo_text,
+            "roles_text": roles_text,
+            "eo_date": eo_date_final or "",
+            "now_utc": now_utc_final,
+        })
+        
+        # Log the raw result
+        print(f"[DEBUG] Raw LLM Result: {result}")
+        print(f"[DEBUG] Raw LLM Result Type: {type(result)}")
+        print(f"[DEBUG] Raw LLM Result Dict: {result.model_dump() if hasattr(result, 'model_dump') else result}")
+        print(f"[DEBUG] Number of tasks extracted: {len(result.tasks) if hasattr(result, 'tasks') else 'No tasks attribute'}")
+        
+        for t in result.tasks:
+            t.assignee = ""
+        return result
+        
+    except Exception as e:
+        print(f"[DEBUG] LLM Extraction Error: {e}")
+        print(f"[DEBUG] Error Type: {type(e)}")
+        import traceback
+        print(f"[DEBUG] Full Traceback: {traceback.format_exc()}")
+        # Return empty result on error
+        return TasksModel(tasks=[])
 
 # ----------------------------- New Utilities for Task Rewiring & Summaries -----------------------------
 
@@ -134,6 +157,7 @@ def rewire_tasks_llm(
     eo: str,
     remarks: str,
     tasks: dict,
+    roles_text: str,
     model_name: Optional[str] = None,
 ) -> dict:
     """
@@ -147,6 +171,7 @@ def rewire_tasks_llm(
         "eo": eo,
         "remarks": remarks,
         "tasks": tasks,
+        "roles_text": roles_text,
     })
     # Ensure result is a dict, not AIMessage
     if hasattr(result, "content"):

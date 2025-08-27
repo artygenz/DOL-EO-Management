@@ -5,7 +5,7 @@ from sqlalchemy import String, Text, DateTime, Enum, Column, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.base import Base
 
-EO_STATUS = ("processed", "error", "pending")
+EO_STATUS = ("processed", "error", "pending", "received")
 
 class ExecutiveOrder(Base):
     __tablename__ = "executive_orders"
@@ -25,3 +25,4 @@ class ExecutiveOrder(Base):
 
     tasks = relationship("Task", back_populates="executive_order", cascade="all,delete-orphan")
     email_logs = relationship("EmailLog", back_populates="related_eo", cascade="all,delete-orphan")
+    pmo_assignments = relationship("EOPMOAssignment", back_populates="executive_order", cascade="all,delete-orphan")

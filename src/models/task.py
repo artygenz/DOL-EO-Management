@@ -5,7 +5,7 @@ from sqlalchemy import String, Text, Date, DateTime, Enum, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.base import Base
 
-TASK_STATUS = ("pending", "in_progress", "completed", "Pending PMO approval")
+TASK_STATUS = ("pending", "in_progress", "completed", "Pending PMO approval", "approved", "rejected")
 TASK_PRIORITY = ("low", "medium", "high")
 
 class Task(Base):
@@ -29,3 +29,4 @@ class Task(Base):
     assignee = relationship("User", back_populates="assigned_tasks")
     logs = relationship("TaskLog", back_populates="task", cascade="all,delete-orphan")
     confirmations = relationship("TaskConfirmation", back_populates="task", cascade="all,delete-orphan")
+    daily_updates = relationship("DailyUpdate", back_populates="task")

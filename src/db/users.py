@@ -11,8 +11,17 @@ SessionLocal = get_session_maker(get_engine())
 
 
 def create_user(name: str, email: str, role: str, org_role: str | None = None) -> User:
+    from src.core.auth import hash_password
+    
     with SessionLocal() as db:
-        user = User(name=name, email=email, role=role, org_role=org_role, is_active=True)
+        user = User(
+            name=name, 
+            email=email, 
+            role=role, 
+            org_role=org_role, 
+            password_hash=hash_password("Lumen@2025"),  # Default password
+            is_active=True
+        )
         db.add(user)
         db.commit(); db.refresh(user)
         return user
@@ -22,6 +31,8 @@ def create_users_bulk(users: Iterable[dict]) -> List[User]:
     """
     users: iterable of dicts with keys: name, email, role, org_role(optional)
     """
+    from src.core.auth import hash_password
+    
     created: List[User] = []
     with SessionLocal() as db:
         for item in users:
@@ -30,6 +41,7 @@ def create_users_bulk(users: Iterable[dict]) -> List[User]:
                 email=item.get("email"),
                 role=item.get("role", "executor"),
                 org_role=item.get("org_role"),
+                password_hash=hash_password("Lumen@2025"),  # Default password
                 is_active=True,
             )
             db.add(user)
@@ -43,7 +55,11 @@ def create_users_bulk(users: Iterable[dict]) -> List[User]:
 def build_roles_with_members_text() -> str:
     """Build roles-with-members text for LLM assignment from DB users."""
     with SessionLocal() as db:
-        rows = db.execute(select(User.org_role, User.name).where(User.is_active == True)).all()  # noqa: E712
+        # Only include executor users for task assignment
+        rows = db.execute(select(User.org_role, User.name).where(
+            User.is_active == True,  # noqa: E712
+            User.role == "executor"
+        )).all()
     role_to_members: dict[str, list[str]] = {}
     for org_role, name in rows:
         if not org_role or not name:

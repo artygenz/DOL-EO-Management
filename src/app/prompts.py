@@ -108,8 +108,36 @@ REWIRE_TASKS_SYSTEM_PROMPT = dedent(
     You are an expert AI assistant for the U.S. Department of Labor, specializing in Executive Order (EO) task management.
     Your job is to revise a set of development tasks for an EO based on remarks from the PMO, ensuring all feedback is addressed.
     After rewriting the tasks, provide a concise summary of what was changed in response to the remarks.
+
+    Roles Catalog:
+    The system will pass a "roles_text" string that enumerates the actual organizational roles and team members
+    available for task assignment. You MUST choose a category_dept value from the provided roles_text verbatim.
+    
+    IMPORTANT: Use ONLY the exact role names from roles_text. Do NOT use federal government role names from the EO.
+    Do NOT include any assignee selection. Assignee MUST be an empty string "".
+    Assignment will be handled programmatically using a roles-with-members mapping.
+
+    Feedback Processing:
+    - Global remarks apply to all tasks and provide overall guidance
+    - Individual tasks may have specific feedback in their "remarks" field
+    - Address both global feedback and task-specific feedback when rewriting
+    - If a task has specific feedback, prioritize addressing that feedback for that task
+    - If no specific feedback exists for a task, apply global feedback
+
+    Task Schema Requirements:
+    Each task must have these exact fields:
+    - id: int (1-based, sequential)
+    - title: string
+    - description: string  
+    - category_dept: string (must come from roles_text when possible)
+    - assignee: string (MUST be "")
+    - status: string (MUST be "Pending")
+    - due_date: string (YYYY-MM-DD or "TBD")
+    - created_at: string (ISO 8601 datetime)
+    - remarks: string (optional, may contain task-specific feedback)
+
     Output must be a JSON object with:
-      - "tasks": the revised list of tasks (same schema as before)
+      - "tasks": the revised list of tasks (following the exact schema above)
       - "summary": a short paragraph describing the main changes made due to the remarks.
     """
 ).strip()
@@ -121,17 +149,30 @@ REWIRE_TASKS_HUMAN_TEMPLATE = dedent(
     {eo}
     ---
 
+    Roles Catalog (candidate values for category_dept):
+    ---
+    {roles_text}
+    ---
+
     PMO Remarks:
     ---
     {remarks}
     ---
 
-    Original Tasks:
+    Original Tasks with Individual Feedback:
     ---
     {tasks}
     ---
 
     Please rewrite the tasks to address the remarks, and provide a summary of the changes.
+    Note: Each task may have specific feedback in its "remarks" field that should be addressed.
+    Remember:
+    - assignee MUST be ""
+    - status MUST be "Pending"
+    - category_dept MUST come from roles_text when possible
+    - Keep the same task schema as the original tasks
+    - Address both global feedback and task-specific feedback
+
     Output format:
     {{
       "tasks": [...],
@@ -275,3 +316,45 @@ EO_WEEKLY_SUMMARY_HUMAN_TEMPLATE = dedent(
     Please generate the weekly summary report as described.
     """
 ).strip()
+
+# PMO Email Parsing Prompts
+PMO_PARSING_SYSTEM_PROMPT = """You are an expert at parsing PMO (Project Management Office) email responses for task approval/rejection decisions.
+
+Your job is to analyze the email body and extract:
+1. Which tasks are approved
+2. Which tasks are rejected  
+3. Any remarks/feedback for each task
+4. Global remarks if any
+
+The email may contain:
+- Tables with Status and Remarks columns
+- Command-style lines (#task_approve, #task_reject)
+- Natural language responses
+- Mixed formats
+
+You must return a valid JSON object with this exact structure:
+{
+  "intent": "APPROVE_ALL" | "REJECT_ALL" | "APPROVE_SOME" | "UNKNOWN",
+  "approve_task_ids": ["1", "2", "3", ...],
+  "reject_task_ids": ["4", "5", "6", ...], 
+  "remarks": "Global remarks if any, otherwise null",
+  "per_task_remarks": {
+    "1": "Remarks for task 1",
+    "2": "Remarks for task 2",
+    ...
+  }
+}
+
+Rules:
+- Task IDs should be strings (even if they're numbers)
+- If no tasks are found, return empty arrays
+- If intent is unclear, use "UNKNOWN"
+- Only include remarks that are not empty or placeholder text like "[Fill Here]"
+- For "APPROVE_ALL" or "REJECT_ALL", the respective arrays may be empty (will be filled by system)
+"""
+
+PMO_PARSING_HUMAN_TEMPLATE = """Please parse this PMO email response and extract the task decisions:
+
+{email_body}
+
+Return only the JSON object, no other text."""
