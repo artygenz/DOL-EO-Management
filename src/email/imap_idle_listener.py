@@ -318,7 +318,8 @@ class IMAPIDLEListener:
             
             # Extract key header fields for easy access
             subject = headers.get('Subject', '')           # Email subject line
-            sender = headers.get('From', '')               # Sender email address
+            sender_raw = headers.get('From', '')           # Raw sender field (may contain display name)
+            sender = self._extract_email_from_sender(sender_raw)  # Extract just the email address
             to_recipients = headers.get('To', '')          # Primary recipients
             cc_recipients = headers.get('Cc', '')          # Carbon copy recipients
             bcc_recipients = headers.get('Bcc', '')        # Blind carbon copy recipients
@@ -437,6 +438,59 @@ class IMAPIDLEListener:
             logger.error(f"Error decoding header '{header}': {e}")
             return str(header)
     
+    def _extract_email_from_sender(self, sender_raw: str) -> str:
+        """
+        Extract just the email address from a sender field that may contain a display name.
+        
+        This method handles various sender formats:
+        - "jack.smith@lumenlighthouse.ai" (just email)
+        - "Jack Smith <jack.smith@lumenlighthouse.ai>" (display name + email)
+        - "Jack Smith" <jack.smith@lumenlighthouse.ai> (quoted display name + email)
+        
+        Args:
+            sender_raw (str): The raw sender field from email headers
+            
+        Returns:
+            str: Just the email address, or the original string if no email found
+            
+        Examples:
+            - "jack.smith@lumenlighthouse.ai" -> "jack.smith@lumenlighthouse.ai"
+            - "Jack Smith <jack.smith@lumenlighthouse.ai>" -> "jack.smith@lumenlighthouse.ai"
+            - "Jack Smith" <jack.smith@lumenlighthouse.ai> -> "jack.smith@lumenlighthouse.ai"
+        """
+        if not sender_raw:
+            return ""
+        
+        try:
+            # Import email parsing utilities
+            from email.utils import parseaddr
+            
+            # Use email.utils.parseaddr to extract email from various formats
+            display_name, email_address = parseaddr(sender_raw)
+            
+            # If parseaddr found an email address, return it
+            if email_address:
+                logger.debug(f"Extracted email '{email_address}' from sender '{sender_raw}'")
+                return email_address
+            
+            # If no email found by parseaddr, try regex as fallback
+            import re
+            email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+            email_match = re.search(email_pattern, sender_raw)
+            
+            if email_match:
+                email_address = email_match.group(0)
+                logger.debug(f"Extracted email '{email_address}' from sender '{sender_raw}' using regex")
+                return email_address
+            
+            # If no email found, return the original string
+            logger.warning(f"No email address found in sender: '{sender_raw}'")
+            return sender_raw
+            
+        except Exception as e:
+            logger.error(f"Error extracting email from sender '{sender_raw}': {e}")
+            return sender_raw
+    
     def _extract_all_headers(self, email_message) -> Dict[str, str]:
         """
         Extract and decode all email headers from the email message.
@@ -473,7 +527,7 @@ class IMAPIDLEListener:
         ]
         
         # Extract and decode priority headers
-        for header_name in header_names:
+        for header_name in header_names:    
             value = email_message.get(header_name, '')
             if value:
                 headers[header_name] = self._decode_header(value)
