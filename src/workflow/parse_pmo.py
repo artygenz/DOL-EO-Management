@@ -299,10 +299,32 @@ def parse_pmo_command_format(body_text: str) -> Dict:
 
 
 def extract_eo_id_from_subject(subject: str) -> str | None:
-    """Extract EO UUID from subject line like [EO:<uuid>]."""
+    """
+    Extract EO UUID from subject line with various formats:
+    - [EO:<uuid>]
+    - [EO ID: <uuid>]
+    - [EO ID:<uuid>]
+    - EO ID: <uuid>
+    - EO:<uuid>
+    - Any UUID pattern in the subject
+    """
     if not subject:
         return None
+    
     UUID_RE = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-    SUBJECT_EO_ID = re.compile(r"\[EO:(?P<eo_id>" + UUID_RE + r")\]", re.IGNORECASE)
-    match = SUBJECT_EO_ID.search(subject)
-    return match.group("eo_id") if match else None 
+    
+    # Try various patterns in order of specificity
+    patterns = [
+        r"\[EO\s+ID:\s*(?P<eo_id>" + UUID_RE + r")\]",  # [EO ID: <uuid>]
+        r"\[EO:\s*(?P<eo_id>" + UUID_RE + r")\]",        # [EO: <uuid>]
+        r"EO\s+ID:\s*(?P<eo_id>" + UUID_RE + r")",       # EO ID: <uuid>
+        r"EO:\s*(?P<eo_id>" + UUID_RE + r")",            # EO: <uuid>
+        r"(?P<eo_id>" + UUID_RE + r")",                  # Any UUID in subject
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, subject, re.IGNORECASE)
+        if match:
+            return match.group("eo_id")
+    
+    return None 

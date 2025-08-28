@@ -1120,6 +1120,8 @@ class IMAPIDLEListener:
                                 # Check for EXISTS notification (new message received)
                                 if 'EXISTS' in response_str:
                                     logger.info("New email notification received!")
+                                    # Don't return immediately, continue reading to handle any additional notifications
+                                    # The EXISTS notification will be processed in the main loop
                                     return True
                                 
                                 # Check for EXPUNGE notification (message deleted)

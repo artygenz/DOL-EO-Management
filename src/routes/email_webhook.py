@@ -238,15 +238,19 @@ async def detect_email_intent(payload: EmailWebhookPayload, db: Session = None) 
             except Exception as e:
                 logger.error(f"Error checking PMO email from env: {e}")
         
-        if is_pmo_email and ("re:" in subject or "reply:" in subject):
+        # Check for PMO Response patterns: reply, forward, or PMO-related keywords
+        pmo_patterns = ["re:", "reply:", "fw:", "forward:", "pmo review", "pmo response"]
+        has_pmo_pattern = any(pattern in subject for pattern in pmo_patterns)
+        
+        if is_pmo_email and has_pmo_pattern:
             result.intent = EmailIntent.PMO_RESPONSE
             result.confidence = 0.90
             result.extracted_data = {
                 "detection_method": "role_based",
                 "sender_role": sender_role,
                 "sender_email": sender,
-                "subject_patterns": ["re:", "reply:"],
-                "analysis": "PMO/Reviewer role detected with reply pattern in subject"
+                "subject_patterns": [pattern for pattern in pmo_patterns if pattern in subject],
+                "analysis": "PMO/Reviewer role detected with PMO-related patterns in subject"
             }
             return result
         
