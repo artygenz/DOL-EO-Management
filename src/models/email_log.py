@@ -1,4 +1,9 @@
-# app/models/email_log.py
+"""
+Email Log Model
+
+This model stores received emails from the IMAP IDLE listener.
+"""
+
 import uuid
 import datetime as dt
 from sqlalchemy import String, Text, Boolean, DateTime, Enum, ForeignKey, func
