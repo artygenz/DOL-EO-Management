@@ -12,7 +12,7 @@ class PMOReviewTemplate(BaseEmailTemplate):
     @staticmethod
     def build_pmo_review(eo, rows: List[Dict]) -> BuiltEmail:
         """Build PMO review email with tasks table."""
-        subject = f"PMO Review Required: {PMOReviewTemplate._get_eo_property(eo, 'title') or 'Executive Order'}"
+        subject = f"PMO Review Required: {PMOReviewTemplate._get_eo_property(eo, 'title') or 'Executive Order'} [EO ID: {PMOReviewTemplate._get_eo_property(eo, 'id')}]"
         
         # TEXT VERSION
         lines = [

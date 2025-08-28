@@ -124,8 +124,9 @@ def send_pmo_review_email(self, eo_id: str, task_list: list):
     if not eo:
         raise ValueError(f"ExecutiveOrder not found for id={eo_id}")
     
-     # Resolve PMO recipient: DB role → env fallback, hardcoded for now
-    pmo_email = "abbuabhinav.1502@gmail.com"         ### repo.get_user_email_by_role("PMO") , once we have user data
+     # Resolve PMO recipient: DB role → env fallback
+    import os
+    pmo_email = os.getenv("PMO_EMAIL_ADDRESS", "kevin.brown@lumenlighthouse.ai")  # fallback for backward compatibility
 
    
 
@@ -150,7 +151,7 @@ def send_pmo_review_email(self, eo_id: str, task_list: list):
     svc = EmailService()
     attachments = [Attachment(fn, ct, data) for (fn, ct, data) in built.attachments]
 
-    message_id = svc.send(
+    message_id = svc.send_and_save(
         to=[pmo_email],
         subject=built.subject,
         body_text=built.body_text,
@@ -364,7 +365,7 @@ def notify_assignees(eo_id: str | None):
                 svc = EmailService()
                 attachments = [Attachment(fn, ct, data) for (fn, ct, data) in built.attachments]
                 
-                message_id = svc.send(
+                message_id = svc.send_and_save(
                     to=[assignee.email],
                     subject=built.subject,
                     body_text=built.body_text,
@@ -571,7 +572,8 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
         print(f"[DEBUG] First task dict: {task_list[0] if task_list else 'None'}")
         
         # Resolve PMO recipient
-        pmo_email = "abbuabhinav.1502@gmail.com"  # TODO: repo.get_user_email_by_role("PMO")
+        import os
+        pmo_email = os.getenv("PMO_EMAIL_ADDRESS", "kevin.brown@lumenlighthouse.ai")  # fallback for backward compatibility
         print(f"[DEBUG] PMO email: {pmo_email}")
         
         # Convert EO to simple dict to avoid circular reference issues
@@ -633,7 +635,7 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
         
         print(f"[DEBUG] Sending email...")
         try:
-            message_id = svc.send(
+            message_id = svc.send_and_save(
                 to=[pmo_email],
                 subject=built.subject,
                 body_text=built.body_text,

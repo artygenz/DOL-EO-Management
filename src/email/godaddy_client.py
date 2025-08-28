@@ -4,12 +4,16 @@ import smtplib
 import ssl
 import os
 from typing import List, Optional
+# Use absolute imports to avoid conflict with local email package
 from email.message import EmailMessage
 from email.parser import BytesParser
 from email.policy import default
 from email.header import decode_header
-from email.utils import parseaddr
 import base64
+
+# Import parseaddr function directly to avoid module name conflict
+import email.utils
+parseaddr = email.utils.parseaddr
 
 from .client import EmailClient
 
@@ -18,7 +22,7 @@ class GoDaddyEmailClient(EmailClient):
     def __init__(self):
         self.imap_host = os.getenv("EMAIL_HOST", "imap.secureserver.net")
         self.imap_port = int(os.getenv("EMAIL_PORT", 993))
-        self.smtp_host = os.getenv("SMTP_HOST", "smtpout.secureserver.net")
+        self.smtp_host = os.getenv("SMTP_HOST", "i")
         self.smtp_port = int(os.getenv("SMTP_PORT", 465))
         self.username = os.getenv("EMAIL_USER")
         self.password = os.getenv("EMAIL_PASS")
@@ -31,10 +35,24 @@ class GoDaddyEmailClient(EmailClient):
         self.imap = imaplib.IMAP4_SSL(self.imap_host, self.imap_port)
         self.imap.login(self.username, self.password)
 
-        # Connect to SMTP
-        context = ssl.create_default_context()
-        self.smtp = smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, context=context)
-        self.smtp.login(self.username, self.password)
+        # Connect to SMTP with GoDaddy-specific handling
+        try:
+            context = ssl.create_default_context()
+            # Use SMTP_SSL for GoDaddy with port 465
+            self.smtp = smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, context=context, timeout=30)
+            # GoDaddy servers sometimes send multi-line responses, handle them properly
+            self.smtp.ehlo()
+            self.smtp.login(self.username, self.password)
+        except Exception as e:
+            # If SSL connection fails, try regular SMTP with STARTTLS
+            try:
+                self.smtp = smtplib.SMTP(self.smtp_host, self.smtp_port, timeout=30)
+                self.smtp.ehlo()
+                self.smtp.starttls(context=context)
+                self.smtp.ehlo()
+                self.smtp.login(self.username, self.password)
+            except Exception as e2:
+                raise Exception(f"SMTP connection failed: {e2}")
 
     def list_inbox(self) -> List[dict]:
         """List all emails (metadata only: from, subject, date, UID)"""
@@ -96,23 +114,80 @@ class GoDaddyEmailClient(EmailClient):
                     pdf_files.append(filepath)
         return pdf_files
 
-    def send_email(self, to: str, subject: str, body: str, attachments: Optional[List[str]] = None) -> None:
-        """Send an email, optionally with attachments."""
-        msg = EmailMessage()
-        msg["From"] = self.username
-        msg["To"] = to
-        msg["Subject"] = subject
-        msg.set_content(body)
-        if attachments:
-            for path in attachments:
-                with open(path, "rb") as f:
-                    content = f.read()
-                    filename = os.path.basename(path)
-                    maintype, subtype = "application", "octet-stream"
-                    if filename.endswith(".pdf"):
-                        maintype, subtype = "application", "pdf"
-                    msg.add_attachment(content, maintype=maintype, subtype=subtype, filename=filename)
-        self.smtp.send_message(msg)
+    def send_email(
+        self, 
+        to: str, 
+        subject: str, 
+        body_text: str, 
+        body_html: Optional[str] = None,
+        attachments: Optional[List[dict]] = None
+    ) -> None:
+        """
+        Send an email with support for HTML content and attachments.
+        
+        Parameters
+        ----------
+        to : str
+            Recipient email address
+        subject : str
+            Email subject line
+        body_text : str
+            Plain text email body
+        body_html : Optional[str]
+            HTML email body (optional)
+        attachments : Optional[List[dict]]
+            List of attachment dictionaries with keys:
+            - filename: str
+            - content_type: str  
+            - data: bytes
+        """
+        # Create a new SMTP connection for each email to avoid connection issues
+        try:
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, context=context, timeout=30) as smtp:
+                # Handle GoDaddy's multi-line response properly
+                smtp.ehlo()
+                smtp.login(self.username, self.password)
+                
+                msg = EmailMessage()
+                msg["From"] = self.username
+                msg["To"] = to
+                msg["Subject"] = subject
+                
+                # Set the email content
+                if body_html:
+                    # If HTML is provided, create a multipart message
+                    msg.set_content(body_text)
+                    msg.add_alternative(body_html, subtype='html')
+                else:
+                    # Plain text only
+                    msg.set_content(body_text)
+                
+                # Add attachments if provided
+                if attachments:
+                    for attachment in attachments:
+                        filename = attachment.get('filename', 'attachment')
+                        content_type = attachment.get('content_type', 'application/octet-stream')
+                        data = attachment.get('data', b'')
+                        
+                        # Parse content type
+                        if '/' in content_type:
+                            maintype, subtype = content_type.split('/', 1)
+                        else:
+                            maintype, subtype = 'application', 'octet-stream'
+                        
+                        msg.add_attachment(
+                            data, 
+                            maintype=maintype, 
+                            subtype=subtype, 
+                            filename=filename
+                        )
+                
+                # Send the email
+                smtp.send_message(msg)
+                
+        except Exception as e:
+            raise Exception(f"Failed to send email: {e}")
 
     def send_templated_response(self, to: str, template: str, **kwargs) -> None:
         """Send an email from a text template (e.g. Jinja-style formatting)."""
