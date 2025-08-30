@@ -29,10 +29,20 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error(`API Error [${error.config?.url}]:`, error.response?.data || error.message);
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+    const status = error.response?.status;
+    const url = error.config?.url || '';
+    console.error(`API Error [${url}]:`, error.response?.data || error.message);
+    
+    // ⛔ Don't hard-redirect on 401 from the login (or me) endpoints.
+    const isAuthEndpoint = url.includes('/auth/login') || url.includes('/auth/me');
+    
+    if (status === 401) {
+      if (!isAuthEndpoint) {
+        localStorage.removeItem('token');
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
+      }
     }
     return Promise.reject(error);
   }

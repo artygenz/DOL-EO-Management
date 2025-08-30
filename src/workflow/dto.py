@@ -79,6 +79,16 @@ class DailyUpdateCreate(BaseModel):
     risks: Optional[dict] = None
     next_actions: Optional[dict] = None
 
+class TaskUpdateCreate(BaseModel):
+    """Improved DTO for TaskUpdate that matches the model structure"""
+    task_id: str
+    notes: Optional[str] = None
+    progress_pct: Optional[int] = Field(None, ge=0, le=100)
+    spent_hours: Optional[float] = Field(None, ge=0)
+    status: Optional[str] = Field(None, pattern="^(NotStarted|InProgress|Blocked|Completed)$")
+    blockers: Optional[list[str]] = None
+    risks: Optional[list[str]] = None
+
 class DailyUpdateResponse(BaseModel):
     id: str
     task_id: str

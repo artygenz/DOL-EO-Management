@@ -7,7 +7,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ReviewerDashboard from './pages/ReviewerDashboard';
 import ExecutorDashboard from './pages/ExecutorDashboard';
 import EOsPage from './pages/EOsPage';
-import AllTasksPage from './pages/AllTasksPage';
+import TasksPage from './pages/TasksPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import RoleBasedRedirect from './components/auth/RoleBasedRedirect';
 import { useAuth } from './hooks/useAuth';
@@ -80,7 +80,7 @@ function App() {
           element={
             <ProtectedRoute>
               <AppShell>
-                <AllTasksPage />
+                <TasksPage />
               </AppShell>
             </ProtectedRoute>
           } 
@@ -91,7 +91,7 @@ function App() {
           element={
             <ProtectedRoute>
               <AppShell>
-                <AllTasksPage />
+                <TasksPage />
               </AppShell>
             </ProtectedRoute>
           } 

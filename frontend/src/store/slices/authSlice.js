@@ -1,51 +1,50 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../services/api';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../services/api";
 
 export const login = createAsyncThunk(
-  'auth/login',
-  async (credentials, { rejectWithValue }) => {
+  "auth/login",
+  async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await api.post('/auth/login', credentials);
-      localStorage.setItem('token', response.data.access_token);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Login failed');
+      const res = await api.post("/auth/login", { email, password });
+      // FastAPI returns { access_token, user }
+      // persist token immediately
+      localStorage.setItem("token", res.data.access_token);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.detail || "Login failed"
+      );
     }
   }
 );
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (_, { rejectWithValue }) => {
-    try {
-      await api.post('/auth/logout');
-      localStorage.removeItem('token');
-      return null;
-    } catch (error) {
-      localStorage.removeItem('token');
-      return rejectWithValue(error.response?.data || 'Logout failed');
-    }
+export const logout = createAsyncThunk("auth/logout", async () => {
+  try {
+    await api.post("/auth/logout");
+  } catch {
+    // ignore API failure, always clear client
   }
-);
+  localStorage.removeItem("token");
+  return null;
+});
 
 export const getCurrentUser = createAsyncThunk(
-  'auth/getCurrentUser',
+  "auth/getCurrentUser",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/auth/me');
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Failed to get user');
+      const res = await api.get("/auth/me");
+      // your backend returns { data: {...} }
+      return res.data;
+    } catch (err) {
+      return rejectWithValue("Failed to get user");
     }
   }
 );
 
-// Helper function to safely get token from localStorage
 const getStoredToken = () => {
   try {
-    return localStorage.getItem('token');
-  } catch (error) {
-    console.warn('Could not access localStorage:', error);
+    return localStorage.getItem("token");
+  } catch {
     return null;
   }
 };
@@ -55,16 +54,13 @@ const initialState = {
   token: getStoredToken(),
   isAuthenticated: !!getStoredToken(),
   loading: false,
-  error: null,
+  // ❌ remove error from redux — keep it local in LoginPage
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    clearError: (state) => {
-      state.error = null;
-    },
     setToken: (state, action) => {
       state.token = action.payload;
       state.isAuthenticated = !!action.payload;
@@ -74,46 +70,39 @@ const authSlice = createSlice({
     builder
       .addCase(login.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user; // Access the user property from the API response
+        state.user = action.payload.user;
         state.token = action.payload.access_token;
         state.isAuthenticated = true;
-        state.error = null;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state) => {
         state.loading = false;
-        state.error = action.payload;
+        // do not store error here
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
         state.loading = false;
-        state.error = null;
       })
       .addCase(getCurrentUser.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
-        console.log('getCurrentUser fulfilled:', action.payload);
-        state.user = action.payload.data; // Keep this as data since /auth/me returns {data: {...}}
+        // backend sends { data: {...} }
+        state.user = action.payload.data || action.payload.user;
         state.isAuthenticated = true;
         state.loading = false;
-        state.error = null;
-        console.log('Auth state updated:', { user: state.user, isAuthenticated: state.isAuthenticated });
       })
-      .addCase(getCurrentUser.rejected, (state, action) => {
+      .addCase(getCurrentUser.rejected, (state) => {
         state.user = null;
         state.isAuthenticated = false;
         state.loading = false;
-        state.error = action.payload;
       });
   },
 });
 
-export const { clearError, setToken } = authSlice.actions;
+export const { setToken } = authSlice.actions;
 export default authSlice.reducer;

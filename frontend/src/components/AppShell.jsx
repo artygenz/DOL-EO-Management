@@ -30,11 +30,11 @@ export default function AppShell({ children }) {
             U.S. DoL — AI Task Management
           </Typography>
 
-          {/* Hide EO button for executors */}
-          {user?.role !== "executor" && (
-            <Button component={RouterLink} to="/eos" color={isActive("/eo") || pathname === "/eos" ? "primary" : "inherit"}>EOs</Button>
-          )}
+          {/* Navigation for all users */}
+          <Button component={RouterLink} to="/eos" color={isActive("/eo") || pathname === "/eos" ? "primary" : "inherit"}>EOs</Button>
+          <Button component={RouterLink} to="/tasks" color={pathname === "/tasks" ? "primary" : "inherit"}>Tasks</Button>
 
+          {/* Role-specific navigation */}
           {user?.role === "executor" && (
             <>
               <Button component={RouterLink} to="/dashboard/executor" color={isActive("/dashboard/executor") ? "primary" : "inherit"}>Dashboard</Button>
@@ -45,7 +45,6 @@ export default function AppShell({ children }) {
           {user?.role === "admin" && (
             <>
               <Button component={RouterLink} to="/dashboard/admin" color={isActive("/dashboard/admin") ? "primary" : "inherit"}>Admin Console</Button>
-              <Button component={RouterLink} to="/tasks" color={pathname === "/tasks" ? "primary" : "inherit"}>Tasks</Button>
             </>
           )}
 

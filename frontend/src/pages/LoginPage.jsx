@@ -1,29 +1,63 @@
 import React, { useState } from "react";
-import { Card, CardContent, Typography, Button, Stack, TextField, Alert } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Stack,
+  TextField,
+  Snackbar,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { login } from "../store/slices/authSlice";
-import LoadingSpinner from "../components/common/LoadingSpinner";
+import api from "../services/api";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(login({ email, password }));
-    if (login.fulfilled.match(result)) {
-      // Navigate to dashboard, which will redirect to appropriate role-based dashboard
+    setLoading(true);
+    setError("");
+    setShowToast(false);
+
+    try {
+      const response = await api.post("/auth/login", { email, password });
+      
+      // Store token
+      localStorage.setItem("token", response.data.access_token);
+      
+      // Navigate to dashboard
       navigate("/dashboard");
+      
+    } catch (err) {
+      console.log("Login error:", err);
+      
+      // Get error message
+      let errorMessage = "Invalid email or password";
+      if (err.response?.data?.detail) {
+        errorMessage = err.response.data.detail;
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      console.log("Setting error message:", errorMessage);
+      setError(errorMessage);
+      setShowToast(true);
+      console.log("Toast should now be visible:", true);
+      console.log("Current error state:", errorMessage);
+      console.log("Current toast state:", true);
+    } finally {
+      setLoading(false);
     }
   };
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <Card sx={{ maxWidth: 480, mx: "auto", mt: 8 }}>
@@ -34,14 +68,8 @@ export default function LoginPage() {
         <Typography color="text.secondary" sx={{ mb: 2 }}>
           Sign in to access your dashboard.
         </Typography>
-        
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <Stack spacing={2}>
             <TextField
               label="Email"
@@ -50,6 +78,8 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               fullWidth
+              autoComplete="email"
+              disabled={loading}
             />
             <TextField
               label="Password"
@@ -58,17 +88,60 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               fullWidth
+              autoComplete="current-password"
+              disabled={loading}
             />
-            <Button type="submit" fullWidth>
-              Sign In
+
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              disabled={loading}
+              startIcon={
+                loading ? <CircularProgress size={16} thickness={5} /> : null
+              }
+            >
+              {loading ? "Signing in…" : "Sign In"}
             </Button>
           </Stack>
         </form>
 
-        <Typography color="text.secondary" sx={{ mt: 2, fontSize: "0.875rem" }}>
-          Demo credentials: jack.smith@lumenlighthouse.ai / Lumen@2025
-        </Typography>
       </CardContent>
+
+      {/* Global top notification - positioned like navbar */}
+      <Snackbar
+        open={showToast}
+        onClose={() => setShowToast(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{
+          '& .MuiSnackbar-root': {
+            top: '20px !important',
+            left: '50% !important',
+            transform: 'translateX(-50%) !important',
+            right: 'auto !important',
+          }
+        }}
+      >
+        <Alert
+          severity="error"
+          variant="filled"
+          onClose={() => setShowToast(false)}
+          sx={{
+            width: '100%',
+            minWidth: '400px',
+            maxWidth: '600px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+            background: '#d32f2f',
+            '& .MuiAlert-message': {
+              fontSize: '14px',
+              fontWeight: 500,
+            }
+          }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }

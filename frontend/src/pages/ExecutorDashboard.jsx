@@ -15,21 +15,26 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Divider
+  Divider,
+  CircularProgress
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { fetchUserTasks, submitDailyUpdate } from '../store/slices/taskSlice';
+import { submitDailyUpdate } from '../store/slices/taskSlice';
 import { useAuth } from '../hooks/useAuth';
 import { fetchDashboardStats } from '../store/slices/dashboardSlice';
+import api from '../services/api';
+import SectionHeader from '../ui/SectionHeader';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 export default function ExecutorDashboard() {
   const dispatch = useDispatch();
   const { user } = useAuth();
-  const { tasks, loading } = useSelector((state) => state.task);
   const { stats } = useSelector((state) => state.dashboard);
   
-  // Debug logging
-  console.log('ExecutorDashboard State:', { tasks, loading, stats, user });
+  // Real data state for executor dashboard
+  const [assignedTasks, setAssignedTasks] = useState([]);
+  const [tasksLoading, setTasksLoading] = useState(false);
+  const [tasksError, setTasksError] = useState("");
   
   // Daily update form state
   const [selectedTask, setSelectedTask] = useState("");
@@ -40,14 +45,37 @@ export default function ExecutorDashboard() {
   const [blockers, setBlockers] = useState("");
   const [nextActions, setNextActions] = useState("");
   const [todayUpdateSubmitted, setTodayUpdateSubmitted] = useState(false);
+  const [submittingUpdate, setSubmittingUpdate] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchUserTasks());
+    fetchExecutorData();
     dispatch(fetchDashboardStats());
     
     // Check if today's update is already submitted
     checkTodayUpdateStatus();
   }, [dispatch]);
+
+  const fetchExecutorData = async () => {
+    setTasksLoading(true);
+    setTasksError("");
+    
+    try {
+      // Fetch tasks assigned to this executor (all statuses, not just active)
+      const tasksResponse = await api.get('/dashboard/tasks');
+      
+      if (tasksResponse.data.success) {
+        setAssignedTasks(tasksResponse.data.data.tasks);
+      } else {
+        setTasksError('Failed to fetch assigned tasks');
+      }
+      
+    } catch (err) {
+      console.error('Error fetching executor data:', err);
+      setTasksError(err.response?.data?.detail || 'Failed to fetch assigned tasks');
+    } finally {
+      setTasksLoading(false);
+    }
+  };
 
   const checkTodayUpdateStatus = () => {
     const today = new Date().toDateString();
@@ -62,6 +90,8 @@ export default function ExecutorDashboard() {
     if (!selectedTask || !updateText.trim()) return;
     if (todayUpdateSubmitted) return; // Prevent duplicate submissions
     
+    setSubmittingUpdate(true);
+    
     const dailyUpdateData = {
       task_id: selectedTask,
       update_text: updateText,
@@ -72,32 +102,54 @@ export default function ExecutorDashboard() {
       next_actions: nextActions ? { description: nextActions } : null
     };
     
-    const result = await dispatch(submitDailyUpdate(dailyUpdateData));
-    
-    if (submitDailyUpdate.fulfilled.match(result)) {
-      // Reset form
-      setSelectedTask("");
-      setUpdateText("");
-      setProgressPct(0);
-      setHoursSpent("");
-      setStatusNote("");
-      setBlockers("");
-      setNextActions("");
+    try {
+      const result = await dispatch(submitDailyUpdate(dailyUpdateData));
       
-      // Mark today's update as submitted
-      const today = new Date().toDateString();
-      localStorage.setItem(`dailyUpdate_${user?.id}_${today}`, 'true');
-      setTodayUpdateSubmitted(true);
-      
-      // Show success message (you can add a snackbar here later)
-      console.log('Daily update submitted successfully!');
+      if (submitDailyUpdate.fulfilled.match(result)) {
+        // Reset form
+        setSelectedTask("");
+        setUpdateText("");
+        setProgressPct(0);
+        setHoursSpent("");
+        setStatusNote("");
+        setBlockers("");
+        setNextActions("");
+        
+        // Mark today's update as submitted
+        const today = new Date().toDateString();
+        localStorage.setItem(`dailyUpdate_${user?.id}_${today}`, 'true');
+        setTodayUpdateSubmitted(true);
+        
+        // Refresh tasks to show updated progress
+        fetchExecutorData();
+        
+        // Show success message (you can add a snackbar here later)
+        console.log('Daily update submitted successfully!');
+      }
+    } catch (error) {
+      console.error('Failed to submit daily update:', error);
+    } finally {
+      setSubmittingUpdate(false);
     }
   };
 
-  const myTasks = tasks.filter((t) => t.assignee_id === user?.id);
+  const getTaskStatusColor = (status) => {
+    switch (status) {
+      case 'completed': return 'success';
+      case 'in_progress': return 'warning';
+      case 'approved': return 'success';
+      case 'rejected': return 'error';
+      case 'pending': return 'default';
+      default: return 'default';
+    }
+  };
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (tasksLoading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress size={60} />
+      </Box>
+    );
   }
 
   return (
@@ -112,6 +164,13 @@ export default function ExecutorDashboard() {
         </Typography>
       </Box>
 
+      {/* Error Alert */}
+      {tasksError && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {tasksError}
+        </Alert>
+      )}
+
       {/* Stats Cards */}
       {stats && (
         <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
@@ -121,7 +180,7 @@ export default function ExecutorDashboard() {
                 Active Tasks
               </Typography>
               <Typography variant="h4" color="primary.main">
-                {myTasks.length}
+                {assignedTasks.length}
               </Typography>
             </CardContent>
           </Card>
@@ -131,17 +190,17 @@ export default function ExecutorDashboard() {
                 Team Role
               </Typography>
               <Typography variant="h6" sx={{ textTransform: 'capitalize' }}>
-                {stats.user?.org_role || 'Executor'}
+                {user?.org_role || 'Executor'}
               </Typography>
             </CardContent>
           </Card>
           <Card sx={{ minWidth: 200, flex: 1 }}>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography color="text.secondary" gutterBottom>
-                Your Team
+                Department
               </Typography>
               <Typography variant="h6" color="secondary.main">
-                {stats.user?.org_role || 'Team'} Member
+                {user?.org_role || 'Team'} Member
               </Typography>
             </CardContent>
           </Card>
@@ -176,7 +235,7 @@ export default function ExecutorDashboard() {
                 label="Select Task"
                 disabled={todayUpdateSubmitted}
               >
-                {myTasks.map((task) => (
+                {assignedTasks.map((task) => (
                   <MenuItem key={task.id} value={task.id}>
                     {task.title}
                   </MenuItem>
@@ -247,10 +306,19 @@ export default function ExecutorDashboard() {
               variant="contained"
               size="large"
               onClick={handleDailyUpdate}
-              disabled={!selectedTask || !updateText.trim() || todayUpdateSubmitted}
+              disabled={!selectedTask || !updateText.trim() || todayUpdateSubmitted || submittingUpdate}
               sx={{ mt: 2 }}
             >
-              {todayUpdateSubmitted ? 'Already Submitted Today' : 'Submit Daily Update'}
+              {submittingUpdate ? (
+                <>
+                  <CircularProgress size={20} sx={{ mr: 1 }} />
+                  Submitting...
+                </>
+              ) : todayUpdateSubmitted ? (
+                'Already Submitted Today'
+              ) : (
+                'Submit Daily Update'
+              )}
             </Button>
           </Stack>
         </CardContent>
@@ -258,91 +326,33 @@ export default function ExecutorDashboard() {
 
       <Divider />
 
-      {/* Tasks Section */}
-      <Box>
-        <Typography variant="h6" fontWeight={700} gutterBottom>
-          🎯 Active Tasks
-        </Typography>
-        
-        {myTasks.length === 0 ? (
-          <Card>
-            <CardContent sx={{ textAlign: 'center', py: 4 }}>
-              <Typography color="text.secondary">
-                No tasks assigned yet. Your reviewer will assign tasks to you.
-              </Typography>
-            </CardContent>
-          </Card>
-        ) : (
-          <Stack spacing={2}>
-            {myTasks.map((task) => (
-              <Card key={task.id} sx={{ borderRadius: 3 }}>
-                <CardContent>
-                  <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                    <Box sx={{ flex: 1 }}>
-                      <Typography variant="h6" fontWeight={600}>
-                        {task.title}
-                      </Typography>
-                      <Typography color="text.secondary" sx={{ mt: 0.5 }}>
-                        {task.description || 'No description available'}
-                      </Typography>
-                      
-                      {task.due_date && (
-                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                          📅 Due: {new Date(task.due_date).toLocaleDateString()}
-                        </Typography>
-                      )}
-                    </Box>
-                    
-                    <Stack spacing={1} alignItems="flex-end">
-                      <Chip 
-                        label={task.status} 
-                        size="small" 
-                        color={task.status === 'completed' ? 'success' : 'primary'}
-                      />
-                      {task.category && (
-                        <Chip 
-                          label={task.category} 
-                          size="small" 
-                          variant="outlined"
-                        />
-                      )}
-                    </Stack>
-                  </Stack>
-
-                  <Box sx={{ mt: 2 }}>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Progress: {task.progress_pct || 0}%
-                    </Typography>
-                    <LinearProgress
-                      variant="determinate"
-                      value={task.progress_pct || 0}
-                      sx={{ height: 8, borderRadius: 4 }}
-                    />
-                  </Box>
-
-                  <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-                    <Button
-                      component={RouterLink}
-                      to={`/task/${task.id}`}
-                      size="small"
-                      variant="outlined"
-                    >
-                      View Details
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      onClick={() => setSelectedTask(task.id)}
-                    >
-                      Update Progress
-                    </Button>
-                  </Stack>
-                </CardContent>
-              </Card>
-            ))}
+      {/* Quick Access to Tasks */}
+      <SectionHeader
+        title="Quick Access"
+        subtitle="Navigate to your tasks and other sections"
+      />
+      
+      <Card sx={{ borderRadius: 3, mb: 3 }}>
+        <CardContent>
+          <Stack direction="row" spacing={2}>
+            <Button
+              component={RouterLink}
+              to="/tasks"
+              variant="contained"
+              startIcon={<AssignmentIndIcon />}
+            >
+              View My Tasks ({assignedTasks.length})
+            </Button>
+            <Button
+              component={RouterLink}
+              to="/eos"
+              variant="outlined"
+            >
+              View Executive Orders
+            </Button>
           </Stack>
-        )}
-      </Box>
+        </CardContent>
+      </Card>
     </Stack>
   );
 }

@@ -9,6 +9,7 @@ import { Link as RouterLink } from "react-router-dom";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import PeopleIcon from "@mui/icons-material/People";
 import TaskIcon from "@mui/icons-material/Task";
+import BusinessIcon from "@mui/icons-material/Business";
 import SectionHeader from "../ui/SectionHeader";
 import {
   fetchDashboardStats,
@@ -16,6 +17,7 @@ import {
 } from '../store/slices/dashboardSlice';
 import { assignTaskToExecutor } from '../store/slices/taskSlice';
 import { useAuth } from '../hooks/useAuth';
+import api from '../services/api';
 
 export default function ReviewerDashboard() {
   const dispatch = useDispatch();
@@ -29,6 +31,17 @@ export default function ReviewerDashboard() {
   const [selectedAssignee, setSelectedAssignee] = useState("");
   const [assignmentDialogOpen, setAssignmentDialogOpen] = useState(false);
   const [assigningTask, setAssigningTask] = useState(false);
+  
+  // EO management state
+  const [assignedEOs, setAssignedEOs] = useState([]);
+  const [assignedEOsWithTasks, setAssignedEOsWithTasks] = useState([]);
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [pmosLoading, setPmosLoading] = useState(false);
+  const [pmosError, setPmosError] = useState("");
+  
+  // EO details dialog state
+  const [eoDetailsDialogOpen, setEoDetailsDialogOpen] = useState(false);
+  const [selectedEoForDetails, setSelectedEoForDetails] = useState(null);
 
   // Debug logging
   console.log('ReviewerDashboard State:', { loading, stats, error, executiveOrders });
@@ -36,7 +49,40 @@ export default function ReviewerDashboard() {
   useEffect(() => {
     dispatch(fetchDashboardStats());
     dispatch(fetchExecutiveOrders());
+    fetchPMOData();
   }, [dispatch]);
+  
+  const fetchPMOData = async () => {
+    setPmosLoading(true);
+    setPmosError("");
+    
+    try {
+      // Fetch EOs assigned to this PMO with their tasks
+      const eosResponse = await api.get('/dashboard/pmo/assigned-eos-with-tasks');
+      
+      if (eosResponse.data.success) {
+        setAssignedEOsWithTasks(eosResponse.data.data.executive_orders);
+        setAssignedEOs(eosResponse.data.data.executive_orders);
+      } else {
+        setPmosError('Failed to fetch assigned EOs');
+      }
+      
+      // Fetch team members (executors) under this PMO
+      const teamResponse = await api.get('/dashboard/pmo/employees');
+      
+      if (teamResponse.data.success) {
+        setTeamMembers(teamResponse.data.data.employees);
+      } else {
+        console.warn('Failed to fetch team members');
+      }
+      
+    } catch (err) {
+      console.error('Error fetching PMO data:', err);
+      setPmosError(err.response?.data?.detail || 'Failed to fetch PMO data');
+    } finally {
+      setPmosLoading(false);
+    }
+  };
 
   const handleTaskAssignment = (task) => {
     setSelectedTask(task);
@@ -93,6 +139,16 @@ export default function ReviewerDashboard() {
       default: return 'default';
     }
   };
+  
+  const truncateTitle = (title, maxLength = 60) => {
+    if (title.length <= maxLength) return title;
+    return title.substring(0, maxLength) + '...';
+  };
+  
+  const handleViewFullEO = (eo) => {
+    setSelectedEoForDetails(eo);
+    setEoDetailsDialogOpen(true);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -116,108 +172,203 @@ export default function ReviewerDashboard() {
         </Alert>
       )}
       
-      {stats && (
-        <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
-          <Card sx={{ minWidth: 200, flex: 1 }}>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="text.secondary" gutterBottom>
-                Assigned EOs
-              </Typography>
-              <Typography variant="h4" color="primary.main">
-                {stats.executive_orders?.total || 0}
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card sx={{ minWidth: 200, flex: 1 }}>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="text.secondary" gutterBottom>
-                Team Members
-              </Typography>
-              <Typography variant="h4" color="info.main">
-                {getAvailableExecutors().length}
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card sx={{ minWidth: 200, flex: 1 }}>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="text.secondary" gutterBottom>
-                Active Tasks
-              </Typography>
-              <Typography variant="h4" color="secondary.main">
-                {stats.tasks?.total || 0}
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card sx={{ minWidth: 200, flex: 1 }}>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography color="text.secondary" gutterBottom>
-                Team Status
-              </Typography>
-              <Typography variant="h6" color="success.main">
-                Active
-              </Typography>
-            </CardContent>
-          </Card>
-        </Stack>
-      )}
+             {pmosError && (
+         <Alert severity="warning" sx={{ mb: 2 }}>
+           PMO Data Warning: {pmosError}
+         </Alert>
+       )}
+       
+       {stats && (
+         <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+           <Card sx={{ minWidth: 200, flex: 1 }}>
+             <CardContent sx={{ textAlign: 'center' }}>
+               <Typography color="text.secondary" gutterBottom>
+                 Assigned EOs
+               </Typography>
+               <Typography variant="h4" color="primary.main">
+                 {pmosLoading ? '...' : assignedEOs.length}
+               </Typography>
+               {pmosLoading && (
+                 <Typography variant="caption" color="text.secondary">
+                   Loading EOs...
+                 </Typography>
+               )}
+             </CardContent>
+           </Card>
+           <Card sx={{ minWidth: 200, flex: 1 }}>
+             <CardContent sx={{ textAlign: 'center' }}>
+               <Typography color="text.secondary" gutterBottom>
+                 Executors with Tasks
+               </Typography>
+               <Typography variant="h4" color="info.main">
+                 {pmosLoading ? '...' : teamMembers.length}
+               </Typography>
+               {pmosLoading && (
+                 <Typography variant="caption" color="text.secondary">
+                   Loading executors...
+                 </Typography>
+               )}
+             </CardContent>
+           </Card>
+           <Card sx={{ minWidth: 200, flex: 1 }}>
+             <CardContent sx={{ textAlign: 'center' }}>
+               <Typography color="text.secondary" gutterBottom>
+                 Active Tasks
+               </Typography>
+               <Typography variant="h4" color="secondary.main">
+                 {pmosLoading ? '...' : 
+                   assignedEOsWithTasks.reduce((total, eo) => total + (eo.tasks?.length || 0), 0)
+                 }
+               </Typography>
+               {pmosLoading && (
+                 <Typography variant="caption" color="text.secondary">
+                   Loading tasks...
+                 </Typography>
+               )}
+             </CardContent>
+           </Card>
+           <Card sx={{ minWidth: 200, flex: 1 }}>
+             <CardContent sx={{ textAlign: 'center' }}>
+               <Typography color="text.secondary" gutterBottom>
+                 Team Status
+               </Typography>
+               <Typography variant="h6" color="success.main">
+                 Active
+               </Typography>
+             </CardContent>
+           </Card>
+         </Stack>
+       )}
 
-      {/* Team Overview */}
-      <SectionHeader
-        title="Your Team"
-        subtitle="Executors under your supervision"
-      />
-      
-      <Card sx={{ borderRadius: 3, mb: 3 }}>
-        <CardContent>
-          <Stack spacing={2}>
-            {getAvailableExecutors().map((executor) => (
-              <Box key={executor.id} sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between',
-                p: 2,
-                border: '1px solid',
-                borderColor: 'divider',
-                borderRadius: 2
-              }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Avatar sx={{ bgcolor: 'primary.main' }}>
-                    {executor.name.split(' ').map(n => n[0]).join('')}
-                  </Avatar>
-                  <Box>
-                    <Typography variant="subtitle1" fontWeight={600}>
-                      {executor.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {executor.role}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {executor.email}
-                    </Typography>
-                  </Box>
-                </Box>
-                
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Chip 
-                    label="Active" 
-                    size="small" 
-                    color="success" 
-                    variant="outlined"
-                  />
-                  <Button 
-                    component={RouterLink} 
-                    to={`/tasks?assignee=${executor.id}`} 
-                    size="small" 
-                    variant="outlined"
-                  >
-                    View Tasks
-                  </Button>
-                </Box>
+             {/* Executive Order Assignment Status */}
+       {!pmosLoading && assignedEOsWithTasks.length > 0 && (
+         <Card sx={{ borderRadius: 3, mb: 3, bgcolor: 'primary.50', border: '2px solid', borderColor: 'primary.main' }}>
+           <CardContent sx={{ textAlign: 'center', py: 3 }}>
+             <BusinessIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
+             <Typography variant="h5" fontWeight={700} color="primary.main" gutterBottom>
+               You are assigned to manage:
+             </Typography>
+             <Typography variant="h4" fontWeight={600} color="primary.main" sx={{ mb: 1 }}>
+               {truncateTitle(assignedEOsWithTasks[0]?.title || 'Executive Order')}
+             </Typography>
+             {assignedEOsWithTasks[0]?.title && assignedEOsWithTasks[0].title.length > 60 && (
+               <Button
+                 size="small"
+                 variant="text"
+                 color="primary"
+                 onClick={() => handleViewFullEO(assignedEOsWithTasks[0])}
+                 sx={{ mb: 2 }}
+               >
+                 View Full EO
+               </Button>
+             )}
+             <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+               {assignedEOsWithTasks[0]?.description ? 
+                 truncateTitle(assignedEOsWithTasks[0].description, 100) : 
+                 'Executive Order Management'
+               }
+             </Typography>
+             <Stack direction="row" spacing={2} justifyContent="center" alignItems="center">
+               <Chip 
+                 label={`${assignedEOsWithTasks.length} EOs`} 
+                 size="large" 
+                 color="primary" 
+                 icon={<BusinessIcon />}
+               />
+               <Chip 
+                 label={`${assignedEOsWithTasks.reduce((total, eo) => total + (eo.tasks?.length || 0), 0)} Tasks`} 
+                 size="large" 
+                 color="secondary" 
+                 icon={<TaskIcon />}
+               />
+               <Chip 
+                 label={`${teamMembers.length} Executors`} 
+                 size="large" 
+                 color="info" 
+                 icon={<PeopleIcon />}
+               />
+             </Stack>
+             {assignedEOsWithTasks[0]?.pmo_assignment && (
+               <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                 Assigned on: {new Date(assignedEOsWithTasks[0].pmo_assignment.assigned_at).toLocaleDateString()}
+               </Typography>
+             )}
+           </CardContent>
+         </Card>
+       )}
+
+               {/* Team Overview */}
+        <SectionHeader
+          title="Executors with Tasks"
+          subtitle="Executors who have tasks from your assigned Executive Orders"
+        />
+       
+        <Card sx={{ borderRadius: 3, mb: 3 }}>
+          <CardContent>
+            {pmosLoading ? (
+              <Box sx={{ textAlign: 'center', py: 3 }}>
+                <Typography>Loading executors...</Typography>
               </Box>
-            ))}
-          </Stack>
-        </CardContent>
-      </Card>
+            ) : teamMembers.length > 0 ? (
+              <Stack spacing={2}>
+                {teamMembers.map((executor) => (
+                  <Box key={executor.id} sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    p: 2,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    borderRadius: 2
+                  }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Avatar sx={{ bgcolor: 'primary.main' }}>
+                        {executor.name.split(' ').map(n => n[0]).join('')}
+                      </Avatar>
+                      <Box>
+                        <Typography variant="subtitle1" fontWeight={600}>
+                          {executor.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {executor.org_role || 'Executor'}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {executor.email}
+                        </Typography>
+                        <Typography variant="caption" color="primary.main" sx={{ display: 'block', mt: 0.5 }}>
+                          {executor.assigned_tasks_count || 0} tasks assigned
+                        </Typography>
+                      </Box>
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Chip 
+                        label={`${executor.assigned_tasks_count || 0} Tasks`} 
+                        size="small" 
+                        color="primary" 
+                        variant="outlined"
+                      />
+                      <Button 
+                        component={RouterLink} 
+                        to={`/tasks?assignee=${executor.id}`} 
+                        size="small" 
+                        variant="outlined"
+                      >
+                        View Tasks
+                      </Button>
+                    </Box>
+                  </Box>
+                ))}
+              </Stack>
+            ) : (
+              <Box sx={{ textAlign: 'center', py: 3 }}>
+                <Typography color="text.secondary">
+                  No executors with tasks from your assigned EOs yet.
+                </Typography>
+              </Box>
+            )}
+          </CardContent>
+        </Card>
 
       {/* Assigned Executive Orders */}
       <SectionHeader
@@ -409,8 +560,92 @@ export default function ReviewerDashboard() {
           >
             {assigningTask ? 'Assigning...' : 'Assign Task'}
           </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-}
+                 </DialogActions>
+       </Dialog>
+       
+       {/* EO Details Dialog */}
+       <Dialog 
+         open={eoDetailsDialogOpen} 
+         onClose={() => setEoDetailsDialogOpen(false)}
+         maxWidth="md"
+         fullWidth
+       >
+         <DialogTitle>
+           <Stack direction="row" spacing={1} alignItems="center">
+             <BusinessIcon color="primary" />
+             <Typography variant="h6">
+               Executive Order Details
+             </Typography>
+           </Stack>
+         </DialogTitle>
+         
+         <DialogContent>
+           {selectedEoForDetails && (
+             <Stack spacing={3}>
+               <Box>
+                 <Typography variant="h5" fontWeight={600} gutterBottom>
+                   {selectedEoForDetails.title}
+                 </Typography>
+                 <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                   {selectedEoForDetails.description || 'No description available'}
+                 </Typography>
+               </Box>
+               
+               <Divider />
+               
+               <Stack direction="row" spacing={3}>
+                 <Box>
+                   <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                     Status
+                   </Typography>
+                   <Chip 
+                     label={selectedEoForDetails.status} 
+                     color={selectedEoForDetails.status === 'processed' ? 'success' : 'default'}
+                     size="small"
+                   />
+                 </Box>
+                 
+                 <Box>
+                   <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                     Created
+                   </Typography>
+                   <Typography variant="body2">
+                     {new Date(selectedEoForDetails.created_at).toLocaleDateString()}
+                   </Typography>
+                 </Box>
+                 
+                 <Box>
+                   <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                     Message ID
+                   </Typography>
+                   <Typography variant="body2" fontFamily="monospace">
+                     {selectedEoForDetails.message_id}
+                   </Typography>
+                 </Box>
+               </Stack>
+               
+               <Divider />
+               
+               <Box>
+                 <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                   Tasks
+                 </Typography>
+                 <Chip 
+                   label={`${selectedEoForDetails.tasks?.length || 0} Total Tasks`} 
+                   color="primary"
+                   size="medium"
+                 />
+               </Box>
+             </Stack>
+           )}
+         </DialogContent>
+         
+         <DialogActions>
+           <Button onClick={() => setEoDetailsDialogOpen(false)}>
+             Close
+           </Button>
+         </DialogActions>
+       </Dialog>
+     </>
+   );
+ }

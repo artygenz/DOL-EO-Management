@@ -13,6 +13,7 @@ import {
   fetchExecutiveOrders,
 } from '../store/slices/dashboardSlice';
 import { useAuth } from '../hooks/useAuth';
+import api from '../services/api';
 
 export default function EOsPage() {
   const dispatch = useDispatch();
@@ -27,10 +28,38 @@ export default function EOsPage() {
   const [primaryPMO, setPrimaryPMO] = useState("");
   const [assignmentDialogOpen, setAssignmentDialogOpen] = useState(false);
   const [assigningPMO, setAssigningPMO] = useState(false);
+  
+  // Available PMOs state
+  const [availablePMOs, setAvailablePMOs] = useState([]);
+  const [pmosLoading, setPmosLoading] = useState(false);
+  const [pmosError, setPmosError] = useState("");
 
   useEffect(() => {
     dispatch(fetchExecutiveOrders());
+    fetchAvailablePMOs();
   }, [dispatch]);
+
+  const fetchAvailablePMOs = async () => {
+    setPmosLoading(true);
+    setPmosError("");
+    
+    try {
+      const response = await api.get('/dashboard/cfo/employees');
+      
+      if (response.data.success) {
+        // Filter to only show reviewers (PMOs)
+        const pmos = response.data.data.employees.filter(emp => emp.role === 'reviewer');
+        setAvailablePMOs(pmos);
+      } else {
+        setPmosError('Failed to fetch PMOs');
+      }
+    } catch (err) {
+      console.error('Error fetching PMOs:', err);
+      setPmosError(err.response?.data?.detail || 'Failed to fetch available PMOs');
+    } finally {
+      setPmosLoading(false);
+    }
+  };
 
   const handlePMOAssignment = (eo) => {
     setSelectedEO(eo);
@@ -47,20 +76,12 @@ export default function EOsPage() {
     try {
       // TODO: Implement PMO assignment API call
       // This would call an endpoint like: POST /dashboard/assign-pmo
-      console.log('Assigning PMOs to EO:', {
-        eoId: selectedEO.id,
-        pmos: pmosToAssign,
-        primaryPMO,
-        assignedBy: user?.id,
-        assignmentDate: new Date().toISOString()
-      });
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Simulate successful assignment
       // In real implementation, this would be an API call
-      console.log('✅ PMOs assigned successfully!');
       
       // Close dialog and refresh data
       setAssignmentDialogOpen(false);
@@ -76,15 +97,7 @@ export default function EOsPage() {
   };
 
   const getAvailablePMOs = () => {
-    // TODO: Fetch available PMOs from backend
-    // For now, return mock data
-    return [
-      { id: 'pm1', name: 'Sarah Johnson', role: 'Senior Project Manager' },
-      { id: 'pm2', name: 'David Chen', role: 'Compliance Manager' },
-      { id: 'pm3', name: 'Maria Rodriguez', role: 'Financial Operations Manager' },
-      { id: 'pm4', name: 'EO 14249 Email', role: 'EO 14249 Email' },
-      { id: 'pm5', name: 'EO 14247 Email', role: 'EO 14247 Email' }
-    ];
+    return availablePMOs;
   };
 
   const getEOStatusColor = (status) => {
@@ -121,6 +134,12 @@ export default function EOsPage() {
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           Error: {error}
+        </Alert>
+      )}
+      
+      {pmosError && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          PMO Data Warning: {pmosError}
         </Alert>
       )}
       
@@ -264,58 +283,70 @@ export default function EOsPage() {
                   Choose one or more PMOs to oversee this Executive Order. The first PMO will be designated as primary.
                 </Typography>
                 
-                <Stack spacing={2}>
-                  {getAvailablePMOs().map((pmo) => (
-                    <Card key={pmo.id} variant="outlined">
-                      <CardContent sx={{ py: 1.5, px: 2 }}>
-                        <Stack direction="row" spacing={2} alignItems="center">
-                          <FormControl size="small">
-                            <input
-                              type="checkbox"
-                              checked={pmosToAssign.includes(pmo.id)}
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  setPmosToAssign([...pmosToAssign, pmo.id]);
-                                  if (pmosToAssign.length === 0) {
-                                    setPrimaryPMO(pmo.id);
-                                  }
-                                } else {
-                                  setPmosToAssign(pmosToAssign.filter(id => id !== pmo.id));
-                                  if (primaryPMO === pmo.id) {
-                                    setPrimaryPMO(pmosToAssign.length > 1 ? pmosToAssign[1] : "");
-                                  }
-                                }
-                              }}
-                            />
-                          </FormControl>
-                          
-                          <Box sx={{ flex: 1 }}>
-                            <Typography variant="body2" fontWeight={600}>
-                              {pmo.name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {pmo.role}
-                            </Typography>
-                          </Box>
-                          
-                          {pmosToAssign.includes(pmo.id) && (
+                {pmosLoading ? (
+                  <Box sx={{ textAlign: 'center', py: 3 }}>
+                    <Typography>Loading available PMOs...</Typography>
+                  </Box>
+                ) : availablePMOs.length > 0 ? (
+                  <Stack spacing={2}>
+                    {availablePMOs.map((pmo) => (
+                      <Card key={pmo.id} variant="outlined">
+                        <CardContent sx={{ py: 1.5, px: 2 }}>
+                          <Stack direction="row" spacing={2} alignItems="center">
                             <FormControl size="small">
                               <input
-                                type="radio"
-                                name="primaryPMO"
-                                checked={primaryPMO === pmo.id}
-                                onChange={() => setPrimaryPMO(pmo.id)}
+                                type="checkbox"
+                                checked={pmosToAssign.includes(pmo.id)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setPmosToAssign([...pmosToAssign, pmo.id]);
+                                    if (pmosToAssign.length === 0) {
+                                      setPrimaryPMO(pmo.id);
+                                    }
+                                  } else {
+                                    setPmosToAssign(pmosToAssign.filter(id => id !== pmo.id));
+                                    if (primaryPMO === pmo.id) {
+                                      setPrimaryPMO(pmosToAssign.length > 1 ? pmosToAssign[1] : "");
+                                    }
+                                  }
+                                }}
                               />
-                              <Typography variant="caption" color="primary">
-                                Primary
-                              </Typography>
                             </FormControl>
-                          )}
-                        </Stack>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </Stack>
+                            
+                            <Box sx={{ flex: 1 }}>
+                              <Typography variant="body2" fontWeight={600}>
+                                {pmo.name}
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                {pmo.org_role || 'Reviewer'}
+                              </Typography>
+                            </Box>
+                            
+                            {pmosToAssign.includes(pmo.id) && (
+                              <FormControl size="small">
+                                <input
+                                  type="radio"
+                                  name="primaryPMO"
+                                  checked={primaryPMO === pmo.id}
+                                  onChange={() => setPrimaryPMO(pmo.id)}
+                                />
+                                <Typography variant="caption" color="primary">
+                                  Primary
+                                </Typography>
+                              </FormControl>
+                            )}
+                          </Stack>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </Stack>
+                ) : (
+                  <Box sx={{ textAlign: 'center', py: 3 }}>
+                    <Typography color="text.secondary">
+                      No PMOs available. Please create reviewer accounts first.
+                    </Typography>
+                  </Box>
+                )}
               </Box>
             </Stack>
           )}
