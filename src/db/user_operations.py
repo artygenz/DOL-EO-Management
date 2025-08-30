@@ -29,7 +29,8 @@ def create_user_with_password(
 
 def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
     """Authenticate a user with email and password"""
-    user = db.query(User).filter(User.email == email).first()
+    from sqlalchemy import func
+    user = db.query(User).filter(func.lower(User.email) == email.lower()).first()
     if not user:
         return None
     
@@ -40,7 +41,8 @@ def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
 
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
     """Get user by email"""
-    return db.query(User).filter(User.email == email).first()
+    from sqlalchemy import func
+    return db.query(User).filter(func.lower(User.email) == email.lower()).first()
 
 def update_user_password(db: Session, user_id: str, new_password: str) -> bool:
     """Update user password"""

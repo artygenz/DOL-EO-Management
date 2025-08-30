@@ -30,3 +30,4 @@ class Task(Base):
     logs = relationship("TaskLog", back_populates="task", cascade="all,delete-orphan")
     confirmations = relationship("TaskConfirmation", back_populates="task", cascade="all,delete-orphan")
     daily_updates = relationship("DailyUpdate", back_populates="task")
+    task_updates = relationship("TaskUpdate", back_populates="task", cascade="all,delete-orphan")

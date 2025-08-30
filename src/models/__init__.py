@@ -9,4 +9,8 @@ from .task_confirmation import TaskConfirmation  # noqa: F401
 from .auth_token import AuthToken  # noqa: F401
 from .token_blacklist import TokenBlacklist  # noqa: F401
 from .daily_update import DailyUpdate  # noqa: F401
+from .task_update import TaskUpdate  # noqa: F401
+from .daily_eo_summary import DailyEOSummary  # noqa: F401
 from .eo_pmo_assignment import EOPMOAssignment  # noqa: F401
+from .celery_task_log import CeleryTaskLog  # noqa: F401
+from .email_queue_log import EmailQueueLog  # noqa: F401

@@ -1,11 +1,20 @@
 from typing import Dict
+from datetime import datetime
 from celery import states
 from src.workflow.celery_app import celery_app
 from src.workflow.dto import EOIn, LLMTask
 from src.workflow import repository as repo
 from src.workflow.ai import extract_tasks
 from src.email.email_template_builder import EmailTemplateBuilder
-from src.email.email_service import EmailService, Attachment
+from src.email.queued_email_service import QueuedEmailService
+# Use Attachment from redis_email_processor
+from dataclasses import dataclass
+
+@dataclass
+class Attachment:
+    filename: str
+    content_type: str
+    data: bytes
 from src.db.session import SessionLocal
 from src.models.task import Task
 from src.models.user import User
@@ -19,7 +28,12 @@ def store_email(eo_payload: Dict):
     3) Queue AI extraction
     """
 
-    print("Received EO", eo_payload)
+    print(f"\n=== EO Processing Started ===")
+    print(f"Subject: {eo_payload.get('subject', 'N/A')}")
+    print(f"Sender: {eo_payload.get('sender', 'N/A')}")
+    print(f"Message ID: {eo_payload.get('message_id', 'N/A')}")
+    print(f"================================\n")
+    
     eo = EOIn(**eo_payload)
     
     # Log inbound EO email first to get email log ID for organized structure
@@ -34,7 +48,8 @@ def store_email(eo_payload: Dict):
             related_eo_id=None,
         )
         email_log_id = str(email_log.id)
-        print(f"Saved email log with ID: {email_log_id}")
+        print(f"Email logged with ID: {email_log_id}")
+
     except Exception as e:
         print(f"Warning: Could not save email log: {e}")
 
@@ -69,7 +84,15 @@ def ai_extract_tasks(eo_id: str, body_text: str):
     1) Call AI to get task list
     2) Queue persistence
     """
+    print(f"\n=== AI Task Extraction Started ===")
+    print(f"EO ID: {eo_id}")
+    print(f"Body text length: {len(body_text)} characters")
+    
     tasks = extract_tasks(body_text)
+    
+    print(f"Extracted {len(tasks)} tasks from EO")
+    print(f"=====================================\n")
+    
     # Convert to serializable dicts for the next task
     serializable = [t.model_dump() for t in tasks]
     persist_tasks.delay(eo_id, serializable)
@@ -81,17 +104,22 @@ def persist_tasks(eo_id: str, tasks_payload: list[dict]):
     1) Persist tasks
     2) Mark EO status
     """
+    print(f"\n=== Task Persistence Started ===")
+    print(f"EO ID: {eo_id}")
+    print(f"Tasks to persist: {len(tasks_payload or [])}")
+    
     from src.workflow.dto import TaskCreate
     to_create = []
     for d in tasks_payload or []:
         try:
             to_create.append(LLMTask.model_validate(d))
         except Exception as e:
-            print(f"[persist] drop malformed task: {e!r} :: {d!r}")
-
-    # print("\n\n Tasks that are sent to db handler to add in the table",to_create,"\n\n")
+            print(f"Warning: Dropping malformed task: {e}")
 
     count = repo.insert_tasks(eo_id, to_create)
+    
+    print(f"Successfully persisted {count} tasks")
+    print(f"====================================\n")
 
     # 2) prepare a JSON-safe snapshot for Celery (don’t send Pydantic objects!)
     safe_for_email = [
@@ -130,6 +158,12 @@ def send_pmo_review_email(self, eo_id: str, task_list: list):
 
    
 
+    print(f"\n=== PMO Review Email Started ===")
+    print(f"EO ID: {eo_id}")
+    print(f"EO Title: {eo.title}")
+    print(f"PMO Email: {pmo_email}")
+    print(f"Tasks: {len(task_list)}")
+    
     # --- build email via template service ---
     built = EmailTemplateBuilder.build_pmo_review(eo, task_list)
 
@@ -148,7 +182,7 @@ def send_pmo_review_email(self, eo_id: str, task_list: list):
         print(f"Warning: Could not save email log: {e}")
         email_log_id = None
 
-    svc = EmailService()
+    svc = QueuedEmailService()
     attachments = [Attachment(fn, ct, data) for (fn, ct, data) in built.attachments]
 
     message_id = svc.send_and_save(
@@ -162,6 +196,10 @@ def send_pmo_review_email(self, eo_id: str, task_list: list):
         email_type="eo_review"
     )
 
+    print(f"PMO review email sent successfully")
+    print(f"Message ID: {message_id}")
+    print(f"================================\n")
+    
     # (optional) persist outbound record here if you have a model/table
     return {"eo_id": eo_id, "sent_to": pmo_email, "message_id": message_id, "tasks": len(task_list)}
 
@@ -279,6 +317,9 @@ def notify_assignees(eo_id: str | None):
         return {"notified": 0}
     
     try:
+        print(f"\n=== Employee Notification Started ===")
+        print(f"EO ID: {eo_id}")
+        
         # Load EO
         eo = repo.get_executive_order(eo_id)
         if not eo:
@@ -297,6 +338,9 @@ def notify_assignees(eo_id: str | None):
             print(f"No approved tasks found for EO {eo_id}")
             return {"eo_id": eo_id, "notified": 0}
         
+        print(f"EO Title: {eo.title}")
+        print(f"Total approved tasks: {len(approved_tasks)}")
+        
         # Group tasks by assignee
         assignee_tasks = {}
         for task in approved_tasks:
@@ -306,7 +350,7 @@ def notify_assignees(eo_id: str | None):
                     assignee_tasks[assignee_id] = []
                 assignee_tasks[assignee_id].append(task)
         
-        print(f"Found {len(assignee_tasks)} assignees with {len(approved_tasks)} total tasks")
+        print(f"Found {len(assignee_tasks)} assignees to notify")
         
         # Send notification emails to each assignee
         notified_count = 0
@@ -362,7 +406,7 @@ def notify_assignees(eo_id: str | None):
                     print(f"Warning: Could not save employee notification email log: {e}")
                 
                 # Send email
-                svc = EmailService()
+                svc = QueuedEmailService()
                 attachments = [Attachment(fn, ct, data) for (fn, ct, data) in built.attachments]
                 
                 message_id = svc.send_and_save(
@@ -376,12 +420,15 @@ def notify_assignees(eo_id: str | None):
                     email_type="notify_employees"
                 )
                 
-                print(f"Sent notification email to {assignee.name} ({assignee.email}) with {len(tasks)} tasks")
+                print(f"✓ Notification sent to {assignee.name} ({assignee.email})")
                 notified_count += 1
                 
             except Exception as e:
-                print(f"Error sending notification to assignee {assignee_id}: {e}")
+                print(f"✗ Error sending notification to assignee {assignee_id}: {e}")
                 continue
+        
+        print(f"Employee notification completed: {notified_count} emails sent")
+        print(f"=====================================\n")
         
         return {"eo_id": eo_id, "notified": notified_count}
         
@@ -485,7 +532,9 @@ def handle_rejected_tasks(eo_id: str | None, rejected_ids: list[str] | None, glo
             
             # Send improved tasks back to PMO for review
             if updated_count > 0:
-                send_improved_tasks_to_pmo.delay(eo_id, improvement_summary)
+                # Pass the specific task IDs that were improved
+                improved_task_ids = list(task_updates.keys())
+                send_improved_tasks_to_pmo.delay(eo_id, improvement_summary, improved_task_ids)
             
             # TODO: Send modified review email back to PMO with improved tasks
         
@@ -496,9 +545,10 @@ def handle_rejected_tasks(eo_id: str | None, rejected_ids: list[str] | None, glo
         return {"eo_id": eo_id, "error": str(e)}
 
 @celery_app.task(autoretry_for=(Exception,), retry_backoff=True, max_retries=5, name="src.workflow.tasks.send_improved_tasks_to_pmo")
-def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
+def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_task_ids: list[str] = None):
     """
     Send improved tasks back to PMO for re-review after LLM improvements.
+    Only sends the specific tasks that were just improved, not all tasks.
     
     Parameters
     ----------
@@ -506,6 +556,8 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
         The Executive Order ID
     improvement_summary : str
         Summary of improvements made by LLM
+    improved_task_ids : list[str], optional
+        Specific task IDs that were improved. If not provided, falls back to looking for rejected tasks.
     """
     print(f"[DEBUG] send_improved_tasks_to_pmo started with eo_id: {eo_id}")
     
@@ -524,13 +576,18 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
         # Remove the problematic line that triggers lazy loading
         # print(f"[DEBUG] EO has relationships: {hasattr(eo, 'tasks')}")
         
-        # Load all tasks for this EO (including the improved ones)
-        print(f"[DEBUG] Loading task IDs for EO...")
-        task_ids = repo.get_task_ids_by_eo(eo_id)
+        # Load specific improved task IDs, or fall back to rejected tasks
+        if improved_task_ids:
+            print(f"[DEBUG] Using provided improved task IDs: {len(improved_task_ids)} tasks")
+            task_ids = improved_task_ids
+        else:
+            print(f"[DEBUG] No improved task IDs provided, falling back to rejected tasks...")
+            task_ids = repo.get_task_ids_by_eo_and_status(eo_id, "rejected")
+            
         if not task_ids:
-            return {"error": "No tasks found for this EO"}
+            return {"error": "No tasks found to send for improved review"}
         
-        print(f"[DEBUG] Found {len(task_ids)} task IDs: {task_ids[:3]}...")  # Show first 3
+        print(f"[DEBUG] Found {len(task_ids)} improved task IDs: {task_ids[:3]}...")  # Show first 3
         
         # Convert tasks to format expected by email template
         print(f"[DEBUG] Converting tasks to dict format...")
@@ -623,7 +680,7 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
         
         # Send email
         print(f"[DEBUG] Creating EmailService...")
-        svc = EmailService()
+        svc = QueuedEmailService()
         
         print(f"[DEBUG] Creating attachments...")
         try:
@@ -669,5 +726,368 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str):
         import traceback
         print(f"[ERROR] Traceback: {traceback.format_exc()}")
         return {"eo_id": eo_id, "error": str(e)}
+
+# Daily Task Update Tasks
+@celery_app.task(autoretry_for=(Exception,), retry_backoff=True, max_retries=5, name="src.workflow.tasks.process_daily_update_email")
+def process_daily_update_email(email_payload: Dict):
+    """
+    Process a daily task update email from an employee.
+    
+    1. Resolve user_id from sender email
+    2. Fetch user's active tasks
+    3. Extract task updates using AI
+    4. Save updates to database
+    """
+    from src.workflow.dto import DailyUpdateEmailPayload
+    from src.workflow.ai import extract_daily_task_updates
+    from src.workflow import repository as repo
+    from datetime import date, datetime, timezone
+    import hashlib
+    
+    print(f"\n=== Daily Update Processing Started ===")
+    print(f"Sender: {email_payload.get('sender')}")
+    print(f"Subject: {email_payload.get('subject', 'N/A')}")
+    print(f"Body length: {len(email_payload.get('body_text', ''))} characters")
+    
+    try:
+        # Parse email payload
+        email_data = DailyUpdateEmailPayload(**email_payload)
+        
+        # Resolve user by email
+        user_id = repo.resolve_user_by_email(email_data.sender)
+        if not user_id:
+            print(f"Error: Could not resolve user for email: {email_data.sender}")
+            return {"error": "User not found", "sender": email_data.sender}
+        
+        print(f"User ID: {user_id}")
+        
+        # Get user's active tasks
+        user_tasks = repo.get_user_active_tasks(user_id)
+        if not user_tasks:
+            print(f"Warning: No active tasks found for user: {email_data.sender}")
+            return {"error": "No active tasks", "sender": email_data.sender}
+        
+        print(f"Found {len(user_tasks)} active tasks for user")
+        
+        # Extract task updates using AI
+        extraction_result = extract_daily_task_updates(email_data.body_text, user_tasks)
+        
+        # Process extracted updates
+        updates_to_save = []
+        today = date.today()
+        
+        # Check if email is late (after 6pm ET)
+        email_time = email_data.received_at
+        if email_time.tzinfo is None:
+            email_time = email_time.replace(tzinfo=timezone.utc)
+        
+        # Convert to ET for deadline check
+        import pytz
+        et_tz = pytz.timezone('America/New_York')
+        email_time_et = email_time.astimezone(et_tz)
+        deadline_et = email_time_et.replace(hour=18, minute=0, second=0, microsecond=0)
+        is_late = email_time_et > deadline_et
+        
+        for update in extraction_result.get('updates', []):
+            # Find the task details
+            task_id = update.get('task_id')
+            task_details = next((t for t in user_tasks if t['id'] == task_id), None)
+            
+            if task_details:
+                # Create unique dedupe hash based on task, user, and date (not email content)
+                dedupe_content = f"{task_id}_{user_id}_{today}"
+                dedupe_hash = hashlib.sha256(dedupe_content.encode()).hexdigest()
+                
+                update_data = {
+                    'task_id': task_id,
+                    'user_id': user_id,
+                    'eo_id': task_details['eo_id'],
+                    'date': today,
+                    'progress_pct': update.get('progress_pct'),
+                    'status': update.get('status'),
+                    'notes': update.get('notes'),
+                    'blockers': update.get('blockers'),
+                    'risks': update.get('risks'),
+                    'eta': update.get('eta'),
+                    'spent_hours': update.get('spent_hours'),
+                    'ai_summary': update.get('ai_summary'),
+                    'source_email_message_id': email_data.message_id,
+                    'dedupe_hash': dedupe_hash,
+                    'is_late': is_late
+                }
+                updates_to_save.append(update_data)
+        
+        # Save updates to database
+        saved_count = repo.save_task_updates(updates_to_save)
+        
+        print(f"Saved {saved_count} task updates for user {email_data.sender}")
+        print(f"=====================================\n")
+        
+        return {
+            "success": True,
+            "sender": email_data.sender,
+            "user_id": user_id,
+            "extraction_case": extraction_result.get('case'),
+            "updates_saved": saved_count,
+            "unmatched_mentions": extraction_result.get('unmatched_mentions', []),
+            "is_late": is_late
+        }
+        
+    except Exception as e:
+        print(f"Error processing daily update email: {e}")
+        return {"error": str(e), "sender": email_payload.get('sender')}
+
+@celery_app.task(autoretry_for=(Exception,), retry_backoff=True, max_retries=5, name="src.workflow.tasks.aggregate_daily_updates")
+def aggregate_daily_updates(eo_id: str, target_date: str = None):
+    """
+    Aggregate daily updates for an EO and generate summary.
+    
+    1. Get all task updates for the EO and date
+    2. Generate summary using AI
+    3. Save summary to database
+    4. Send email to PMOs
+    """
+    from src.workflow.ai import generate_daily_eo_summary
+    from src.workflow import repository as repo
+    # EmailService removed - using Redis queue only
+    from datetime import date
+    import pytz
+    
+    print(f"Aggregating daily updates for EO {eo_id} on {target_date}")
+    
+    try:
+        # Parse target date
+        if target_date:
+            target_date = date.fromisoformat(target_date)
+        else:
+            target_date = date.today()
+        
+        # Get task updates for this EO and date
+        task_updates = repo.get_task_updates_for_eo_date(eo_id, target_date)
+        
+        if not task_updates:
+            print(f"No task updates found for EO {eo_id} on {target_date}")
+            return {"error": "No updates found", "eo_id": eo_id, "date": str(target_date)}
+        
+        # Get EO context for summary
+        from src.models.executive_order import ExecutiveOrder
+        with repo.SessionLocal() as db:
+            eo = db.get(ExecutiveOrder, eo_id)
+            eo_context = f"{eo.title}" if eo else f"EO {eo_id}"
+        
+        # Generate summary
+        summary_data = generate_daily_eo_summary(eo_id, task_updates, eo_context)
+        
+        # Add missing updates information
+        expected_users = repo.get_expected_updates_for_eo_date(eo_id, target_date)
+        updated_user_emails = {update['user_email'] for update in task_updates if 'user_email' in update}
+        missing_updates = [
+            user['user_email'] for user in expected_users 
+            if user['user_email'] not in updated_user_emails
+        ]
+        
+        summary_data['missing_updates'] = missing_updates
+        summary_data['eo_id'] = eo_id
+        summary_data['date'] = target_date
+        
+        # Save summary to database
+        summary_id = repo.save_daily_eo_summary(summary_data)
+        
+        # Send email to PMOs
+        send_daily_summary_email.delay(summary_id)
+        
+        print(f"Generated and saved daily summary {summary_id} for EO {eo_id}")
+        
+        return {
+            "success": True,
+            "eo_id": eo_id,
+            "date": str(target_date),
+            "summary_id": summary_id,
+            "updates_count": len(task_updates),
+            "missing_updates_count": len(missing_updates)
+        }
+        
+    except Exception as e:
+        print(f"Error aggregating daily updates: {e}")
+        return {"error": str(e), "eo_id": eo_id, "date": target_date}
+
+@celery_app.task(autoretry_for=(Exception,), retry_backoff=True, max_retries=5, name="src.workflow.tasks.send_daily_summary_email")
+def send_daily_summary_email(summary_id: str):
+    """
+    Send daily summary email to PMOs assigned to the EO.
+    """
+    from src.workflow import repository as repo
+    # EmailService removed - using Redis queue only
+    from src.email.email_template_builder import EmailTemplateBuilder
+    
+    print(f"Sending daily summary email for summary {summary_id}")
+    
+    try:
+        # Get summary data
+        summary = repo.get_daily_eo_summary_by_id(summary_id)
+        if not summary:
+            print(f"Summary not found: {summary_id}")
+            return {"error": "Summary not found", "summary_id": summary_id}
+        
+        # Get EO details
+        from src.models.executive_order import ExecutiveOrder
+        with repo.SessionLocal() as db:
+            eo = db.get(ExecutiveOrder, summary['eo_id'])
+            if not eo:
+                print(f"EO not found: {summary['eo_id']}")
+                return {"error": "EO not found", "summary_id": summary_id}
+        
+        # Get PMO assignments for this EO
+        from src.models.eo_pmo_assignment import EOPMOAssignment
+        from src.models.user import User
+        with repo.SessionLocal() as db:
+            pmo_assignments = db.execute(
+                select(EOPMOAssignment, User.email.label('pmo_email'), User.name.label('pmo_name'))
+                .join(User, EOPMOAssignment.pmo_id == User.id)
+                .where(EOPMOAssignment.eo_id == summary['eo_id'])
+            ).all()
+        
+        if not pmo_assignments:
+            print(f"No PMO assignments found for EO {summary['eo_id']}")
+            return {"error": "No PMO assignments", "summary_id": summary_id}
+        
+        # Get individual task updates for detailed reporting
+        task_updates = repo.get_task_updates_for_eo_date(summary['eo_id'], summary['date'])
+        
+        # Use the email template to build the email
+        from src.email.email_templates import DailySummaryTemplate
+        
+        built_email = DailySummaryTemplate.build_daily_summary(
+            eo=eo.__dict__ if hasattr(eo, '__dict__') else eo,
+            summary=summary,
+            task_updates=task_updates
+        )
+        
+        # Send email to each PMO
+        email_service = QueuedEmailService()
+        pmo_emails = [assignment.pmo_email for assignment in pmo_assignments]
+        
+        email_service.send_and_save(
+            to=pmo_emails,
+            subject=built_email.subject,
+            body_text=built_email.body_text,
+            body_html=built_email.body_html,
+            email_type="daily_summary"
+        )
+        
+        # Mark summary as emailed
+        repo.mark_summary_email_sent(summary_id)
+        
+        print(f"Sent daily summary email to {len(pmo_emails)} PMOs")
+        
+        return {
+            "success": True,
+            "summary_id": summary_id,
+            "pmo_count": len(pmo_emails),
+            "pmo_emails": pmo_emails
+        }
+        
+    except Exception as e:
+        print(f"Error sending daily summary email: {e}")
+        return {"error": str(e), "summary_id": summary_id}
+
+@celery_app.task(autoretry_for=(Exception,), retry_backoff=True, max_retries=5, name="src.workflow.tasks.send_daily_reminders")
+def send_daily_reminders(target_date: str = None):
+    """
+    Send reminder emails to employees who haven't provided daily updates.
+    Runs at 4pm ET daily.
+    """
+    from src.workflow import repository as repo
+    from src.email.queued_email_service import QueuedEmailService
+    from datetime import date
+    
+    print(f"Sending daily reminders for {target_date}")
+    
+    try:
+        # Parse target date
+        if target_date:
+            target_date = date.fromisoformat(target_date)
+        else:
+            target_date = date.today()
+        
+        # Get all EOs with active tasks
+        from src.models.executive_order import ExecutiveOrder
+        from src.models.task import Task
+        with repo.SessionLocal() as db:
+            eos_with_tasks = db.execute(
+                select(ExecutiveOrder)
+                .join(Task, ExecutiveOrder.id == Task.eo_id)
+                .where(Task.status.in_(["pending", "in_progress", "Pending PMO approval"]))
+                .distinct()
+            ).scalars().all()
+        
+        total_reminders_sent = 0
+        
+        for eo in eos_with_tasks:
+            # Get expected updates for this EO
+            expected_users = repo.get_expected_updates_for_eo_date(eo.id, target_date)
+            
+            # Get actual updates for this EO
+            actual_updates = repo.get_task_updates_for_eo_date(eo.id, target_date)
+            updated_user_emails = {update['user_email'] for update in actual_updates if 'user_email' in update}
+            
+            # Find users who haven't updated
+            missing_users = [
+                user for user in expected_users 
+                if user['user_email'] not in updated_user_emails
+            ]
+            
+            if missing_users:
+                # Send reminder emails
+                email_service = QueuedEmailService()
+                
+                for user in missing_users:
+                    # Build task list separately to avoid nested f-string
+                    task_list = chr(10).join(f"- {task['title']}" for task in user['tasks'])
+                    
+                    reminder_content = f"""
+Hello {user['user_name']},
+
+This is a friendly reminder that you have {user['task_count']} active task(s) assigned to you under Executive Order: {eo.title}
+
+Please provide your daily update by 6:00 PM ET today.
+
+Your tasks:
+{task_list}
+
+You can reply to this email with your update, or use the following template:
+
+# Daily Update ({target_date})
+- Task: [Task Title or ID]
+  Status: [NotStarted/InProgress/Blocked/Completed]
+  Progress: [0-100]%
+  ETA: [YYYY-MM-DD]
+  Spent: [X.X]h
+  Blockers: [none or description]
+  Notes: [brief update]
+
+Thank you!
+                    """.strip()
+                    
+                    email_service.send(
+                        to=[user['user_email']],
+                        subject=f"Daily Update Reminder - {eo.title}",
+                        body_text=reminder_content,
+                        body_html=reminder_content.replace('\n', '<br>')
+                    )
+                    
+                    total_reminders_sent += 1
+        
+        print(f"Sent {total_reminders_sent} reminder emails")
+        
+        return {
+            "success": True,
+            "date": str(target_date),
+            "reminders_sent": total_reminders_sent
+        }
+        
+    except Exception as e:
+        print(f"Error sending daily reminders: {e}")
+        return {"error": str(e), "date": target_date}
 
     

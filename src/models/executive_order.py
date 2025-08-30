@@ -26,3 +26,5 @@ class ExecutiveOrder(Base):
     tasks = relationship("Task", back_populates="executive_order", cascade="all,delete-orphan")
     email_logs = relationship("EmailLog", back_populates="related_eo", cascade="all,delete-orphan")
     pmo_assignments = relationship("EOPMOAssignment", back_populates="executive_order", cascade="all,delete-orphan")
+    task_updates = relationship("TaskUpdate", back_populates="executive_order", cascade="all,delete-orphan")
+    daily_summaries = relationship("DailyEOSummary", back_populates="executive_order", cascade="all,delete-orphan")
