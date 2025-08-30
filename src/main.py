@@ -14,7 +14,8 @@ logging.basicConfig(
 
 # src/main.py
 from fastapi import FastAPI, status, HTTPException
-from src.routes import auth, application, dashboard, email_webhook
+from src.routes import auth, application, dashboard, email_webhook, monitoring
+# Redis email processor runs in Celery worker, not API
 
 app = FastAPI(
     title="DOL EO Management API",
@@ -27,6 +28,17 @@ app.include_router(auth.router)
 app.include_router(application.router)
 app.include_router(dashboard.router)
 app.include_router(email_webhook.router)
+app.include_router(monitoring.router)
+
+@app.on_event("startup")
+async def startup_event():
+    """API startup - Redis email processor runs in Celery worker"""
+    pass
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """API shutdown"""
+    pass
 
 @app.get("/health_check", status_code=status.HTTP_200_OK)
 def check_health():
@@ -34,3 +46,5 @@ def check_health():
         "success": True,
         "message": "Server is up and running"
     }
+
+# Email queue statistics removed - email processing handled entirely by Celery worker

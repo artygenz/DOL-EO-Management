@@ -12,7 +12,7 @@ class ImprovedTasksReviewTemplate(BaseEmailTemplate):
     @staticmethod
     def build_improved_tasks_review(eo, rows: List[Dict], improvement_summary: str) -> BuiltEmail:
         """Build improved tasks review email."""
-        subject = f"Improved Tasks Review: {ImprovedTasksReviewTemplate._get_eo_property(eo, 'title') or 'Executive Order'}"
+        subject = f"Improved Tasks Review: {ImprovedTasksReviewTemplate._get_eo_property(eo, 'title') or 'Executive Order'} [EO ID: {ImprovedTasksReviewTemplate._get_eo_property(eo, 'id')}]"
         
         # TEXT VERSION
         lines = [

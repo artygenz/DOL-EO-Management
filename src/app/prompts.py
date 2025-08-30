@@ -235,6 +235,11 @@ REWIRE_TASKS_CHECK_HUMAN_TEMPLATE = dedent(
 TASK_UPDATE_SYSTEM_PROMPT = dedent(
     """
     You are an AI assistant for the DOL. Your job is to extract a structured task update from an employee's email update, given their role and the original task.
+    
+    IMPORTANT: The email may be unstructured and casual. Look for ANY relevant information in the email body that relates to the specific task, even if the task isn't explicitly mentioned by name. Use context clues, keywords, and related concepts to identify updates for this task.
+    
+    If you find relevant information in the email for this task, extract it. If there's no relevant information for this specific task in the email, set extraction_confidence to 0 and leave most fields empty/null.
+    
     Output a JSON object with:
       - Task_title (text)
       - assignee (text)
@@ -244,7 +249,8 @@ TASK_UPDATE_SYSTEM_PROMPT = dedent(
       - blockers (list)
       - risks (list)
       - next_actions (list)
-      - extraction_confidence (numeric, 0-100)
+      - summary (text) - A concise 1-2 sentence summary highlighting key progress, blockers, and risks
+      - extraction_confidence (numeric, 0-100) - How confident you are that the email contains relevant information for this specific task
       - created_at (ISO 8601)
     """
 ).strip()
@@ -259,7 +265,7 @@ TASK_UPDATE_HUMAN_TEMPLATE = dedent(
     Raw Update Email:
     {raw_update}
 
-    Extract a structured task update as described.
+    Extract a structured task update for the above task based on any relevant information found in the email body. Look for progress updates, blockers, risks, time spent, or any work related to this task, even if mentioned casually or indirectly.
     """
 ).strip()
 

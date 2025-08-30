@@ -108,3 +108,98 @@ class EOPMOAssignmentResponse(BaseModel):
     assigned_at: datetime
     assigned_by: Optional[str] = None
     is_primary: bool
+
+# Task Update Schemas
+class TaskUpdateCreate(BaseModel):
+    task_id: str
+    user_id: str
+    eo_id: str
+    date: date
+    progress_pct: Optional[int] = None
+    status: Optional[str] = None
+    notes: Optional[str] = None
+    blockers: Optional[List[str]] = None
+    risks: Optional[List[str]] = None
+    eta: Optional[date] = None
+    spent_hours: Optional[float] = None
+    ai_summary: Optional[str] = None  # AI-generated summary for this task update
+    source_email_message_id: Optional[str] = None
+    dedupe_hash: Optional[str] = None
+    is_late: bool = False
+
+class TaskUpdateOut(BaseModel):
+    id: str
+    task_id: str
+    user_id: str
+    eo_id: str
+    date: date
+    progress_pct: Optional[int] = None
+    status: Optional[str] = None
+    notes: Optional[str] = None
+    blockers: Optional[List[str]] = None
+    risks: Optional[List[str]] = None
+    eta: Optional[date] = None
+    spent_hours: Optional[float] = None
+    ai_summary: Optional[str] = None  # AI-generated summary for this task update
+    is_late: bool = False
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+# Daily EO Summary Schemas
+class DailyEOSummaryCreate(BaseModel):
+    eo_id: str
+    date: date
+    progress_summary: Optional[str] = None
+    key_blockers: Optional[List[str]] = None
+    risks: Optional[List[str]] = None
+    attention_items: Optional[List[str]] = None
+    missing_updates: Optional[List[str]] = None
+    total_tasks: int = 0
+    updated_tasks: int = 0
+
+class DailyEOSummaryOut(BaseModel):
+    id: str
+    eo_id: str
+    date: date
+    progress_summary: Optional[str] = None
+    key_blockers: Optional[List[str]] = None
+    risks: Optional[List[str]] = None
+    attention_items: Optional[List[str]] = None
+    missing_updates: Optional[List[str]] = None
+    total_tasks: int
+    updated_tasks: int
+    summary_email_sent: bool
+    summary_email_sent_at: Optional[datetime] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+# LLM Extraction Schemas
+class TaskUpdateExtraction(BaseModel):
+    status: Optional[str] = None
+    progress_pct: Optional[int] = None
+    notes: Optional[str] = None
+    blockers: Optional[List[str]] = None
+    risks: Optional[List[str]] = None
+    eta: Optional[str] = None  # YYYY-MM-DD format
+    spent_hours: Optional[float] = None
+    ai_summary: Optional[str] = None  # AI-generated summary for this task update
+
+class DailyUpdateExtraction(BaseModel):
+    case: Literal["C1", "C2", "C3"]
+    updates: List[TaskUpdateExtraction]
+    unmatched_mentions: List[str] = []
+
+# Email Processing Schemas
+class DailyUpdateEmailPayload(BaseModel):
+    message_id: str
+    subject: str
+    sender: str
+    recipients: List[str]
+    body_text: str
+    body_html: Optional[str] = None
+    received_at: datetime
+    raw_mime_s3_key: Optional[str] = None
