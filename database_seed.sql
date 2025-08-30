@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict IDjWHO99LPzcPgErO8X3KkCx9tc28OsMjlyDfPRTDe6Vbeqd1agT1LseM9MoOkb
+\restrict tBKSzCROtTcejyQ9ErV8jQQTMP16qgLxmpNUYYfcQeudJ8kPHl4gPdH4anHGkuB
 
 -- Dumped from database version 13.22 (Debian 13.22-1.pgdg13+1)
 -- Dumped by pg_dump version 13.22 (Debian 13.22-1.pgdg13+1)
@@ -22,71 +22,567 @@ SET row_security = off;
 -- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.alembic_version VALUES ('bbe85c9252e4');
+INSERT INTO public.alembic_version VALUES ('5667efdb81b0');
 
 
 --
 -- Data for Name: executive_orders; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.executive_orders VALUES ('4079e80f-781b-44ed-a759-527f97ef87f5', 'EO - Digital Transformation', 'Daily Update - All tasks progressing well.
+INSERT INTO public.executive_orders VALUES ('caad98cf-0b8d-4968-b319-d09aa02cffaa', 'EO: Modernize workforce data ', 'This document is scheduled to be published in the Federal Register on 03/28/2025 and available online at https://federalregister.gov/d/2025-05522, and on https://govinfo.gov 
+EXECUTIVE ORDER 14247 - - - - - - - 
+MODERNIZING PAYMENTS TO AND FROM AMERICA''S BANK ACCOUNT 
+By the authority vested in me as President by the 
+Constitution and the laws of the United States of America, it is 
+hereby ordered: 
+Section 1. Purpose. The continued use of paper-based 
+payments by the Federal Government, including checks and money 
+orders, flowing into and out of the United States General Fund, 
+which might be thought of as America''s bank account, imposes 
+unnecessary costs; delays; and risks of fraud, lost payments, 
+theft, and inefficiencies. Mail theft complaints have increased 
+substantially since the COVID-19 pandemic. Historically, 
+Department of the Treasury checks are 16 times more likely to be 
+reported lost or stolen, returned undeliverable, or altered than 
+an electronic funds transfer (EFT). Maintaining the physical 
+infrastructure and specialized technology for digitizing paper 
+records cost the American taxpayer over $657 million in Fiscal 
+Year 2024 alone. 
+This order promotes operational efficiency by mandating the 
+transition to electronic payments for all Federal disbursements 
+and receipts by digitizing payments to the extent permissible 
+under applicable law (but not, for avoidance of doubt, to 
+establish a Central Bank Digital Currency). 
+Sec. 2. Policy. It is the policy of the United States to 
+defend against financial fraud and improper payments, increase 
+efficiency, reduce costs, and enhance the security of Federal 
+payments. 
+Sec. 3. Phase Out of Paper Check Disbursements 
+and Receipts. (a) Effective September 30, 2025, and to the 
+2 
+extent permitted by law, the Secretary of the Treasury shall 
+cease issuing paper checks for all Federal disbursements 
+inclusive of intragovernmental payments, benefits payments, 
+vendor payments, and tax refunds, except as specified in 
+section 4 of this order. 
+(b) All executive departments and agencies (agencies) 
+shall comply with this directive by transitioning to EFT 
+methods, including direct deposit, prepaid card accounts, and 
+other digital payment options, and take all steps necessary to 
+enroll recipients in EFT payments, except as specified in 
+section 4 of this order. 
+(c) As soon as practicable, and to the extent permitted by 
+law, all payments made to the Federal Government shall be 
+processed electronically, except as specified in section 4 of 
+this order. 
+(d) The Secretary of State, the Secretary of the Treasury, 
+the Secretary of Health and Human Services, the Secretary of 
+Education, the Secretary of Veterans Affairs, and the Secretary 
+of Homeland Security shall take appropriate action to eliminate 
+the need for the Department of the Treasury''s physical lockbox 
+services and expedite requirements to receive the payment of 
+Federal receipts, including fees, fines, loans, and taxes, 
+through electronic means except as specified in section 4 of 
+this order. 
+(e) The Secretary of the Treasury shall support agencies'' 
+transition to digital payment methods, including by providing 
+access through the Department of the Treasury''s centralized 
+payment systems to: 
+(i) direct deposits; 
+(ii) debit and credit card payments; 
+3 
+(iii) digital wallets and real-time payment systems; 
+and 
+(iv) other modern electronic payment options. 
+Sec. 4. Exceptions and Accommodations for the Phase Out of 
+Paper Check Disbursements and Receipts. (a) The Secretary of 
+the Treasury, shall review and, as appropriate, revise 
+procedures for granting limited exceptions where electronic 
+payment and collection methods are not feasible, including 
+exceptions for: 
+(i) individuals who do not have access to banking 
+services or electronic payment systems; 
+(ii) certain emergency payments where electronic 
+disbursement would cause undue hardship, as 
+contemplated in 31 C.F.R. Part 208; 
+(iii) national security- or law enforcement-related 
+activities where non-EFT transactions are necessary or 
+desirable; and 
+(iv) other circumstances as determined by the 
+Secretary of the Treasury, as reflected in regulations 
+or other guidance. 
+(b) Individuals or entities qualifying for an exception 
+under this section or other applicable law shall be provided 
+alternative payment options. 
+Sec. 5. Implementation and Compliance of Electronic 
+Transactions. (a) The Secretary of the Treasury, in 
+coordination with the heads of agencies, shall develop and 
+implement a comprehensive public awareness campaign to inform 
+Federal payment recipients of the transition to electronic 
+payments, including guidance on accessing and setting up digital 
+payment options. 
+4 
+(b) Agencies shall coordinate with the Department of the 
+Treasury to facilitate a smooth transition to digital payments, 
+ensuring that affected individuals and entities receive adequate 
+support. 
+(c) The Secretary of the Treasury shall work with 
+financial institutions, consumer groups, and other stakeholders 
+to address financial access for unbanked and underbanked 
+populations. 
+(d) The Secretary of the Treasury and the heads of 
+agencies shall take all necessary steps to protect classified 
+information and systems, as well as personally identifiable 
+information and tax return information, through the 
+implementation of this order. 
+Sec. 6. Reporting Requirements. (a) The heads of agencies 
+shall submit a compliance plan to the Director of the Office of 
+Management and Budget within 90 days of the date of this order 
+detailing their strategy for eliminating paper-based 
+transactions. 
+(b) The Secretary of the Treasury shall submit an 
+implementation report to the President through the Assistant to 
+the President for Economic Policy within 180 days of the date of 
+this order detailing progress on the matters set forth in this 
+order.Sec. 7. General Provisions. (a) Nothing in this order 
+shall be construed to impair or otherwise affect: 
+(i) the authority granted by law to an executive 
+department or agency, or the head thereof; or 
+(ii) the functions of the Director of the Office of 
+Management and Budget relating to budgetary, 
+administrative, or legislative proposals. 
+5 
+(b) This order shall be implemented consistent with 
+applicable law and subject to the availability of 
+appropriations. 
+(c) This order is not intended to, and does not, create 
+any right or benefit, substantive or procedural, enforceable at 
+law or in equity by any party against the United States, its 
+departments, agencies, or entities, its officers, employees, or 
+agents, or any other person. 
+THE WHITE HOUSE, 
+March 25, 2025. 
+[FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] 
 
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', 'westley.everette@lumenlighthouse.ai', '2025-08-29 18:08:51.823537+00', NULL, 'error', '2025-08-29 18:08:51.840504+00', '2025-08-29 18:08:51.845023+00', '<aeede9de-89b3-4dce-a511-5bb9270c5725@example.com>');
-INSERT INTO public.executive_orders VALUES ('8fd95066-1662-4482-b1f8-3801f037f356', 'EO: Modernize Workforce Data', 'Presidential ActionsProtecting America’s Bank Account Against Fraud, Waste, and AbuseExecutive OrdersMarch 25, 2025 By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered:Section 1. Purpose.  Promoting financial integrity and operational efficiency are critical responsibilities of the Federal Government.  The Federal Government processes trillions of dollars annually in disbursements to individuals, businesses, and organizations, and in receipts from taxes, fees, and other payments to finance daily and long-term Government operations.  These transactions flow into and out of the United States General Fund (General Fund), which might be thought of as America’s bank account.  In Fiscal Year 2024, $33.9 trillion flowed into the General Fund and $33.6 trillion flowed out of the account, including $5.87 trillion (less net interest) in benefits, grants, loans, vendor payments, and other disbursements. The Department of the Treasury is the largest financial payment manager of the Federal Government and is responsible for safeguarding the General Fund, but lacks sufficient controls to track transactions flowing through the General Fund to determine if they were proper.  To enforce sufficient controls and ensure accountability to American taxpayers, the Department of the Treasury requires financial information from executive departments and agencies (agencies) beyond what they currently provide.Financial fraud threatens the integrity of Federal programs and undermines trust in Government.  Agencies’ past underinvestment in technology and longstanding challenges with access to accurate data has prevented them from more fully safeguarding taxpayer dollars against fraud and improper payments.  The Government Accountability Office estimates that the Federal Government loses between $233 and $521 billion annually to fraud.In addition to being an efficient steward of taxpayer funds, the Federal Government, on behalf of the American public, must seek to ensure that financial information is accurate and that there is transparency with respect to how taxpayer dollars are being used.  Today, Federal funds are disbursed both by the Department of the Treasury and various Federal Government entities that are authorized to issue their own disbursements known as Non-Treasury Disbursing Offices (NTDOs).  In Fiscal Year 2024, NTDOs were estimated to be responsible for 181 million payments totaling over $1.5 trillion (approximately 22 percent of all Federal Government dollars disbursed). This fragmentation of disbursing authority, together with the proliferation of non-standard financial management systems across the Federal Government, leads to expensive, disjointed, and duplicative financial reporting, lack of financial traceability, complicated financial management, opacity, increased operational risks, and decreased ability of the Department of the Treasury to provide centralized oversight.This order promotes financial integrity by enabling the Department of the Treasury to more easily conduct improper payment and fraud prevention screening prior to disbursing funds on behalf of agencies.  This order increases transparency and accountability by requiring agencies to provide the Department of the Treasury with the information needed to track transactions through the General Fund in greater detail.  This order also promotes operational efficiency by returning disbursing functions to the Department of the Treasury when possible and consolidating and standardizing core Federal financial systems.Sec. 2.  Policy.  It is the policy of the United States to defend against financial fraud and improper payments, increase transparency and accountability around the Federal Government’s operations and financial condition, increase efficiency, reduce costs, and enhance the security of Federal payments.Sec. 3.  Treasury Verification of Agency Payments Information.  (a)  The Secretary of the Treasury, in consultation with the Director of the Office of Management and Budget (OMB Director), shall update guidance and enhance systems to ensure that all payments made by the Department of the Treasury on behalf of agencies pursuant to the Secretary of the Treasury’s disbursing authority, including 31 U.S.C. 3321, are subject to pre-certification verification processes established by the Secretary of the Treasury and conducted by agencies and the Department of the Treasury for the purposes of defending against financial fraud and improper payments, to the greatest extent permitted by law.  Such guidance shall set forth guidelines for compliance with the Do Not Pay Working System as described in 31 U.S.C. 3351 et seq., and such other payment, account, and payee validation programs and services that the Secretary of the Treasury and the OMB Director determine to be beneficial for reducing financial fraud and improper payments.(b)  In accordance with 31 U.S.C. 3354, the heads of all agencies shall cooperate with the Secretary of the Treasury to fulfill their obligations to determine payment or award eligibility through pre-certification and pre-award procedures, as determined by the Secretary of the Treasury, including pursuant to subsection (a) of this section and section 4 of this order to prevent fraud and improper payments.(c)  The Secretary of the Treasury is directed to minimize administrative barriers to accessing and using data to prevent fraud and improper payments by exercising the authority in 31 U.S.C. 3351 et seq. to waive the requirements of 5 U.S.C. 552a(o), in consultation with the OMB Director, in any case or class of cases for computer matching activities, to the extent permissible by law.(d)  Within 90 days of the date of this order, agency heads shall review and modify, as applicable, their relevant system of records notices under the Privacy Act of 1974 to include a “routine use” that allows for the disclosure of records to the Department of the Treasury for the purposes of identifying, preventing, or recouping fraud and improper payments, to the extent permissible by law. (e)  The Secretary of the Treasury, in consultation with the OMB Director, shall issue guidance to agency heads on the circumstances in which agency heads, to the extent permissible by law, may provide the Secretary of the Treasury with access to data necessary for the purposes of detecting and preventing fraud and improper payments, as well as data for payment information verification (and not, for example, data such as health records).Sec. 4.  Implementation and Compliance of Payment Verification.  (a)  Agency heads, through designated agency officials (Certifying Officers or COs), who are responsible for verifying that disbursements made by the Federal Government are legal, proper, and correct, and for performing the duties in 31 U.S.C. 3528, shall comply with the disbursement requirements and instructions, including pre-certification requirements, published by the Secretary of the Treasury.(b)  The Secretary of the Treasury shall consider, as appropriate, issuing instructions to agencies to enforce the following pre-certification criteria for disbursement requests submitted by COs (Vouchers) before they are certified for payment by the CO:(i)     Funds are available at the time the obligation is incurred.  If an obligation is incurred when funds are not available, then the CO shall not certify the payment.(ii)    The amount of the payment and the name of the payee on the Voucher are correct, in conformance with the Department of the Treasury’s prescribed standard format.(iii)   A proper Social Security Number, Taxpayer Identification Number, Employer Identification Number, Individual Taxpayer Identification Number, or Payee ID Number is provided for each payee on the Voucher, as applicable.(iv)    The appropriation or fund from which the payment will be made is available for the purpose set forth in the Voucher and indicated with the appropriate Treasury Account Symbol/Business Event Type Code.(v)     Payees are not deceased individuals, to the greatest extent permitted by law.(vi)    The account number provided on the Voucher is held at a financial institution and is open, valid, and belongs to the payee or valid designee of payee.(vii)   Contracts or agreements are referenced on the Voucher by providing the contract number, referred to as the Procurement Instrument Identifier, where applicable.(viii)  Financial assistance awards (non-aggregate) are referenced on the Voucher by providing the award number, referred to as the Federal Award Identification Number, where applicable.(ix)    For summary schedules, the payments on the Voucher are submitted in conformance with the Department of the Treasury prescribed standard formats for such schedules.(c)  Agency heads shall submit payment files other than with respect to same-day payments to the Secretary of the Treasury or the Secretary’s designee with sufficient lead time prior to the date of disbursement as determined by the Department of the Treasury and provided in the requirements and instructions issued pursuant to subsections (a) and (b) of this section, to allow for fraud and improper payment screening, to the extent permissible by law.  With respect to same-day payments, agency heads shall submit payment files to the Secretary of the Treasury or the Secretary’s designee as much in advance as reasonably practicable.(d)  In issuing requirements and instructions pursuant to subsection (a) of this section, the Secretary of the Treasury shall consider whether it would be appropriate to provide that the Department of the Treasury’s Chief Disbursing Officer return to the relevant agency for reconciliation any payments that do not pass the pre-certification verification processes established pursuant to section 3(a) of this order and notify the designated CO.  (e)  The Secretary of the Treasury shall include in the guidance issued pursuant to subsection (a) of this section, or in other regulations or guidance, a transparent process for agencies to request exemptions from some or all of the payment verification requirements for specific payments or categories of payments.Sec. 5.  Core Financial System Consolidation.  (a)  Within 180 days of the date of this order, the OMB Director shall issue guidance that directs agencies described in 31 U.S.C. 901(b) (CFO Act agencies) to consolidate their core financial systems.(b)  As soon as practicable, but not later than 180 days of the date of this order, the OMB Director, in consultation with the Secretary of the Treasury, shall issue guidance directing all non-CFO Act agencies to consolidate transactional financial management services under a single provider approved by the Department of the Treasury.(c)  As soon as practicable, all heads of CFO Act agencies shall use standard financial management solutions available through the Financial Management Marketplace, administered by the Financial Management Quality Service Management Office.(d)  Agency heads shall ensure that core financial systems comply with Federal accounting and financial reporting standards and relevant regulations, orders, guidance documents, policy statements, and other agency actions published by the Department of the Treasury from time to time.Sec. 6.  Reduction of NTDOs.  (a)  Within 30 days of the date of this order, the Secretary of the Treasury shall assess whether to maintain disbursing authority that it has delegated to agencies pursuant to 31 U.S.C. 3321(b) and issue notices to revoke such delegations, as appropriate, in accordance with applicable law.  (b)  The heads of agencies with disbursing authority under 31 U.S.C. 3321(c), including the Secretary of Defense, the Secretary of Homeland Security, and the Attorney General (but excluding, for the avoidance of doubt, the Supreme Court and other entities of the Federal Government outside the Executive Branch) will work with the Secretary of the Treasury to delegate the performance of their disbursing activities, other than with respect to classified payments, to the Department of the Treasury’s Chief Disbursing Officer in accordance with applicable law. (c)  Notwithstanding subsections (a) or (b) of this section, the Secretary of the Treasury may continue to delegate disbursing authority to NTDOs at other agencies when doing so would align with significant Government priorities.  Any remaining NTDOs are required to report daily to the Department of the Treasury’s centralized accounting and reporting system in accordance with then-current Department of the Treasury guidance and applicable law.(d)  The Secretary of the Treasury shall develop a plan to centralize and manage all payments previously disbursed by NTDOs, ensuring seamless continuity of Government payments.(e)  The Secretary of the Treasury, in coordination with agency heads, shall establish a transition plan for agencies currently operating as NTDOs, including staffing adjustments, system integrations, and legal or regulatory modifications necessary for full consolidation.(f)  The heads of agencies with disbursing authority delegated to the agency under 33 U.S.C. 3321(b) shall decommission all internal payment systems and use the Department of the Treasury’s disbursement systems, except and to the extent authorized by the Department of the Treasury or otherwise required by applicable law.Sec. 7.  Reporting and Implementation Requirements.  (a)  The heads of all agencies shall submit a compliance plan to the OMB Director within 90 days of the date of this order detailing their strategy for:(i)    transitioning disbursing authority to the Department of the Treasury, as applicable and as contemplated by this order;(ii)   updating and integrating systems with Department of the Treasury platforms;(iii)  procedures to verify payment information as contemplated by this order; and(iv)   transmitting information associated with improper payments to the Department of the Treasury in accordance with standards and reporting specifications established by the OMB Director in coordination with the Secretary of the Treasury as contemplated by this order.(b)  The Secretary of the Treasury shall submit an implementation report to the President through the Assistant to the President for Economic Policy within 180 days of the date of this order detailing progress on the matters set forth in this order.(c)  The Secretary of the Treasury and agency heads shall take all necessary steps to protect classified information and systems, as well as personally identifiable information and tax return information, through the implementation of this order.Sec. 8.  General Provisions.  (a)  Nothing in this order shall be construed to impair or otherwise affect:(i)   the authority granted by law to an executive department or agency, or the head thereof; or(ii)  the functions of the Director of the Office of Management and Budget relating to budgetary, administrative, or legislative proposals.(b)  This order shall be implemented consistent with applicable law and subject to the availability of appropriations.(c)  This order is not intended to, and does not, create any right or benefit, substantive or procedural, enforceable at law or in equity by any party against the United States, its departments, agencies, or entities, its officers, employees, or agents, or any other person.DONALD J. TRUMPTHE WHITE HOUSE,    March 25, 2025.# Newline-delimited ROLES catalog used by the LLM to set category_dept (verbatim when possible).ROLES_DEMO = Secretary of the Treasury (in consultation with OMB Director)All Agency HeadsSecretary of the TreasuryAgency Heads / Certifying OfficersSecretary of the Treasury & Agency Certifying OfficersOMB DirectorOMB Director (in consultation with Secretary of the Treasury)CFO Act Agency HeadsHeads of agencies with disbursing authority under 31 U.S.C. 3321(c) (e.g., DoD, DHS, DOJ) + Secretary of the TreasurySecretary of the Treasury & NTDOs remaining after consolidation processSecretary of the Treasury (in coordination with agency heads)Agency Heads with authority under 31 U.S.C. 3321(b)', 'sec@agency.gov', '2025-08-13 15:00:00+00', NULL, 'error', '2025-08-28 19:15:30.705092+00', '2025-08-28 19:15:30.711016+00', 'msg-2001@sample');
-INSERT INTO public.executive_orders VALUES ('ccae689f-6842-4b82-a745-19d5d7e0c659', 'EO - Digital Transformation', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', 'westley.everette@lumenlighthouse.ai', '2025-08-29 18:03:01.805171+00', NULL, 'error', '2025-08-29 18:03:02.014919+00', '2025-08-29 18:03:02.038947+00', '<11607f1d-30d6-40a1-90a8-2062af44df29@example.com>');
-INSERT INTO public.executive_orders VALUES ('b8cd1182-41f6-4c38-a3b3-02e0d7e99c84', 'EO - Digital Transformation Initiative', 'Executive Order for Digital Transformation Initiative
-
-This executive order outlines the digital transformation requirements for the Department of Labor.
-
-Key directives:
-1. Implement new reporting systems
-2. Update documentation
-3. Conduct security reviews
-
-Please process this executive order and create appropriate tasks.', 'westley.everette@lumenlighthouse.ai', '2025-08-29 18:03:01.068537+00', NULL, 'error', '2025-08-29 18:03:02.022971+00', '2025-08-29 18:03:02.036999+00', '<0ed8e961-09d0-4ee4-b216-166571587e2b@example.com>');
+', 'jack.smith@lumenlighthouse.ai', '2025-08-30 18:33:57.739137+00', NULL, 'error', '2025-08-30 18:33:58.306686+00', '2025-08-30 18:33:58.312966+00', '<9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>');
 
 
 --
 -- Data for Name: email_logs; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.email_logs VALUES ('a4d4141a-95f0-46c4-858e-f91d9855ebc5', 'incoming', 'Mail delivery failed: returning message to sender', 'Mailer-Daemon@p3plzcpnl492179.prod.phx3.secureserver.net', '{eo.14249@lumenlighthouse.ai}', 'This message was created automatically by mail delivery software.
+INSERT INTO public.email_logs VALUES ('8856fc58-e515-4472-bb3d-68630705764f', 'incoming', 'EO: Modernize Workforce  Data', 'jack.smith@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'This document is scheduled to be published in the Federal Register on 03/28/2025 and available online at https://federalregister.gov/d/2025-05522, and on https://govinfo.gov 
+EXECUTIVE ORDER 14247 - - - - - - - 
+MODERNIZING PAYMENTS TO AND FROM AMERICA''S BANK ACCOUNT 
+By the authority vested in me as President by the 
+Constitution and the laws of the United States of America, it is 
+hereby ordered: 
+Section 1. Purpose. The continued use of paper-based 
+payments by the Federal Government, including checks and money 
+orders, flowing into and out of the United States General Fund, 
+which might be thought of as America''s bank account, imposes 
+unnecessary costs; delays; and risks of fraud, lost payments, 
+theft, and inefficiencies. Mail theft complaints have increased 
+substantially since the COVID-19 pandemic. Historically, 
+Department of the Treasury checks are 16 times more likely to be 
+reported lost or stolen, returned undeliverable, or altered than 
+an electronic funds transfer (EFT). Maintaining the physical 
+infrastructure and specialized technology for digitizing paper 
+records cost the American taxpayer over $657 million in Fiscal 
+Year 2024 alone. 
+This order promotes operational efficiency by mandating the 
+transition to electronic payments for all Federal disbursements 
+and receipts by digitizing payments to the extent permissible 
+under applicable law (but not, for avoidance of doubt, to 
+establish a Central Bank Digital Currency). 
+Sec. 2. Policy. It is the policy of the United States to 
+defend against financial fraud and improper payments, increase 
+efficiency, reduce costs, and enhance the security of Federal 
+payments. 
+Sec. 3. Phase Out of Paper Check Disbursements 
+and Receipts. (a) Effective September 30, 2025, and to the 
+2 
+extent permitted by law, the Secretary of the Treasury shall 
+cease issuing paper checks for all Federal disbursements 
+inclusive of intragovernmental payments, benefits payments, 
+vendor payments, and tax refunds, except as specified in 
+section 4 of this order. 
+(b) All executive departments and agencies (agencies) 
+shall comply with this directive by transitioning to EFT 
+methods, including direct deposit, prepaid card accounts, and 
+other digital payment options, and take all steps necessary to 
+enroll recipients in EFT payments, except as specified in 
+section 4 of this order. 
+(c) As soon as practicable, and to the extent permitted by 
+law, all payments made to the Federal Government shall be 
+processed electronically, except as specified in section 4 of 
+this order. 
+(d) The Secretary of State, the Secretary of the Treasury, 
+the Secretary of Health and Human Services, the Secretary of 
+Education, the Secretary of Veterans Affairs, and the Secretary 
+of Homeland Security shall take appropriate action to eliminate 
+the need for the Department of the Treasury''s physical lockbox 
+services and expedite requirements to receive the payment of 
+Federal receipts, including fees, fines, loans, and taxes, 
+through electronic means except as specified in section 4 of 
+this order. 
+(e) The Secretary of the Treasury shall support agencies'' 
+transition to digital payment methods, including by providing 
+access through the Department of the Treasury''s centralized 
+payment systems to: 
+(i) direct deposits; 
+(ii) debit and credit card payments; 
+3 
+(iii) digital wallets and real-time payment systems; 
+and 
+(iv) other modern electronic payment options. 
+Sec. 4. Exceptions and Accommodations for the Phase Out of 
+Paper Check Disbursements and Receipts. (a) The Secretary of 
+the Treasury, shall review and, as appropriate, revise 
+procedures for granting limited exceptions where electronic 
+payment and collection methods are not feasible, including 
+exceptions for: 
+(i) individuals who do not have access to banking 
+services or electronic payment systems; 
+(ii) certain emergency payments where electronic 
+disbursement would cause undue hardship, as 
+contemplated in 31 C.F.R. Part 208; 
+(iii) national security- or law enforcement-related 
+activities where non-EFT transactions are necessary or 
+desirable; and 
+(iv) other circumstances as determined by the 
+Secretary of the Treasury, as reflected in regulations 
+or other guidance. 
+(b) Individuals or entities qualifying for an exception 
+under this section or other applicable law shall be provided 
+alternative payment options. 
+Sec. 5. Implementation and Compliance of Electronic 
+Transactions. (a) The Secretary of the Treasury, in 
+coordination with the heads of agencies, shall develop and 
+implement a comprehensive public awareness campaign to inform 
+Federal payment recipients of the transition to electronic 
+payments, including guidance on accessing and setting up digital 
+payment options. 
+4 
+(b) Agencies shall coordinate with the Department of the 
+Treasury to facilitate a smooth transition to digital payments, 
+ensuring that affected individuals and entities receive adequate 
+support. 
+(c) The Secretary of the Treasury shall work with 
+financial institutions, consumer groups, and other stakeholders 
+to address financial access for unbanked and underbanked 
+populations. 
+(d) The Secretary of the Treasury and the heads of 
+agencies shall take all necessary steps to protect classified 
+information and systems, as well as personally identifiable 
+information and tax return information, through the 
+implementation of this order. 
+Sec. 6. Reporting Requirements. (a) The heads of agencies 
+shall submit a compliance plan to the Director of the Office of 
+Management and Budget within 90 days of the date of this order 
+detailing their strategy for eliminating paper-based 
+transactions. 
+(b) The Secretary of the Treasury shall submit an 
+implementation report to the President through the Assistant to 
+the President for Economic Policy within 180 days of the date of 
+this order detailing progress on the matters set forth in this 
+order.Sec. 7. General Provisions. (a) Nothing in this order 
+shall be construed to impair or otherwise affect: 
+(i) the authority granted by law to an executive 
+department or agency, or the head thereof; or 
+(ii) the functions of the Director of the Office of 
+Management and Budget relating to budgetary, 
+administrative, or legislative proposals. 
+5 
+(b) This order shall be implemented consistent with 
+applicable law and subject to the availability of 
+appropriations. 
+(c) This order is not intended to, and does not, create 
+any right or benefit, substantive or procedural, enforceable at 
+law or in equity by any party against the United States, its 
+departments, agencies, or entities, its officers, employees, or 
+agents, or any other person. 
+THE WHITE HOUSE, 
+March 25, 2025. 
+[FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] 
 
-A message that you sent could not be delivered to one or more of its
-recipients. This is a permanent error. The following address(es) failed:
+', true, NULL, '2025-08-30 18:31:49.145628+00');
+INSERT INTO public.email_logs VALUES ('11e1eea5-72e6-4d28-bd5d-28a1d8dcaf32', 'incoming', 'EO: Modernize workforce data ', 'jack.smith@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'This document is scheduled to be published in the Federal Register on 03/28/2025 and available online at https://federalregister.gov/d/2025-05522, and on https://govinfo.gov 
+EXECUTIVE ORDER 14247 - - - - - - - 
+MODERNIZING PAYMENTS TO AND FROM AMERICA''S BANK ACCOUNT 
+By the authority vested in me as President by the 
+Constitution and the laws of the United States of America, it is 
+hereby ordered: 
+Section 1. Purpose. The continued use of paper-based 
+payments by the Federal Government, including checks and money 
+orders, flowing into and out of the United States General Fund, 
+which might be thought of as America''s bank account, imposes 
+unnecessary costs; delays; and risks of fraud, lost payments, 
+theft, and inefficiencies. Mail theft complaints have increased 
+substantially since the COVID-19 pandemic. Historically, 
+Department of the Treasury checks are 16 times more likely to be 
+reported lost or stolen, returned undeliverable, or altered than 
+an electronic funds transfer (EFT). Maintaining the physical 
+infrastructure and specialized technology for digitizing paper 
+records cost the American taxpayer over $657 million in Fiscal 
+Year 2024 alone. 
+This order promotes operational efficiency by mandating the 
+transition to electronic payments for all Federal disbursements 
+and receipts by digitizing payments to the extent permissible 
+under applicable law (but not, for avoidance of doubt, to 
+establish a Central Bank Digital Currency). 
+Sec. 2. Policy. It is the policy of the United States to 
+defend against financial fraud and improper payments, increase 
+efficiency, reduce costs, and enhance the security of Federal 
+payments. 
+Sec. 3. Phase Out of Paper Check Disbursements 
+and Receipts. (a) Effective September 30, 2025, and to the 
+2 
+extent permitted by law, the Secretary of the Treasury shall 
+cease issuing paper checks for all Federal disbursements 
+inclusive of intragovernmental payments, benefits payments, 
+vendor payments, and tax refunds, except as specified in 
+section 4 of this order. 
+(b) All executive departments and agencies (agencies) 
+shall comply with this directive by transitioning to EFT 
+methods, including direct deposit, prepaid card accounts, and 
+other digital payment options, and take all steps necessary to 
+enroll recipients in EFT payments, except as specified in 
+section 4 of this order. 
+(c) As soon as practicable, and to the extent permitted by 
+law, all payments made to the Federal Government shall be 
+processed electronically, except as specified in section 4 of 
+this order. 
+(d) The Secretary of State, the Secretary of the Treasury, 
+the Secretary of Health and Human Services, the Secretary of 
+Education, the Secretary of Veterans Affairs, and the Secretary 
+of Homeland Security shall take appropriate action to eliminate 
+the need for the Department of the Treasury''s physical lockbox 
+services and expedite requirements to receive the payment of 
+Federal receipts, including fees, fines, loans, and taxes, 
+through electronic means except as specified in section 4 of 
+this order. 
+(e) The Secretary of the Treasury shall support agencies'' 
+transition to digital payment methods, including by providing 
+access through the Department of the Treasury''s centralized 
+payment systems to: 
+(i) direct deposits; 
+(ii) debit and credit card payments; 
+3 
+(iii) digital wallets and real-time payment systems; 
+and 
+(iv) other modern electronic payment options. 
+Sec. 4. Exceptions and Accommodations for the Phase Out of 
+Paper Check Disbursements and Receipts. (a) The Secretary of 
+the Treasury, shall review and, as appropriate, revise 
+procedures for granting limited exceptions where electronic 
+payment and collection methods are not feasible, including 
+exceptions for: 
+(i) individuals who do not have access to banking 
+services or electronic payment systems; 
+(ii) certain emergency payments where electronic 
+disbursement would cause undue hardship, as 
+contemplated in 31 C.F.R. Part 208; 
+(iii) national security- or law enforcement-related 
+activities where non-EFT transactions are necessary or 
+desirable; and 
+(iv) other circumstances as determined by the 
+Secretary of the Treasury, as reflected in regulations 
+or other guidance. 
+(b) Individuals or entities qualifying for an exception 
+under this section or other applicable law shall be provided 
+alternative payment options. 
+Sec. 5. Implementation and Compliance of Electronic 
+Transactions. (a) The Secretary of the Treasury, in 
+coordination with the heads of agencies, shall develop and 
+implement a comprehensive public awareness campaign to inform 
+Federal payment recipients of the transition to electronic 
+payments, including guidance on accessing and setting up digital 
+payment options. 
+4 
+(b) Agencies shall coordinate with the Department of the 
+Treasury to facilitate a smooth transition to digital payments, 
+ensuring that affected individuals and entities receive adequate 
+support. 
+(c) The Secretary of the Treasury shall work with 
+financial institutions, consumer groups, and other stakeholders 
+to address financial access for unbanked and underbanked 
+populations. 
+(d) The Secretary of the Treasury and the heads of 
+agencies shall take all necessary steps to protect classified 
+information and systems, as well as personally identifiable 
+information and tax return information, through the 
+implementation of this order. 
+Sec. 6. Reporting Requirements. (a) The heads of agencies 
+shall submit a compliance plan to the Director of the Office of 
+Management and Budget within 90 days of the date of this order 
+detailing their strategy for eliminating paper-based 
+transactions. 
+(b) The Secretary of the Treasury shall submit an 
+implementation report to the President through the Assistant to 
+the President for Economic Policy within 180 days of the date of 
+this order detailing progress on the matters set forth in this 
+order.Sec. 7. General Provisions. (a) Nothing in this order 
+shall be construed to impair or otherwise affect: 
+(i) the authority granted by law to an executive 
+department or agency, or the head thereof; or 
+(ii) the functions of the Director of the Office of 
+Management and Budget relating to budgetary, 
+administrative, or legislative proposals. 
+5 
+(b) This order shall be implemented consistent with 
+applicable law and subject to the availability of 
+appropriations. 
+(c) This order is not intended to, and does not, create 
+any right or benefit, substantive or procedural, enforceable at 
+law or in equity by any party against the United States, its 
+departments, agencies, or entities, its officers, employees, or 
+agents, or any other person. 
+THE WHITE HOUSE, 
+March 25, 2025. 
+[FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] 
 
-  test@example.com
-    host p3nlsmtpcp01-v01.prod.phx3.secureserver.net [132.148.124.48]
-    SMTP error from remote mail server after RCPT TO:<test@example.com>:
-    550 5.1.1 <test@example.com> recipient rejected. This is a default recipient used as a placeholder in many web applications. Please check your settings and try again.
-Direct SMTP test to test@example.com
-', true, NULL, '2025-08-28 19:05:46.570185+00');
-INSERT INTO public.email_logs VALUES ('c64323b7-0677-4a2a-9d19-9e2b78b16426', 'incoming', 'Mail delivery failed: returning message to sender', 'Mailer-Daemon@p3plzcpnl492179.prod.phx3.secureserver.net', '{eo.14249@lumenlighthouse.ai}', 'This message was created automatically by mail delivery software.
+', true, NULL, '2025-08-30 18:33:57.779588+00');
+INSERT INTO public.email_logs VALUES ('fdf03f51-f6f2-4e43-a664-1587e035ee86', 'incoming', 'EO: Modernize workforce data ', 'jack.smith@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'This document is scheduled to be published in the Federal Register on 03/28/2025 and available online at https://federalregister.gov/d/2025-05522, and on https://govinfo.gov 
+EXECUTIVE ORDER 14247 - - - - - - - 
+MODERNIZING PAYMENTS TO AND FROM AMERICA''S BANK ACCOUNT 
+By the authority vested in me as President by the 
+Constitution and the laws of the United States of America, it is 
+hereby ordered: 
+Section 1. Purpose. The continued use of paper-based 
+payments by the Federal Government, including checks and money 
+orders, flowing into and out of the United States General Fund, 
+which might be thought of as America''s bank account, imposes 
+unnecessary costs; delays; and risks of fraud, lost payments, 
+theft, and inefficiencies. Mail theft complaints have increased 
+substantially since the COVID-19 pandemic. Historically, 
+Department of the Treasury checks are 16 times more likely to be 
+reported lost or stolen, returned undeliverable, or altered than 
+an electronic funds transfer (EFT). Maintaining the physical 
+infrastructure and specialized technology for digitizing paper 
+records cost the American taxpayer over $657 million in Fiscal 
+Year 2024 alone. 
+This order promotes operational efficiency by mandating the 
+transition to electronic payments for all Federal disbursements 
+and receipts by digitizing payments to the extent permissible 
+under applicable law (but not, for avoidance of doubt, to 
+establish a Central Bank Digital Currency). 
+Sec. 2. Policy. It is the policy of the United States to 
+defend against financial fraud and improper payments, increase 
+efficiency, reduce costs, and enhance the security of Federal 
+payments. 
+Sec. 3. Phase Out of Paper Check Disbursements 
+and Receipts. (a) Effective September 30, 2025, and to the 
+2 
+extent permitted by law, the Secretary of the Treasury shall 
+cease issuing paper checks for all Federal disbursements 
+inclusive of intragovernmental payments, benefits payments, 
+vendor payments, and tax refunds, except as specified in 
+section 4 of this order. 
+(b) All executive departments and agencies (agencies) 
+shall comply with this directive by transitioning to EFT 
+methods, including direct deposit, prepaid card accounts, and 
+other digital payment options, and take all steps necessary to 
+enroll recipients in EFT payments, except as specified in 
+section 4 of this order. 
+(c) As soon as practicable, and to the extent permitted by 
+law, all payments made to the Federal Government shall be 
+processed electronically, except as specified in section 4 of 
+this order. 
+(d) The Secretary of State, the Secretary of the Treasury, 
+the Secretary of Health and Human Services, the Secretary of 
+Education, the Secretary of Veterans Affairs, and the Secretary 
+of Homeland Security shall take appropriate action to eliminate 
+the need for the Department of the Treasury''s physical lockbox 
+services and expedite requirements to receive the payment of 
+Federal receipts, including fees, fines, loans, and taxes, 
+through electronic means except as specified in section 4 of 
+this order. 
+(e) The Secretary of the Treasury shall support agencies'' 
+transition to digital payment methods, including by providing 
+access through the Department of the Treasury''s centralized 
+payment systems to: 
+(i) direct deposits; 
+(ii) debit and credit card payments; 
+3 
+(iii) digital wallets and real-time payment systems; 
+and 
+(iv) other modern electronic payment options. 
+Sec. 4. Exceptions and Accommodations for the Phase Out of 
+Paper Check Disbursements and Receipts. (a) The Secretary of 
+the Treasury, shall review and, as appropriate, revise 
+procedures for granting limited exceptions where electronic 
+payment and collection methods are not feasible, including 
+exceptions for: 
+(i) individuals who do not have access to banking 
+services or electronic payment systems; 
+(ii) certain emergency payments where electronic 
+disbursement would cause undue hardship, as 
+contemplated in 31 C.F.R. Part 208; 
+(iii) national security- or law enforcement-related 
+activities where non-EFT transactions are necessary or 
+desirable; and 
+(iv) other circumstances as determined by the 
+Secretary of the Treasury, as reflected in regulations 
+or other guidance. 
+(b) Individuals or entities qualifying for an exception 
+under this section or other applicable law shall be provided 
+alternative payment options. 
+Sec. 5. Implementation and Compliance of Electronic 
+Transactions. (a) The Secretary of the Treasury, in 
+coordination with the heads of agencies, shall develop and 
+implement a comprehensive public awareness campaign to inform 
+Federal payment recipients of the transition to electronic 
+payments, including guidance on accessing and setting up digital 
+payment options. 
+4 
+(b) Agencies shall coordinate with the Department of the 
+Treasury to facilitate a smooth transition to digital payments, 
+ensuring that affected individuals and entities receive adequate 
+support. 
+(c) The Secretary of the Treasury shall work with 
+financial institutions, consumer groups, and other stakeholders 
+to address financial access for unbanked and underbanked 
+populations. 
+(d) The Secretary of the Treasury and the heads of 
+agencies shall take all necessary steps to protect classified 
+information and systems, as well as personally identifiable 
+information and tax return information, through the 
+implementation of this order. 
+Sec. 6. Reporting Requirements. (a) The heads of agencies 
+shall submit a compliance plan to the Director of the Office of 
+Management and Budget within 90 days of the date of this order 
+detailing their strategy for eliminating paper-based 
+transactions. 
+(b) The Secretary of the Treasury shall submit an 
+implementation report to the President through the Assistant to 
+the President for Economic Policy within 180 days of the date of 
+this order detailing progress on the matters set forth in this 
+order.Sec. 7. General Provisions. (a) Nothing in this order 
+shall be construed to impair or otherwise affect: 
+(i) the authority granted by law to an executive 
+department or agency, or the head thereof; or 
+(ii) the functions of the Director of the Office of 
+Management and Budget relating to budgetary, 
+administrative, or legislative proposals. 
+5 
+(b) This order shall be implemented consistent with 
+applicable law and subject to the availability of 
+appropriations. 
+(c) This order is not intended to, and does not, create 
+any right or benefit, substantive or procedural, enforceable at 
+law or in equity by any party against the United States, its 
+departments, agencies, or entities, its officers, employees, or 
+agents, or any other person. 
+THE WHITE HOUSE, 
+March 25, 2025. 
+[FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] 
 
-A message that you sent could not be delivered to one or more of its
-recipients. This is a permanent error. The following address(es) failed:
-
-  test@example.com
-    host p3nlsmtpcp01-v01.prod.phx3.secureserver.net [132.148.124.48]
-    SMTP error from remote mail server after RCPT TO:<test@example.com>:
-    550 5.1.1 <test@example.com> recipient rejected. This is a default recipient used as a placeholder in many web applications. Please check your settings and try again.
-This is the final verification test for email sending.
-', true, NULL, '2025-08-28 19:15:04.842531+00');
-INSERT INTO public.email_logs VALUES ('4f714c62-8509-4f63-b370-295445ce2d6f', 'incoming', 'EO: Modernize Workforce Data', 'sec@agency.gov', '{ops@dol.gov}', 'Presidential ActionsProtecting America’s Bank Account Against Fraud, Waste, and AbuseExecutive OrdersMarch 25, 2025 By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered:Section 1. Purpose.  Promoting financial integrity and operational efficiency are critical responsibilities of the Federal Government.  The Federal Government processes trillions of dollars annually in disbursements to individuals, businesses, and organizations, and in receipts from taxes, fees, and other payments to finance daily and long-term Government operations.  These transactions flow into and out of the United States General Fund (General Fund), which might be thought of as America’s bank account.  In Fiscal Year 2024, $33.9 trillion flowed into the General Fund and $33.6 trillion flowed out of the account, including $5.87 trillion (less net interest) in benefits, grants, loans, vendor payments, and other disbursements. The Department of the Treasury is the largest financial payment manager of the Federal Government and is responsible for safeguarding the General Fund, but lacks sufficient controls to track transactions flowing through the General Fund to determine if they were proper.  To enforce sufficient controls and ensure accountability to American taxpayers, the Department of the Treasury requires financial information from executive departments and agencies (agencies) beyond what they currently provide.Financial fraud threatens the integrity of Federal programs and undermines trust in Government.  Agencies’ past underinvestment in technology and longstanding challenges with access to accurate data has prevented them from more fully safeguarding taxpayer dollars against fraud and improper payments.  The Government Accountability Office estimates that the Federal Government loses between $233 and $521 billion annually to fraud.In addition to being an efficient steward of taxpayer funds, the Federal Government, on behalf of the American public, must seek to ensure that financial information is accurate and that there is transparency with respect to how taxpayer dollars are being used.  Today, Federal funds are disbursed both by the Department of the Treasury and various Federal Government entities that are authorized to issue their own disbursements known as Non-Treasury Disbursing Offices (NTDOs).  In Fiscal Year 2024, NTDOs were estimated to be responsible for 181 million payments totaling over $1.5 trillion (approximately 22 percent of all Federal Government dollars disbursed). This fragmentation of disbursing authority, together with the proliferation of non-standard financial management systems across the Federal Government, leads to expensive, disjointed, and duplicative financial reporting, lack of financial traceability, complicated financial management, opacity, increased operational risks, and decreased ability of the Department of the Treasury to provide centralized oversight.This order promotes financial integrity by enabling the Department of the Treasury to more easily conduct improper payment and fraud prevention screening prior to disbursing funds on behalf of agencies.  This order increases transparency and accountability by requiring agencies to provide the Department of the Treasury with the information needed to track transactions through the General Fund in greater detail.  This order also promotes operational efficiency by returning disbursing functions to the Department of the Treasury when possible and consolidating and standardizing core Federal financial systems.Sec. 2.  Policy.  It is the policy of the United States to defend against financial fraud and improper payments, increase transparency and accountability around the Federal Government’s operations and financial condition, increase efficiency, reduce costs, and enhance the security of Federal payments.Sec. 3.  Treasury Verification of Agency Payments Information.  (a)  The Secretary of the Treasury, in consultation with the Director of the Office of Management and Budget (OMB Director), shall update guidance and enhance systems to ensure that all payments made by the Department of the Treasury on behalf of agencies pursuant to the Secretary of the Treasury’s disbursing authority, including 31 U.S.C. 3321, are subject to pre-certification verification processes established by the Secretary of the Treasury and conducted by agencies and the Department of the Treasury for the purposes of defending against financial fraud and improper payments, to the greatest extent permitted by law.  Such guidance shall set forth guidelines for compliance with the Do Not Pay Working System as described in 31 U.S.C. 3351 et seq., and such other payment, account, and payee validation programs and services that the Secretary of the Treasury and the OMB Director determine to be beneficial for reducing financial fraud and improper payments.(b)  In accordance with 31 U.S.C. 3354, the heads of all agencies shall cooperate with the Secretary of the Treasury to fulfill their obligations to determine payment or award eligibility through pre-certification and pre-award procedures, as determined by the Secretary of the Treasury, including pursuant to subsection (a) of this section and section 4 of this order to prevent fraud and improper payments.(c)  The Secretary of the Treasury is directed to minimize administrative barriers to accessing and using data to prevent fraud and improper payments by exercising the authority in 31 U.S.C. 3351 et seq. to waive the requirements of 5 U.S.C. 552a(o), in consultation with the OMB Director, in any case or class of cases for computer matching activities, to the extent permissible by law.(d)  Within 90 days of the date of this order, agency heads shall review and modify, as applicable, their relevant system of records notices under the Privacy Act of 1974 to include a “routine use” that allows for the disclosure of records to the Department of the Treasury for the purposes of identifying, preventing, or recouping fraud and improper payments, to the extent permissible by law. (e)  The Secretary of the Treasury, in consultation with the OMB Director, shall issue guidance to agency heads on the circumstances in which agency heads, to the extent permissible by law, may provide the Secretary of the Treasury with access to data necessary for the purposes of detecting and preventing fraud and improper payments, as well as data for payment information verification (and not, for example, data such as health records).Sec. 4.  Implementation and Compliance of Payment Verification.  (a)  Agency heads, through designated agency officials (Certifying Officers or COs), who are responsible for verifying that disbursements made by the Federal Government are legal, proper, and correct, and for performing the duties in 31 U.S.C. 3528, shall comply with the disbursement requirements and instructions, including pre-certification requirements, published by the Secretary of the Treasury.(b)  The Secretary of the Treasury shall consider, as appropriate, issuing instructions to agencies to enforce the following pre-certification criteria for disbursement requests submitted by COs (Vouchers) before they are certified for payment by the CO:(i)     Funds are available at the time the obligation is incurred.  If an obligation is incurred when funds are not available, then the CO shall not certify the payment.(ii)    The amount of the payment and the name of the payee on the Voucher are correct, in conformance with the Department of the Treasury’s prescribed standard format.(iii)   A proper Social Security Number, Taxpayer Identification Number, Employer Identification Number, Individual Taxpayer Identification Number, or Payee ID Number is provided for each payee on the Voucher, as applicable.(iv)    The appropriation or fund from which the payment will be made is available for the purpose set forth in the Voucher and indicated with the appropriate Treasury Account Symbol/Business Event Type Code.(v)     Payees are not deceased individuals, to the greatest extent permitted by law.(vi)    The account number provided on the Voucher is held at a financial institution and is open, valid, and belongs to the payee or valid designee of payee.(vii)   Contracts or agreements are referenced on the Voucher by providing the contract number, referred to as the Procurement Instrument Identifier, where applicable.(viii)  Financial assistance awards (non-aggregate) are referenced on the Voucher by providing the award number, referred to as the Federal Award Identification Number, where applicable.(ix)    For summary schedules, the payments on the Voucher are submitted in conformance with the Department of the Treasury prescribed standard formats for such schedules.(c)  Agency heads shall submit payment files other than with respect to same-day payments to the Secretary of the Treasury or the Secretary’s designee with sufficient lead time prior to the date of disbursement as determined by the Department of the Treasury and provided in the requirements and instructions issued pursuant to subsections (a) and (b) of this section, to allow for fraud and improper payment screening, to the extent permissible by law.  With respect to same-day payments, agency heads shall submit payment files to the Secretary of the Treasury or the Secretary’s designee as much in advance as reasonably practicable.(d)  In issuing requirements and instructions pursuant to subsection (a) of this section, the Secretary of the Treasury shall consider whether it would be appropriate to provide that the Department of the Treasury’s Chief Disbursing Officer return to the relevant agency for reconciliation any payments that do not pass the pre-certification verification processes established pursuant to section 3(a) of this order and notify the designated CO.  (e)  The Secretary of the Treasury shall include in the guidance issued pursuant to subsection (a) of this section, or in other regulations or guidance, a transparent process for agencies to request exemptions from some or all of the payment verification requirements for specific payments or categories of payments.Sec. 5.  Core Financial System Consolidation.  (a)  Within 180 days of the date of this order, the OMB Director shall issue guidance that directs agencies described in 31 U.S.C. 901(b) (CFO Act agencies) to consolidate their core financial systems.(b)  As soon as practicable, but not later than 180 days of the date of this order, the OMB Director, in consultation with the Secretary of the Treasury, shall issue guidance directing all non-CFO Act agencies to consolidate transactional financial management services under a single provider approved by the Department of the Treasury.(c)  As soon as practicable, all heads of CFO Act agencies shall use standard financial management solutions available through the Financial Management Marketplace, administered by the Financial Management Quality Service Management Office.(d)  Agency heads shall ensure that core financial systems comply with Federal accounting and financial reporting standards and relevant regulations, orders, guidance documents, policy statements, and other agency actions published by the Department of the Treasury from time to time.Sec. 6.  Reduction of NTDOs.  (a)  Within 30 days of the date of this order, the Secretary of the Treasury shall assess whether to maintain disbursing authority that it has delegated to agencies pursuant to 31 U.S.C. 3321(b) and issue notices to revoke such delegations, as appropriate, in accordance with applicable law.  (b)  The heads of agencies with disbursing authority under 31 U.S.C. 3321(c), including the Secretary of Defense, the Secretary of Homeland Security, and the Attorney General (but excluding, for the avoidance of doubt, the Supreme Court and other entities of the Federal Government outside the Executive Branch) will work with the Secretary of the Treasury to delegate the performance of their disbursing activities, other than with respect to classified payments, to the Department of the Treasury’s Chief Disbursing Officer in accordance with applicable law. (c)  Notwithstanding subsections (a) or (b) of this section, the Secretary of the Treasury may continue to delegate disbursing authority to NTDOs at other agencies when doing so would align with significant Government priorities.  Any remaining NTDOs are required to report daily to the Department of the Treasury’s centralized accounting and reporting system in accordance with then-current Department of the Treasury guidance and applicable law.(d)  The Secretary of the Treasury shall develop a plan to centralize and manage all payments previously disbursed by NTDOs, ensuring seamless continuity of Government payments.(e)  The Secretary of the Treasury, in coordination with agency heads, shall establish a transition plan for agencies currently operating as NTDOs, including staffing adjustments, system integrations, and legal or regulatory modifications necessary for full consolidation.(f)  The heads of agencies with disbursing authority delegated to the agency under 33 U.S.C. 3321(b) shall decommission all internal payment systems and use the Department of the Treasury’s disbursement systems, except and to the extent authorized by the Department of the Treasury or otherwise required by applicable law.Sec. 7.  Reporting and Implementation Requirements.  (a)  The heads of all agencies shall submit a compliance plan to the OMB Director within 90 days of the date of this order detailing their strategy for:(i)    transitioning disbursing authority to the Department of the Treasury, as applicable and as contemplated by this order;(ii)   updating and integrating systems with Department of the Treasury platforms;(iii)  procedures to verify payment information as contemplated by this order; and(iv)   transmitting information associated with improper payments to the Department of the Treasury in accordance with standards and reporting specifications established by the OMB Director in coordination with the Secretary of the Treasury as contemplated by this order.(b)  The Secretary of the Treasury shall submit an implementation report to the President through the Assistant to the President for Economic Policy within 180 days of the date of this order detailing progress on the matters set forth in this order.(c)  The Secretary of the Treasury and agency heads shall take all necessary steps to protect classified information and systems, as well as personally identifiable information and tax return information, through the implementation of this order.Sec. 8.  General Provisions.  (a)  Nothing in this order shall be construed to impair or otherwise affect:(i)   the authority granted by law to an executive department or agency, or the head thereof; or(ii)  the functions of the Director of the Office of Management and Budget relating to budgetary, administrative, or legislative proposals.(b)  This order shall be implemented consistent with applicable law and subject to the availability of appropriations.(c)  This order is not intended to, and does not, create any right or benefit, substantive or procedural, enforceable at law or in equity by any party against the United States, its departments, agencies, or entities, its officers, employees, or agents, or any other person.DONALD J. TRUMPTHE WHITE HOUSE,    March 25, 2025.# Newline-delimited ROLES catalog used by the LLM to set category_dept (verbatim when possible).ROLES_DEMO = Secretary of the Treasury (in consultation with OMB Director)All Agency HeadsSecretary of the TreasuryAgency Heads / Certifying OfficersSecretary of the Treasury & Agency Certifying OfficersOMB DirectorOMB Director (in consultation with Secretary of the Treasury)CFO Act Agency HeadsHeads of agencies with disbursing authority under 31 U.S.C. 3321(c) (e.g., DoD, DHS, DOJ) + Secretary of the TreasurySecretary of the Treasury & NTDOs remaining after consolidation processSecretary of the Treasury (in coordination with agency heads)Agency Heads with authority under 31 U.S.C. 3321(b)', false, NULL, '2025-08-28 19:15:30.694206+00');
-INSERT INTO public.email_logs VALUES ('a7893eda-aa06-4062-be31-082ea427dfb9', 'outgoing', 'PMO Review Required: EO: Modernize Workforce Data [EO ID: 8fd95066-1662-4482-b1f8-3801f037f356]', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+', false, NULL, '2025-08-30 18:33:58.301805+00');
+INSERT INTO public.email_logs VALUES ('2e789b36-9a60-4914-a042-7962a4b1f3da', 'outgoing', 'PMO Review Required: EO: Modernize workforce data  [EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa]', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO: Modernize workforce data 
+EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa
+EO Message-ID: <9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>
+Received: 2025-08-30 18:33:57 UTC
 
 Below are the PENDING tasks for PMO action.
 
@@ -104,333 +600,96 @@ NOTE: Please refer to the attached files for detailed information:
 
 Task ID | Title | Owner | Assignee | Due | Status | Remarks
 --------|-------|-------|----------|-----|--------|--------
-1 | Update Payment Verification Guidance and Enhance Systems | — | Dylan Sachetti | — | [Fill Here] | [Fill Here]
-2 | Review and Modify Privacy Act System of Records Notices | — | Dylan Sachetti | 2025-06-23 | [Fill Here] | [Fill Here]
-3 | Issue Guidance on Data Access for Fraud Prevention | — | Dylan Sachetti | — | [Fill Here] | [Fill Here]
-4 | Implement Pre-Certification Payment Verification Processes | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
-5 | Submit Payment Files with Sufficient Lead Time for Screening | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
-6 | Develop Transparent Exemption Request Process for Payment Verification | — | Dylan Sachetti | — | [Fill Here] | [Fill Here]
-7 | Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) | — | Hibbi Iqbal | 2025-09-21 | [Fill Here] | [Fill Here]
-8 | Issue Guidance for Non-CFO Act Agency Financial Service Consolidation | — | Hibbi Iqbal | 2025-09-21 | [Fill Here] | [Fill Here]
-9 | Ensure Use of Standard Financial Management Solutions | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
-10 | Ensure Core Financial Systems Comply with Federal Standards | — | Sophia Carty | — | [Fill Here] | [Fill Here]
-11 | Assess and Revoke Delegated Disbursing Authority as Appropriate | — | Hibbi Iqbal | 2025-04-24 | [Fill Here] | [Fill Here]
-12 | Develop Plan to Centralize and Manage NTDO Payments | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
-13 | Establish Transition Plan for NTDO Agencies | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
-14 | Decommission Internal Payment Systems and Transition to Treasury Systems | — | Robert Springfiled | — | [Fill Here] | [Fill Here]
-15 | Submit Agency Compliance Plan to OMB Director | — | Dylan Sachetti | 2025-06-23 | [Fill Here] | [Fill Here]
-16 | Submit Treasury Implementation Report to President | — | Hibbi Iqbal | 2025-09-21 | [Fill Here] | [Fill Here]
-17 | Protect Classified and Sensitive Information During Implementation | — | Robert Springfiled | — | [Fill Here] | [Fill Here]', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:15:50.311882+00');
-INSERT INTO public.email_logs VALUES ('aa9eff72-69f6-469a-9237-dd7636900dc4', 'incoming', 'Re: PMO Review Required: EO: Modernize Workforce Data [EO ID:
- 8fd95066-1662-4482-b1f8-3801f037f356]', 'kevin.brown@lumenlighthouse.ai', '{eo.14249@lumenlighthouse.ai}', '
-Task ID	Title	Owner	Assignee	Due	Status	Remarks
-1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	Reject	Too Vague Instructions
-2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	Approve	[Fill Here]
-4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	Approve	[Fill Here]
-5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	Approve	[Fill Here]
-6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	Approve	[Fill Here]
-7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	Approve	[Fill Here]
-10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	Approve	[Fill Here]
-11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	Approve	[Fill Here]
-12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	Approve	[Fill Here]
-13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	Approve	[Fill Here]
-14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	Approve	[Fill Here]
-15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
+1 | Cease Issuance of Paper Checks for Federal Disbursements | — | Ayesha Ahsan | 2025-09-30 | [Fill Here] | [Fill Here]
+2 | Transition All Federal Receipts to Electronic Processing | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
+3 | Eliminate Treasury Physical Lockbox Services | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
+4 | Support Agency Transition to Digital Payment Methods | — | Sophia Carty | — | [Fill Here] | [Fill Here]
+5 | Review and Revise Exception Procedures for Non-Electronic Payments | — | Dylan Sachetti | — | [Fill Here] | [Fill Here]
+6 | Provide Alternative Payment Options for Exception Cases | — | Dylan Sachetti | — | [Fill Here] | [Fill Here]
+7 | Develop and Implement Public Awareness Campaign | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
+8 | Coordinate Agency Support for Digital Payment Transition | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
+9 | Address Financial Access for Unbanked and Underbanked Populations | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
+10 | Protect Classified and Sensitive Information During Implementation | — | Robert Springfiled | — | [Fill Here] | [Fill Here]
+11 | Submit Agency Compliance Plan for Eliminating Paper-Based Transactions | — | Dylan Sachetti | 2025-12-29 | [Fill Here] | [Fill Here]
+12 | Submit Treasury Implementation Report on EO Progress | — | Hibbi Iqbal | 2026-03-29 | [Fill Here] | [Fill Here]', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:34:38.29211+00');
+INSERT INTO public.email_logs VALUES ('0396086d-79ca-439e-a8ee-74922075f793', 'incoming', 'Re: PMO Review Required: EO: Modernize workforce data  [EO ID:
+ caad98cf-0b8d-4968-b319-d09aa02cffaa]', 'kevin.brown@lumenlighthouse.ai', '{eo.14249@lumenlighthouse.ai}', '
 
-> On Aug 28, 2025, at 3:15 PM, eo.14249@lumenlighthouse.ai wrote:
+> On Aug 30, 2025, at 2:35 PM, eo.14249@lumenlighthouse.ai wrote:
 > 
-> 📋 PMO Review Required
-> Executive Order: EO: Modernize Workforce Data
-> EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-> Message ID: msg-2001@sample
-> Received: 2025-08-13 15:00:00 UTC
-> Below are the PENDING tasks for PMO action.
-> 
-> 📝 Instructions:
-> 
-> Copy the table below
-> Paste it in your reply email
-> Fill in the ''Status'' column with ''Approve'' or ''Reject''
-> Fill in the ''Remarks'' column with your feedback
-> Send the email back
 > Task ID	Title	Owner	Assignee	Due	Status	Remarks
-> 1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
-> 2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
-> 3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
-> 4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
-> 7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
-> 8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
-> 9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	[Fill Here]	[Fill Here]
-> 10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	[Fill Here]	[Fill Here]
-> 11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	[Fill Here]	[Fill Here]
-> 12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
-> 15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
-> 16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
-> 17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
-> 📎 Attachments:
+> 1	Cease Issuance of Paper Checks for Federal Disbursements	—	Ayesha Ahsan	2025-09-30	Approve	[Fill Here]
+> 2	Transition All Federal Receipts to Electronic Processing	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 3	Eliminate Treasury Physical Lockbox Services	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 4	Support Agency Transition to Digital Payment Methods	—	Sophia Carty	—	Approve	[Fill Here]
+> 5	Review and Revise Exception Procedures for Non-Electronic Payments	—	Dylan Sachetti	—	Approve	[Fill Here]
+> 6	Provide Alternative Payment Options for Exception Cases	—	Dylan Sachetti	—	Approve	[Fill Here]
+> 7	Develop and Implement Public Awareness Campaign	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 8	Coordinate Agency Support for Digital Payment Transition	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 9	Address Financial Access for Unbanked and Underbanked Populations	—	Hibbi Iqbal	—	Approve	[Fill Here]
+> 10	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	Approve	[Fill Here]
+> 11	Submit Agency Compliance Plan for Eliminating Paper-Based Transactions	—	Dylan Sachetti	2025-12-29	Approve	[Fill Here]
+> 12	Submit Treasury Implementation Report on EO Progress	—	Hibbi Iqbal	2026-03-29	Approve	[Fill Here]
 > 
-> Please refer to the attached files for detailed information:
-> 
-> CSV file: Complete task details in spreadsheet format
-> JSON file: Structured task data
-> TXT file: Full Executive Order text
-> DOL EO Management System
-> 
-> <pmo_review_tasks.csv><pmo_review_tasks.json><executive_order.txt>
 
-', true, NULL, '2025-08-28 19:17:12.757849+00');
-INSERT INTO public.email_logs VALUES ('7c64ed7f-2f1e-459b-b6c2-bff321ea5498', 'incoming', 'Re: PMO Review Required: EO: Modernize Workforce Data [EO ID:
- 8fd95066-1662-4482-b1f8-3801f037f356]', 'kevin.brown@lumenlighthouse.ai', '{eo.14249@lumenlighthouse.ai}', '
-Task ID	Title	Owner	Assignee	Due	Status	Remarks
-1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	Reject	Too Vague Instructions
-2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	Approve	[Fill Here]
-4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	Approve	[Fill Here]
-5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	Approve	[Fill Here]
-6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	Approve	[Fill Here]
-7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	Approve	[Fill Here]
-10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	Approve	[Fill Here]
-11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	Approve	[Fill Here]
-12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	Approve	[Fill Here]
-13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	Approve	[Fill Here]
-14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	Approve	[Fill Here]
-15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
+', true, NULL, '2025-08-30 18:39:37.242031+00');
+INSERT INTO public.email_logs VALUES ('5374b470-bd00-47ab-b23d-776a0c26e8be', 'incoming', 'Re: PMO Review Required: EO: Modernize workforce data  [EO ID:
+ caad98cf-0b8d-4968-b319-d09aa02cffaa]', 'kevin.brown@lumenlighthouse.ai', '{eo.14249@lumenlighthouse.ai}', '
 
-> On Aug 28, 2025, at 3:15 PM, eo.14249@lumenlighthouse.ai wrote:
+> On Aug 30, 2025, at 2:35 PM, eo.14249@lumenlighthouse.ai wrote:
 > 
-> 📋 PMO Review Required
-> Executive Order: EO: Modernize Workforce Data
-> EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-> Message ID: msg-2001@sample
-> Received: 2025-08-13 15:00:00 UTC
-> Below are the PENDING tasks for PMO action.
-> 
-> 📝 Instructions:
-> 
-> Copy the table below
-> Paste it in your reply email
-> Fill in the ''Status'' column with ''Approve'' or ''Reject''
-> Fill in the ''Remarks'' column with your feedback
-> Send the email back
 > Task ID	Title	Owner	Assignee	Due	Status	Remarks
-> 1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
-> 2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
-> 3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
-> 4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
-> 7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
-> 8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
-> 9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	[Fill Here]	[Fill Here]
-> 10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	[Fill Here]	[Fill Here]
-> 11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	[Fill Here]	[Fill Here]
-> 12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
-> 14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
-> 15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
-> 16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
-> 17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
-> 📎 Attachments:
+> 1	Cease Issuance of Paper Checks for Federal Disbursements	—	Ayesha Ahsan	2025-09-30	Approve	[Fill Here]
+> 2	Transition All Federal Receipts to Electronic Processing	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 3	Eliminate Treasury Physical Lockbox Services	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 4	Support Agency Transition to Digital Payment Methods	—	Sophia Carty	—	Approve	[Fill Here]
+> 5	Review and Revise Exception Procedures for Non-Electronic Payments	—	Dylan Sachetti	—	Approve	[Fill Here]
+> 6	Provide Alternative Payment Options for Exception Cases	—	Dylan Sachetti	—	Approve	[Fill Here]
+> 7	Develop and Implement Public Awareness Campaign	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 8	Coordinate Agency Support for Digital Payment Transition	—	Ayesha Ahsan	—	Approve	[Fill Here]
+> 9	Address Financial Access for Unbanked and Underbanked Populations	—	Hibbi Iqbal	—	Approve	[Fill Here]
+> 10	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	Approve	[Fill Here]
+> 11	Submit Agency Compliance Plan for Eliminating Paper-Based Transactions	—	Dylan Sachetti	2025-12-29	Approve	[Fill Here]
+> 12	Submit Treasury Implementation Report on EO Progress	—	Hibbi Iqbal	2026-03-29	Approve	[Fill Here]
 > 
-> Please refer to the attached files for detailed information:
-> 
-> CSV file: Complete task details in spreadsheet format
-> JSON file: Structured task data
-> TXT file: Full Executive Order text
-> DOL EO Management System
-> 
-> <pmo_review_tasks.csv><pmo_review_tasks.json><executive_order.txt>
 
-', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:12.771689+00');
-INSERT INTO public.email_logs VALUES ('413e3109-7de0-464b-9838-c4dfd7d2d172', 'outgoing', 'Improved Tasks Review: EO: Modernize Workforce Data', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:39:37.257951+00');
+INSERT INTO public.email_logs VALUES ('578cd81d-42da-4589-b5ad-6a19e025d82a', 'outgoing', 'Task Assignment: EO: Modernize workforce data ', NULL, '{ayesha.ahsan@lumenlighthouse.ai}', 'Dear Ayesha Ahsan,
 
-=== IMPROVEMENT SUMMARY ===
-The revised task should explicitly reference the requirement for consultation with the OMB Director, cite the relevant legal authorities, and focus on the specific elements mandated by the EO (guidelines for Do Not Pay, other validation programs, and actionable instructions for agencies). Remove extraneous details not present in the EO, such as establishing timelines and IT team coordination, unless these are specified elsewhere in the implementation plan.
-
-Below are ALL tasks for this EO with their current status.
-Tasks marked as ''Approved'' were previously approved and do not need action.
-Tasks marked as ''Pending PMO approval'' are improved versions that need your review.
-
-INSTRUCTIONS:
-1. Copy the table below
-2. Paste it in your reply email
-3. For ''Pending PMO approval'' tasks: Fill in the ''Status'' column with ''Approve'' or ''Reject''
-4. For ''Pending PMO approval'' tasks: Fill in the ''Remarks'' column with your feedback
-5. Leave ''Approved'' tasks as-is (no action needed)
-6. Send the email back
-
-NOTE: Please refer to the attached files for detailed information:
-- CSV file: Complete task details in spreadsheet format
-- JSON file: Structured task data
-- TXT file: Full Executive Order text
-
-Task ID | Title | Owner | Assignee | Due | Status | Remarks
---------|-------|-------|----------|-----|--------|--------
-1 | Review and Modify Privacy Act System of Records Notices | — | Dylan Sachetti | 2025-06-23 | Approved | N/A
-2 | Issue Guidance on Data Access for Fraud Prevention | — | Dylan Sachetti | TBD | Approved | N/A
-3 | Update and Issue Payment Verification Guidance in Consultation with OMB Director | — | Dylan Sachetti | TBD | [Fill Here] | [Fill Here]
-4 | Protect Classified and Sensitive Information During Implementation | — | Robert Springfiled | TBD | [Fill Here] | [Fill Here]
-5 | Implement Pre-Certification Payment Verification Processes | — | Ayesha Ahsan | TBD | Approved | N/A
-6 | Submit Payment Files with Sufficient Lead Time for Screening | — | Ayesha Ahsan | TBD | Approved | N/A
-7 | Develop Transparent Exemption Request Process for Payment Verification | — | Dylan Sachetti | TBD | Approved | N/A
-8 | Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) | — | Hibbi Iqbal | 2025-09-21 | Approved | N/A
-9 | Issue Guidance for Non-CFO Act Agency Financial Service Consolidation | — | Hibbi Iqbal | 2025-09-21 | Approved | N/A
-10 | Ensure Use of Standard Financial Management Solutions | — | Hibbi Iqbal | TBD | Approved | N/A
-11 | Ensure Core Financial Systems Comply with Federal Standards | — | Sophia Carty | TBD | Approved | N/A
-12 | Assess and Revoke Delegated Disbursing Authority as Appropriate | — | Hibbi Iqbal | 2025-04-24 | Approved | N/A
-13 | Develop Plan to Centralize and Manage NTDO Payments | — | Ayesha Ahsan | TBD | Approved | N/A
-14 | Establish Transition Plan for NTDO Agencies | — | Ayesha Ahsan | TBD | Approved | N/A
-15 | Decommission Internal Payment Systems and Transition to Treasury Systems | — | Robert Springfiled | TBD | Approved | N/A
-16 | Submit Agency Compliance Plan to OMB Director | — | Dylan Sachetti | 2025-06-23 | Approved | N/A
-17 | Submit Treasury Implementation Report to President | — | Hibbi Iqbal | 2025-09-21 | Approved | N/A', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:34.360958+00');
-INSERT INTO public.email_logs VALUES ('10abc36b-1ba6-448c-b6c8-ad3e9b6f2952', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{dylan.sachetti@lumenlighthouse.ai}', 'Dear Dylan Sachetti,
-
-You have been assigned 4 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+You have been assigned 5 task(s) from Executive Order: EO: Modernize workforce data 
+EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa
+EO Message-ID: <9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>
+Received: 2025-08-30 18:33:57 UTC
 
 Your assigned tasks are:
 
 Task 1:
-  Title: Review and Modify Privacy Act System of Records Notices
-  Description: Review and modify relevant system of records notices to include a routine use for disclosure to Treasury for fraud and improper payment prevention. Per Sec. 3(d).
-  Due Date: 2025-06-23
+  Title: Cease Issuance of Paper Checks for Federal Disbursements
+  Description: Transition all Federal disbursements, including intragovernmental payments, benefits, vendor payments, and tax refunds, to electronic funds transfer methods by the effective date, per Sec. 3(a).
+  Due Date: 2025-09-30
   Status: approved
 
 Task 2:
-  Title: Issue Guidance on Data Access for Fraud Prevention
-  Description: Issue guidance to agency heads on circumstances for providing Treasury with access to necessary data for fraud and improper payment detection, excluding sensitive data types. Per Sec. 3(e).
+  Title: Transition All Federal Receipts to Electronic Processing
+  Description: Implement processes to ensure all payments made to the Federal Government are processed electronically, except as specified in Sec. 4, per Sec. 3(c).
   Due Date: TBD
   Status: approved
 
 Task 3:
-  Title: Develop Transparent Exemption Request Process for Payment Verification
-  Description: Develop and include a transparent process for agencies to request exemptions from payment verification requirements for specific payments. Per Sec. 4(e).
+  Title: Eliminate Treasury Physical Lockbox Services
+  Description: Take appropriate action to eliminate the need for the Department of the Treasury''s physical lockbox services and expedite requirements to receive Federal receipts electronically, per Sec. 3(d).
   Due Date: TBD
   Status: approved
 
 Task 4:
-  Title: Submit Agency Compliance Plan to OMB Director
-  Description: Submit a compliance plan within 90 days detailing strategy for transitioning disbursing authority, updating systems, verifying payment information, and reporting improper payments. Per Sec. 7(a).
-  Due Date: 2025-06-23
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:12.905263+00');
-INSERT INTO public.email_logs VALUES ('b6b942e5-0fbf-4ec5-93f1-eda9108b5479', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{ayesha.ahsan@lumenlighthouse.ai}', 'Dear Ayesha Ahsan,
-
-You have been assigned 4 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Implement Pre-Certification Payment Verification Processes
-  Description: Ensure all disbursements comply with Treasury''s pre-certification requirements, including validation of funds, payee information, and contract references. Per Sec. 4(a)-(b).
+  Title: Develop and Implement Public Awareness Campaign
+  Description: Develop and implement a comprehensive public awareness campaign to inform Federal payment recipients of the transition to electronic payments and provide guidance on digital payment setup, per Sec. 5(a).
   Due Date: TBD
-  Status: approved
-
-Task 2:
-  Title: Submit Payment Files with Sufficient Lead Time for Screening
-  Description: Submit payment files to Treasury with sufficient lead time for fraud and improper payment screening, as determined by Treasury requirements. Per Sec. 4(c).
-  Due Date: TBD
-  Status: approved
-
-Task 3:
-  Title: Develop Plan to Centralize and Manage NTDO Payments
-  Description: Develop a plan to centralize and manage all payments previously disbursed by NTDOs, ensuring seamless continuity of government payments. Per Sec. 6(d).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Establish Transition Plan for NTDO Agencies
-  Description: Establish a transition plan for agencies currently operating as NTDOs, including staffing, system integrations, and legal/regulatory modifications for consolidation. Per Sec. 6(e).
-  Due Date: TBD
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:13.115723+00');
-INSERT INTO public.email_logs VALUES ('a5e4453f-6c5d-446e-ae12-6065527f084b', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{hibbi.iqbal@lumenlighthouse.ai}', 'Dear Hibbi Iqbal,
-
-You have been assigned 5 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)
-  Description: Issue guidance directing CFO Act agencies to consolidate their core financial systems. Per Sec. 5(a).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 2:
-  Title: Issue Guidance for Non-CFO Act Agency Financial Service Consolidation
-  Description: Issue guidance directing non-CFO Act agencies to consolidate transactional financial management services under a single Treasury-approved provider. Per Sec. 5(b).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 3:
-  Title: Ensure Use of Standard Financial Management Solutions
-  Description: Ensure all CFO Act agencies use standard financial management solutions available through the Financial Management Marketplace. Per Sec. 5(c).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Assess and Revoke Delegated Disbursing Authority as Appropriate
-  Description: Assess whether to maintain or revoke delegated disbursing authority to agencies and issue revocation notices as appropriate. Per Sec. 6(a).
-  Due Date: 2025-04-24
   Status: approved
 
 Task 5:
-  Title: Submit Treasury Implementation Report to President
-  Description: Submit an implementation report to the President within 180 days detailing progress on EO implementation. Per Sec. 7(b).
-  Due Date: 2025-09-21
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:13.286342+00');
-INSERT INTO public.email_logs VALUES ('a9fada6f-b88c-416e-8f2f-a2486a2ae6c0', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{sophia.carty@lumenlighthouse.ai}', 'Dear Sophia Carty,
-
-You have been assigned 1 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Ensure Core Financial Systems Comply with Federal Standards
-  Description: Ensure core financial systems comply with Federal accounting and financial reporting standards and relevant Treasury guidance. Per Sec. 5(d).
+  Title: Coordinate Agency Support for Digital Payment Transition
+  Description: Coordinate with relevant agencies to facilitate a smooth transition to digital payments and ensure adequate support for affected individuals and entities, per Sec. 5(b).
   Due Date: TBD
   Status: approved
 
@@ -438,19 +697,19 @@ Please review these tasks and begin work as soon as possible.
 If you have any questions or need clarification, please contact your supervisor.
 
 Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:13.458855+00');
-INSERT INTO public.email_logs VALUES ('a874db8f-6cb9-4a9c-b712-e2a3267ac3bd', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{robert.springfiled@lumenlighthouse.ai}', 'Dear Robert Springfiled,
+DOL EO Management System', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:39:38.306014+00');
+INSERT INTO public.email_logs VALUES ('ee2147a8-1899-4c4c-96b7-850a972a9980', 'outgoing', 'Task Assignment: EO: Modernize workforce data ', NULL, '{sophia.carty@lumenlighthouse.ai}', 'Dear Sophia Carty,
 
-You have been assigned 1 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+You have been assigned 1 task(s) from Executive Order: EO: Modernize workforce data 
+EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa
+EO Message-ID: <9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>
+Received: 2025-08-30 18:33:57 UTC
 
 Your assigned tasks are:
 
 Task 1:
-  Title: Decommission Internal Payment Systems and Transition to Treasury Systems
-  Description: Decommission all internal payment systems and transition to using Treasury’s disbursement systems, except as otherwise authorized. Per Sec. 6(f).
+  Title: Support Agency Transition to Digital Payment Methods
+  Description: Provide access to centralized payment systems for direct deposits, debit/credit card payments, digital wallets, real-time payment systems, and other electronic options, per Sec. 3(e).
   Due Date: TBD
   Status: approved
 
@@ -458,390 +717,77 @@ Please review these tasks and begin work as soon as possible.
 If you have any questions or need clarification, please contact your supervisor.
 
 Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:17:13.644338+00');
-INSERT INTO public.email_logs VALUES ('8e510567-ef45-4941-b6df-4d339ab1d34d', 'incoming', 'Daily Task Update - 2025-01-15', 'john.doe@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
+DOL EO Management System', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:39:38.31433+00');
+INSERT INTO public.email_logs VALUES ('00f89790-51d9-4f62-91bc-2686286dcb5f', 'outgoing', 'Task Assignment: EO: Modernize workforce data ', NULL, '{dylan.sachetti@lumenlighthouse.ai}', 'Dear Dylan Sachetti,
 
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.295761+00');
-INSERT INTO public.email_logs VALUES ('e67db531-c879-4312-9854-4a0874790595', 'incoming', 'Mail delivery failed: returning message to sender', 'Mailer-Daemon@p3plzcpnl492179.prod.phx3.secureserver.net', '{eo.14249@lumenlighthouse.ai}', 'This message was created automatically by mail delivery software.
-
-A message that you sent could not be delivered to one or more of its
-recipients. This is a permanent error. The following address(es) failed:
-
-  test1@example.com
-    host p3nlsmtpcp01-v01.prod.phx3.secureserver.net [132.148.124.48]
-    SMTP error from remote mail server after RCPT TO:<test1@example.com>:
-    550 5.1.1 <test1@example.com> recipient rejected. This is a default recipient used as a placeholder in many web applications. Please check your settings and try again.
-This is a test email sent to multiple recipients with improved rate limiting handling.
-', true, NULL, '2025-08-28 19:22:17.371837+00');
-INSERT INTO public.email_logs VALUES ('ede1430f-f57c-4b35-a00b-aa791fd9d1f4', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{dylan.sachetti@lumenlighthouse.ai}', 'Dear Dylan Sachetti,
-
-You have been assigned 4 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+You have been assigned 3 task(s) from Executive Order: EO: Modernize workforce data 
+EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa
+EO Message-ID: <9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>
+Received: 2025-08-30 18:33:57 UTC
 
 Your assigned tasks are:
 
 Task 1:
-  Title: Review and Modify Privacy Act System of Records Notices
-  Description: Review and modify relevant system of records notices to include a routine use for disclosure to Treasury for fraud and improper payment prevention. Per Sec. 3(d).
-  Due Date: 2025-06-23
-  Status: approved
-
-Task 2:
-  Title: Issue Guidance on Data Access for Fraud Prevention
-  Description: Issue guidance to agency heads on circumstances for providing Treasury with access to necessary data for fraud and improper payment detection, excluding sensitive data types. Per Sec. 3(e).
-  Due Date: TBD
-  Status: approved
-
-Task 3:
-  Title: Develop Transparent Exemption Request Process for Payment Verification
-  Description: Develop and include a transparent process for agencies to request exemptions from payment verification requirements for specific payments. Per Sec. 4(e).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Submit Agency Compliance Plan to OMB Director
-  Description: Submit a compliance plan within 90 days detailing strategy for transitioning disbursing authority, updating systems, verifying payment information, and reporting improper payments. Per Sec. 7(a).
-  Due Date: 2025-06-23
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:23:25.318649+00');
-INSERT INTO public.email_logs VALUES ('e01eec06-a612-40e8-a575-f755d56ceb7a', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{ayesha.ahsan@lumenlighthouse.ai}', 'Dear Ayesha Ahsan,
-
-You have been assigned 4 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Implement Pre-Certification Payment Verification Processes
-  Description: Ensure all disbursements comply with Treasury''s pre-certification requirements, including validation of funds, payee information, and contract references. Per Sec. 4(a)-(b).
+  Title: Review and Revise Exception Procedures for Non-Electronic Payments
+  Description: Review and, as appropriate, revise procedures for granting exceptions to electronic payment and collection methods, including for unbanked individuals, emergencies, and other circumstances, per Sec. 4(a).
   Due Date: TBD
   Status: approved
 
 Task 2:
-  Title: Submit Payment Files with Sufficient Lead Time for Screening
-  Description: Submit payment files to Treasury with sufficient lead time for fraud and improper payment screening, as determined by Treasury requirements. Per Sec. 4(c).
+  Title: Provide Alternative Payment Options for Exception Cases
+  Description: Ensure individuals or entities qualifying for exceptions to electronic payments are provided with alternative payment options, per Sec. 4(b).
   Due Date: TBD
   Status: approved
 
 Task 3:
-  Title: Develop Plan to Centralize and Manage NTDO Payments
-  Description: Develop a plan to centralize and manage all payments previously disbursed by NTDOs, ensuring seamless continuity of government payments. Per Sec. 6(d).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Establish Transition Plan for NTDO Agencies
-  Description: Establish a transition plan for agencies currently operating as NTDOs, including staffing, system integrations, and legal/regulatory modifications for consolidation. Per Sec. 6(e).
-  Due Date: TBD
+  Title: Submit Agency Compliance Plan for Eliminating Paper-Based Transactions
+  Description: Prepare and submit a compliance plan to the Director of the Office of Management and Budget within 90 days of the order date, detailing the strategy for eliminating paper-based transactions, per Sec. 6(a).
+  Due Date: 2025-12-29
   Status: approved
 
 Please review these tasks and begin work as soon as possible.
 If you have any questions or need clarification, please contact your supervisor.
 
 Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:23:27.681907+00');
-INSERT INTO public.email_logs VALUES ('c1fbed02-518d-4cd3-92c2-5bef5e28fffa', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{hibbi.iqbal@lumenlighthouse.ai}', 'Dear Hibbi Iqbal,
+DOL EO Management System', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:39:38.32097+00');
+INSERT INTO public.email_logs VALUES ('53498f8a-a14e-47fe-9032-9b5227b859e0', 'outgoing', 'Task Assignment: EO: Modernize workforce data ', NULL, '{hibbi.iqbal@lumenlighthouse.ai}', 'Dear Hibbi Iqbal,
 
-You have been assigned 5 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)
-  Description: Issue guidance directing CFO Act agencies to consolidate their core financial systems. Per Sec. 5(a).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 2:
-  Title: Issue Guidance for Non-CFO Act Agency Financial Service Consolidation
-  Description: Issue guidance directing non-CFO Act agencies to consolidate transactional financial management services under a single Treasury-approved provider. Per Sec. 5(b).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 3:
-  Title: Ensure Use of Standard Financial Management Solutions
-  Description: Ensure all CFO Act agencies use standard financial management solutions available through the Financial Management Marketplace. Per Sec. 5(c).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Assess and Revoke Delegated Disbursing Authority as Appropriate
-  Description: Assess whether to maintain or revoke delegated disbursing authority to agencies and issue revocation notices as appropriate. Per Sec. 6(a).
-  Due Date: 2025-04-24
-  Status: approved
-
-Task 5:
-  Title: Submit Treasury Implementation Report to President
-  Description: Submit an implementation report to the President within 180 days detailing progress on EO implementation. Per Sec. 7(b).
-  Due Date: 2025-09-21
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:23:30.056436+00');
-INSERT INTO public.email_logs VALUES ('f0f970cf-1109-42a5-a2a5-2e964475e4d7', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{sophia.carty@lumenlighthouse.ai}', 'Dear Sophia Carty,
-
-You have been assigned 1 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+You have been assigned 2 task(s) from Executive Order: EO: Modernize workforce data 
+EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa
+EO Message-ID: <9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>
+Received: 2025-08-30 18:33:57 UTC
 
 Your assigned tasks are:
 
 Task 1:
-  Title: Ensure Core Financial Systems Comply with Federal Standards
-  Description: Ensure core financial systems comply with Federal accounting and financial reporting standards and relevant Treasury guidance. Per Sec. 5(d).
-  Due Date: TBD
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:23:31.747114+00');
-INSERT INTO public.email_logs VALUES ('ba9c9afd-4db1-401d-b2ec-050b3db3c4a6', 'incoming', 'Task Update - Reporting System', 'jane.smith@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.301502+00');
-INSERT INTO public.email_logs VALUES ('3195cf14-1726-47e2-a1a2-85162559f052', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{robert.springfiled@lumenlighthouse.ai}', 'Dear Robert Springfiled,
-
-You have been assigned 1 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Decommission Internal Payment Systems and Transition to Treasury Systems
-  Description: Decommission all internal payment systems and transition to using Treasury’s disbursement systems, except as otherwise authorized. Per Sec. 6(f).
-  Due Date: TBD
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:23:33.19932+00');
-INSERT INTO public.email_logs VALUES ('b21cc45a-ddae-40e6-83cf-eeac645464ca', 'incoming', 'Re: PMO Review Required: EO: Modernize Workforce Data [EO ID:
- 8fd95066-1662-4482-b1f8-3801f037f356]', 'kevin.brown@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', '
-
-> 
-> 
-> Task ID	Title	Owner	Assignee	Due	Status	Remarks
-> 1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	Reject	Too Vague Instructions
-> 2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-> 3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	Approve	[Fill Here]
-> 4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	Approve	[Fill Here]
-> 7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-> 8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-> 9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	Approve	[Fill Here]
-> 10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	Approve	[Fill Here]
-> 11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	Approve	[Fill Here]
-> 12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	Approve	[Fill Here]
-> 15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-> 16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-> 17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
-> 
->> On Aug 28, 2025, at 3:15 PM, eo.14249@lumenlighthouse.ai wrote:
->> 
->> 📋 PMO Review Required
->> Executive Order: EO: Modernize Workforce Data
->> EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
->> Message ID: msg-2001@sample
->> Received: 2025-08-13 15:00:00 UTC
->> Below are the PENDING tasks for PMO action.
->> 
->> 📝 Instructions:
->> 
->> Copy the table below
->> Paste it in your reply email
->> Fill in the ''Status'' column with ''Approve'' or ''Reject''
->> Fill in the ''Remarks'' column with your feedback
->> Send the email back
->> Task ID	Title	Owner	Assignee	Due	Status	Remarks
->> 1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
->> 2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
->> 3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
->> 4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
->> 7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
->> 8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
->> 9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	[Fill Here]	[Fill Here]
->> 10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	[Fill Here]	[Fill Here]
->> 11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	[Fill Here]	[Fill Here]
->> 12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
->> 15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
->> 16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
->> 17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
->> 📎 Attachments:
->> 
->> Please refer to the attached files for detailed information:
->> 
->> CSV file: Complete task details in spreadsheet format
->> JSON file: Structured task data
->> TXT file: Full Executive Order text
->> DOL EO Management System
->> 
->> <pmo_review_tasks.csv><pmo_review_tasks.json><executive_order.txt>
-> 
-
-', true, NULL, '2025-08-28 19:26:33.839876+00');
-INSERT INTO public.email_logs VALUES ('57d976e2-f3c2-444c-bdaa-48fee0e54d92', 'incoming', 'Re: PMO Review Required: EO: Modernize Workforce Data [EO ID:
- 8fd95066-1662-4482-b1f8-3801f037f356]', 'kevin.brown@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', '
-
-> 
-> 
-> Task ID	Title	Owner	Assignee	Due	Status	Remarks
-> 1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	Reject	Too Vague Instructions
-> 2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-> 3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	Approve	[Fill Here]
-> 4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	Approve	[Fill Here]
-> 7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-> 8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-> 9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	Approve	[Fill Here]
-> 10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	Approve	[Fill Here]
-> 11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	Approve	[Fill Here]
-> 12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	Approve	[Fill Here]
-> 14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	Approve	[Fill Here]
-> 15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	Approve	[Fill Here]
-> 16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	Approve	[Fill Here]
-> 17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
-> 
->> On Aug 28, 2025, at 3:15 PM, eo.14249@lumenlighthouse.ai wrote:
->> 
->> 📋 PMO Review Required
->> Executive Order: EO: Modernize Workforce Data
->> EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
->> Message ID: msg-2001@sample
->> Received: 2025-08-13 15:00:00 UTC
->> Below are the PENDING tasks for PMO action.
->> 
->> 📝 Instructions:
->> 
->> Copy the table below
->> Paste it in your reply email
->> Fill in the ''Status'' column with ''Approve'' or ''Reject''
->> Fill in the ''Remarks'' column with your feedback
->> Send the email back
->> Task ID	Title	Owner	Assignee	Due	Status	Remarks
->> 1	Update Payment Verification Guidance and Enhance Systems	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
->> 2	Review and Modify Privacy Act System of Records Notices	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
->> 3	Issue Guidance on Data Access for Fraud Prevention	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
->> 4	Implement Pre-Certification Payment Verification Processes	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 5	Submit Payment Files with Sufficient Lead Time for Screening	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 6	Develop Transparent Exemption Request Process for Payment Verification	—	Dylan Sachetti	—	[Fill Here]	[Fill Here]
->> 7	Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
->> 8	Issue Guidance for Non-CFO Act Agency Financial Service Consolidation	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
->> 9	Ensure Use of Standard Financial Management Solutions	—	Hibbi Iqbal	—	[Fill Here]	[Fill Here]
->> 10	Ensure Core Financial Systems Comply with Federal Standards	—	Sophia Carty	—	[Fill Here]	[Fill Here]
->> 11	Assess and Revoke Delegated Disbursing Authority as Appropriate	—	Hibbi Iqbal	2025-04-24	[Fill Here]	[Fill Here]
->> 12	Develop Plan to Centralize and Manage NTDO Payments	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 13	Establish Transition Plan for NTDO Agencies	—	Ayesha Ahsan	—	[Fill Here]	[Fill Here]
->> 14	Decommission Internal Payment Systems and Transition to Treasury Systems	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
->> 15	Submit Agency Compliance Plan to OMB Director	—	Dylan Sachetti	2025-06-23	[Fill Here]	[Fill Here]
->> 16	Submit Treasury Implementation Report to President	—	Hibbi Iqbal	2025-09-21	[Fill Here]	[Fill Here]
->> 17	Protect Classified and Sensitive Information During Implementation	—	Robert Springfiled	—	[Fill Here]	[Fill Here]
->> 📎 Attachments:
->> 
->> Please refer to the attached files for detailed information:
->> 
->> CSV file: Complete task details in spreadsheet format
->> JSON file: Structured task data
->> TXT file: Full Executive Order text
->> DOL EO Management System
->> 
->> <pmo_review_tasks.csv><pmo_review_tasks.json><executive_order.txt>
-> 
-
-', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:33.850633+00');
-INSERT INTO public.email_logs VALUES ('3f45ae5b-7ba9-4535-b739-c4ba8e84f7f7', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{dylan.sachetti@lumenlighthouse.ai}', 'Dear Dylan Sachetti,
-
-You have been assigned 4 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Issue Guidance on Data Access for Fraud Prevention
-  Description: Issue guidance to agency heads on circumstances for providing Treasury with access to necessary data for fraud and improper payment detection, excluding sensitive data types. Per Sec. 3(e).
+  Title: Address Financial Access for Unbanked and Underbanked Populations
+  Description: Work with financial institutions, consumer groups, and stakeholders to address financial access issues for unbanked and underbanked populations, per Sec. 5(c).
   Due Date: TBD
   Status: approved
 
 Task 2:
-  Title: Update and Issue Payment Verification Guidance in Consultation with OMB Director
-  Description: In consultation with the OMB Director, update and issue guidance to ensure all payments made by the Department of the Treasury on behalf of agencies are subject to pre-certification verification processes. The guidance must: (1) set forth guidelines for compliance with the Do Not Pay Working System as described in 31 U.S.C. 3351 et seq.; (2) include requirements for other payment, account, and payee validation programs and services as determined beneficial for reducing financial fraud and improper payments; (3) specify the data elements and formats agencies must provide for payment submissions; and (4) outline procedures for agencies and Treasury to conduct verification prior to disbursement, as required by law. Reference the legal authorities (31 U.S.C. 3321, 31 U.S.C. 3351 et seq.) and ensure the guidance is actionable for agency implementation.
-  Due Date: TBD
-  Status: approved
-
-Task 3:
-  Title: Develop Transparent Exemption Request Process for Payment Verification
-  Description: Develop and include a transparent process for agencies to request exemptions from payment verification requirements for specific payments. Per Sec. 4(e).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Submit Agency Compliance Plan to OMB Director
-  Description: Submit a compliance plan within 90 days detailing strategy for transitioning disbursing authority, updating systems, verifying payment information, and reporting improper payments. Per Sec. 7(a).
-  Due Date: 2025-06-23
+  Title: Submit Treasury Implementation Report on EO Progress
+  Description: Prepare and submit an implementation report to the President through the Assistant to the President for Economic Policy within 180 days of the order date, detailing progress on the EO, per Sec. 6(b).
+  Due Date: 2026-03-29
   Status: approved
 
 Please review these tasks and begin work as soon as possible.
 If you have any questions or need clarification, please contact your supervisor.
 
 Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:36.672464+00');
-INSERT INTO public.email_logs VALUES ('1da4f4b5-5d58-414f-b527-01d02f0d10b8', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{robert.springfiled@lumenlighthouse.ai}', 'Dear Robert Springfiled,
+DOL EO Management System', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:39:38.325262+00');
+INSERT INTO public.email_logs VALUES ('c2a46425-c694-4d5a-91ad-1cf6b3e0fa1b', 'outgoing', 'Task Assignment: EO: Modernize workforce data ', NULL, '{robert.springfiled@lumenlighthouse.ai}', 'Dear Robert Springfiled,
 
-You have been assigned 2 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
+You have been assigned 1 task(s) from Executive Order: EO: Modernize workforce data 
+EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa
+EO Message-ID: <9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>
+Received: 2025-08-30 18:33:57 UTC
 
 Your assigned tasks are:
 
 Task 1:
   Title: Protect Classified and Sensitive Information During Implementation
-  Description: Take all necessary steps to protect classified information, personally identifiable information, and tax return information during EO implementation. Per Sec. 7(c).
-  Due Date: TBD
-  Status: approved
-
-Task 2:
-  Title: Decommission Internal Payment Systems and Transition to Treasury Systems
-  Description: Decommission all internal payment systems and transition to using Treasury’s disbursement systems, except as otherwise authorized. Per Sec. 6(f).
+  Description: Take all necessary steps to protect classified information, personally identifiable information, and tax return information during the implementation of this order, per Sec. 5(d).
   Due Date: TBD
   Status: approved
 
@@ -849,691 +795,12 @@ Please review these tasks and begin work as soon as possible.
 If you have any questions or need clarification, please contact your supervisor.
 
 Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:39.061876+00');
-INSERT INTO public.email_logs VALUES ('ea53c162-518d-4053-9c49-8bd4d569c3c8', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{ayesha.ahsan@lumenlighthouse.ai}', 'Dear Ayesha Ahsan,
-
-You have been assigned 4 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Implement Pre-Certification Payment Verification Processes
-  Description: Ensure all disbursements comply with Treasury''s pre-certification requirements, including validation of funds, payee information, and contract references. Per Sec. 4(a)-(b).
-  Due Date: TBD
-  Status: approved
-
-Task 2:
-  Title: Submit Payment Files with Sufficient Lead Time for Screening
-  Description: Submit payment files to Treasury with sufficient lead time for fraud and improper payment screening, as determined by Treasury requirements. Per Sec. 4(c).
-  Due Date: TBD
-  Status: approved
-
-Task 3:
-  Title: Develop Plan to Centralize and Manage NTDO Payments
-  Description: Develop a plan to centralize and manage all payments previously disbursed by NTDOs, ensuring seamless continuity of government payments. Per Sec. 6(d).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Establish Transition Plan for NTDO Agencies
-  Description: Establish a transition plan for agencies currently operating as NTDOs, including staffing, system integrations, and legal/regulatory modifications for consolidation. Per Sec. 6(e).
-  Due Date: TBD
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:41.461713+00');
-INSERT INTO public.email_logs VALUES ('fa003149-95f9-45a1-8360-ae19c8712e68', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{hibbi.iqbal@lumenlighthouse.ai}', 'Dear Hibbi Iqbal,
-
-You have been assigned 5 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)
-  Description: Issue guidance directing CFO Act agencies to consolidate their core financial systems. Per Sec. 5(a).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 2:
-  Title: Issue Guidance for Non-CFO Act Agency Financial Service Consolidation
-  Description: Issue guidance directing non-CFO Act agencies to consolidate transactional financial management services under a single Treasury-approved provider. Per Sec. 5(b).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 3:
-  Title: Ensure Use of Standard Financial Management Solutions
-  Description: Ensure all CFO Act agencies use standard financial management solutions available through the Financial Management Marketplace. Per Sec. 5(c).
-  Due Date: TBD
-  Status: approved
-
-Task 4:
-  Title: Submit Treasury Implementation Report to President
-  Description: Submit an implementation report to the President within 180 days detailing progress on EO implementation. Per Sec. 7(b).
-  Due Date: 2025-09-21
-  Status: approved
-
-Task 5:
-  Title: Assess and Revoke Delegated Disbursing Authority as Appropriate
-  Description: Assess whether to maintain or revoke delegated disbursing authority to agencies and issue revocation notices as appropriate. Per Sec. 6(a).
-  Due Date: 2025-04-24
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:43.03161+00');
-INSERT INTO public.email_logs VALUES ('22117f7f-090d-40c2-8faa-810ddf5846b4', 'outgoing', 'Task Assignment: EO: Modernize Workforce Data', NULL, '{sophia.carty@lumenlighthouse.ai}', 'Dear Sophia Carty,
-
-You have been assigned 1 task(s) from Executive Order: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-Your assigned tasks are:
-
-Task 1:
-  Title: Ensure Core Financial Systems Comply with Federal Standards
-  Description: Ensure core financial systems comply with Federal accounting and financial reporting standards and relevant Treasury guidance. Per Sec. 5(d).
-  Due Date: TBD
-  Status: approved
-
-Please review these tasks and begin work as soon as possible.
-If you have any questions or need clarification, please contact your supervisor.
-
-Best regards,
-DOL EO Management System', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:44.383984+00');
-INSERT INTO public.email_logs VALUES ('3f791f90-d891-4c6b-8968-1d337cc8eea3', 'outgoing', 'Improved Tasks Review: EO: Modernize Workforce Data', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO: Modernize Workforce Data
-EO ID: 8fd95066-1662-4482-b1f8-3801f037f356
-EO Message-ID: msg-2001@sample
-Received: 2025-08-13 15:00:00 UTC
-
-=== IMPROVEMENT SUMMARY ===
-The task was rewritten to provide clear, actionable instructions, addressing the PMO''s feedback that the original was too vague. The revised task now specifies the need for a comprehensive review, explicit inclusion of a ''routine use'' provision, details on the types of data and circumstances for disclosure, and documentation of the process, ensuring clarity and completeness.
-
-Below are ALL tasks for this EO with their current status.
-Tasks marked as ''Approved'' were previously approved and do not need action.
-Tasks marked as ''Pending PMO approval'' are improved versions that need your review.
-
-INSTRUCTIONS:
-1. Copy the table below
-2. Paste it in your reply email
-3. For ''Pending PMO approval'' tasks: Fill in the ''Status'' column with ''Approve'' or ''Reject''
-4. For ''Pending PMO approval'' tasks: Fill in the ''Remarks'' column with your feedback
-5. Leave ''Approved'' tasks as-is (no action needed)
-6. Send the email back
-
-NOTE: Please refer to the attached files for detailed information:
-- CSV file: Complete task details in spreadsheet format
-- JSON file: Structured task data
-- TXT file: Full Executive Order text
-
-Task ID | Title | Owner | Assignee | Due | Status | Remarks
---------|-------|-------|----------|-----|--------|--------
-1 | Issue Guidance on Data Access for Fraud Prevention | — | Dylan Sachetti | TBD | Approved | N/A
-2 | Update and Issue Payment Verification Guidance in Consultation with OMB Director | — | Dylan Sachetti | TBD | Approved | N/A
-3 | Update Privacy Act System of Records Notices for Treasury Data Sharing | — | Dylan Sachetti | 2025-06-23 | [Fill Here] | [Fill Here]
-4 | Protect Classified and Sensitive Information During Implementation | — | Robert Springfiled | TBD | Approved | N/A
-5 | Implement Pre-Certification Payment Verification Processes | — | Ayesha Ahsan | TBD | Approved | N/A
-6 | Submit Payment Files with Sufficient Lead Time for Screening | — | Ayesha Ahsan | TBD | Approved | N/A
-7 | Develop Transparent Exemption Request Process for Payment Verification | — | Dylan Sachetti | TBD | Approved | N/A
-8 | Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) | — | Hibbi Iqbal | 2025-09-21 | Approved | N/A
-9 | Issue Guidance for Non-CFO Act Agency Financial Service Consolidation | — | Hibbi Iqbal | 2025-09-21 | Approved | N/A
-10 | Ensure Use of Standard Financial Management Solutions | — | Hibbi Iqbal | TBD | Approved | N/A
-11 | Ensure Core Financial Systems Comply with Federal Standards | — | Sophia Carty | TBD | Approved | N/A
-12 | Submit Treasury Implementation Report to President | — | Hibbi Iqbal | 2025-09-21 | Approved | N/A
-13 | Assess and Revoke Delegated Disbursing Authority as Appropriate | — | Hibbi Iqbal | 2025-04-24 | Approved | N/A
-14 | Develop Plan to Centralize and Manage NTDO Payments | — | Ayesha Ahsan | TBD | Approved | N/A
-15 | Establish Transition Plan for NTDO Agencies | — | Ayesha Ahsan | TBD | Approved | N/A
-16 | Decommission Internal Payment Systems and Transition to Treasury Systems | — | Robert Springfiled | TBD | Approved | N/A
-17 | Submit Agency Compliance Plan to OMB Director | — | Dylan Sachetti | 2025-06-23 | Approved | N/A', false, '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-28 19:26:45.917904+00');
-INSERT INTO public.email_logs VALUES ('a3dfef6d-0965-4ebe-be66-eeffa6a6a5b1', 'incoming', 'Daily Task Update - 2025-01-15', 'john.doe@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.237875+00');
-INSERT INTO public.email_logs VALUES ('d555acc1-d625-4024-aaa9-b4bf5f64fced', 'incoming', 'EO - Digital Transformation Initiative', 'admin@example.com', '{pmo@example.com}', 'Executive Order for Digital Transformation Initiative
-
-This executive order outlines the digital transformation requirements for the Department of Labor.
-
-Key directives:
-1. Implement new reporting systems
-2. Update documentation
-3. Conduct security reviews
-
-Please process this executive order and create appropriate tasks.', true, NULL, '2025-08-29 18:01:09.248296+00');
-INSERT INTO public.email_logs VALUES ('cbe3c92e-07d8-4ff5-97d6-ba484f8a3950', 'incoming', 'Re: PMO Review - EO-12345 - Task Approval', 'pmo@example.com', '{admin@example.com}', 'PMO Review Response
-
-I have reviewed the tasks for EO-12345 and approve the following tasks:
-- Task 1: Implement new reporting system (APPROVED)
-- Task 2: Update documentation (APPROVED)
-- Task 3: Security review (APPROVED)
-
-All tasks are approved for execution.', true, NULL, '2025-08-29 18:01:09.255824+00');
-INSERT INTO public.email_logs VALUES ('979044fc-89df-4519-9778-8d2186017940', 'incoming', 'General Information', 'info@example.com', '{admin@example.com}', 'General Information
-
-This is just a general information email that should not be processed as any specific type.
-
-Thank you.', true, NULL, '2025-08-29 18:01:09.264027+00');
-INSERT INTO public.email_logs VALUES ('2ac53479-db32-4488-b3c8-f094aff36cb5', 'incoming', 'Daily Task Update - 2025-01-15', 'john.doe@example.com', '{pmo@example.com}', '', true, NULL, '2025-08-29 18:01:09.271185+00');
-INSERT INTO public.email_logs VALUES ('7c5692b0-804e-461c-9a04-ce5e8df7e5a2', 'incoming', '', 'john.doe@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.278956+00');
-INSERT INTO public.email_logs VALUES ('ee7fa2cf-8699-4bb7-86ba-f206f9bd6277', 'incoming', 'Daily Task Update - 2025-01-15', '', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.284547+00');
-INSERT INTO public.email_logs VALUES ('2f21b750-a3b9-44d2-8394-425ba38b75cc', 'incoming', 'EO - Digital Transformation', 'admin@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.306704+00');
-INSERT INTO public.email_logs VALUES ('b10bff49-ab7b-4bd1-a152-a1984c8a1cff', 'incoming', 'Re: PMO Review - EO-12345', 'pmo@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.311577+00');
-INSERT INTO public.email_logs VALUES ('c83439cb-e95d-4604-9768-8187531d0487', 'incoming', 'General Information', 'unknown@example.com', '{pmo@example.com}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:01:09.317634+00');
-INSERT INTO public.email_logs VALUES ('9648c3e1-4791-454a-aac8-17ef9eb2b260', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.096279+00');
-INSERT INTO public.email_logs VALUES ('a83b0e15-d377-4800-b63e-9437220225f7', 'incoming', 'EO - Digital Transformation Initiative', 'westley.everette@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Executive Order for Digital Transformation Initiative
-
-This executive order outlines the digital transformation requirements for the Department of Labor.
-
-Key directives:
-1. Implement new reporting systems
-2. Update documentation
-3. Conduct security reviews
-
-Please process this executive order and create appropriate tasks.', true, NULL, '2025-08-29 18:03:01.756436+00');
-INSERT INTO public.email_logs VALUES ('2a4625d6-17b8-4a69-96f8-983f6a7d6edd', 'incoming', 'Re: PMO Review - EO-12345 - Task Approval', 'kevin.brown@lumenlighthouse.ai', '{westley.everette@lumenlighthouse.ai}', 'PMO Review Response
-
-I have reviewed the tasks for EO-12345 and approve the following tasks:
-- Task 1: Implement new reporting system (APPROVED)
-- Task 2: Update documentation (APPROVED)
-- Task 3: Security review (APPROVED)
-
-All tasks are approved for execution.', true, NULL, '2025-08-29 18:03:01.764261+00');
-INSERT INTO public.email_logs VALUES ('c34c4431-8be0-452b-a344-fc92a0991c5f', 'incoming', 'General Information', 'info@example.com', '{admin@example.com}', 'General Information
-
-This is just a general information email that should not be processed as any specific type.
-
-Thank you.', true, NULL, '2025-08-29 18:03:01.77183+00');
-INSERT INTO public.email_logs VALUES ('cc0ca599-4985-4947-8125-aba1c97e59ca', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', '', true, NULL, '2025-08-29 18:03:01.778965+00');
-INSERT INTO public.email_logs VALUES ('da7956ca-3479-4a17-9c19-b0082467589f', 'incoming', '', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.786985+00');
-INSERT INTO public.email_logs VALUES ('92b6a807-3098-4251-9aaf-dd57edb79f73', 'incoming', 'Daily Task Update - 2025-01-15', '', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.792432+00');
-INSERT INTO public.email_logs VALUES ('b050a2e7-3b2d-44ca-8b81-67d2d9558da7', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.800084+00');
-INSERT INTO public.email_logs VALUES ('7b02b698-b66f-414c-8c34-0083df625712', 'incoming', 'Task Update - Reporting System', 'ayesha.ahsan@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.805368+00');
-INSERT INTO public.email_logs VALUES ('73276ad9-87d2-4067-a618-6816e2499a14', 'incoming', 'EO - Digital Transformation', 'westley.everette@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.810005+00');
-INSERT INTO public.email_logs VALUES ('57b51716-c105-4ba4-8f8f-f0066badcf11', 'incoming', 'Re: PMO Review - EO-12345', 'kevin.brown@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.816034+00');
-INSERT INTO public.email_logs VALUES ('f43f6189-2276-473b-82c9-217e4fe595e2', 'incoming', 'General Information', 'unknown@example.com', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:03:01.821074+00');
-INSERT INTO public.email_logs VALUES ('9ff0ee26-f563-4e28-99a5-d7f5917015a1', 'incoming', 'EO - Digital Transformation', 'westley.everette@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', false, NULL, '2025-08-29 18:03:01.980683+00');
-INSERT INTO public.email_logs VALUES ('57be74f8-5c94-49b9-98d5-21bfa347868c', 'outgoing', 'PMO Review Required: EO - Digital Transformation Initiative [EO ID: b8cd1182-41f6-4c38-a3b3-02e0d7e99c84]', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO - Digital Transformation Initiative
-EO ID: b8cd1182-41f6-4c38-a3b3-02e0d7e99c84
-EO Message-ID: <0ed8e961-09d0-4ee4-b216-166571587e2b@example.com>
-Received: 2025-08-29 18:03:01 UTC
-
-Below are the PENDING tasks for PMO action.
-
-INSTRUCTIONS:
-1. Copy the table below
-2. Paste it in your reply email
-3. Fill in the ''Status'' column with ''Approve'' or ''Reject''
-4. Fill in the ''Remarks'' column with your feedback
-5. Send the email back
-
-NOTE: Please refer to the attached files for detailed information:
-- CSV file: Complete task details in spreadsheet format
-- JSON file: Structured task data
-- TXT file: Full Executive Order text
-
-Task ID | Title | Owner | Assignee | Due | Status | Remarks
---------|-------|-------|----------|-----|--------|--------
-1 | Implement New Digital Reporting Systems | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
-2 | Update Departmental Documentation for Digital Transformation | — | Ayesha Ahsan | — | [Fill Here] | [Fill Here]
-3 | Conduct Security Reviews of New Digital Systems | — | Robert Springfiled | — | [Fill Here] | [Fill Here]', false, 'b8cd1182-41f6-4c38-a3b3-02e0d7e99c84', '2025-08-29 18:03:05.301781+00');
-INSERT INTO public.email_logs VALUES ('0f043571-59cb-4eda-a37f-b67dc96e89f8', 'incoming', 'EO - Digital Transformation Initiative', 'westley.everette@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Executive Order for Digital Transformation Initiative
-
-This executive order outlines the digital transformation requirements for the Department of Labor.
-
-Key directives:
-1. Implement new reporting systems
-2. Update documentation
-3. Conduct security reviews
-
-Please process this executive order and create appropriate tasks.', false, NULL, '2025-08-29 18:03:01.996783+00');
-INSERT INTO public.email_logs VALUES ('b57cb309-2ff0-4ec3-bd05-c8b331e29768', 'outgoing', 'PMO Review Required: EO - Digital Transformation [EO ID: ccae689f-6842-4b82-a745-19d5d7e0c659]', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO - Digital Transformation
-EO ID: ccae689f-6842-4b82-a745-19d5d7e0c659
-EO Message-ID: <11607f1d-30d6-40a1-90a8-2062af44df29@example.com>
-Received: 2025-08-29 18:03:01 UTC
-
-Below are the PENDING tasks for PMO action.
-
-INSTRUCTIONS:
-1. Copy the table below
-2. Paste it in your reply email
-3. Fill in the ''Status'' column with ''Approve'' or ''Reject''
-4. Fill in the ''Remarks'' column with your feedback
-5. Send the email back
-
-NOTE: Please refer to the attached files for detailed information:
-- CSV file: Complete task details in spreadsheet format
-- JSON file: Structured task data
-- TXT file: Full Executive Order text
-
-Task ID | Title | Owner | Assignee | Due | Status | Remarks
---------|-------|-------|----------|-----|--------|--------
-1 | Implement New Reporting System | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
-2 | Update Documentation for Reporting System | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
-3 | Conduct Security Review of Reporting System | — | Robert Springfiled | — | [Fill Here] | [Fill Here]', false, 'ccae689f-6842-4b82-a745-19d5d7e0c659', '2025-08-29 18:03:05.523423+00');
-INSERT INTO public.email_logs VALUES ('248cb0f6-acd2-454d-aa6e-7934f96e19f3', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:08:51.078916+00');
-INSERT INTO public.email_logs VALUES ('5accc0c4-af28-47f9-b9bd-d0e9200a6292', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:08:51.812719+00');
-INSERT INTO public.email_logs VALUES ('83a0effc-2ddd-4e7f-892c-36749ce9e60c', 'incoming', 'Task Update - Reporting System', 'ayesha.ahsan@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:08:51.823696+00');
-INSERT INTO public.email_logs VALUES ('4562bccc-a166-4f25-a30a-7a2687940e86', 'incoming', 'EO - Digital Transformation', 'westley.everette@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:08:51.829766+00');
-INSERT INTO public.email_logs VALUES ('eca2eaa1-79fe-4571-b0ca-ae83804f0f27', 'incoming', 'Re: PMO Review - EO-12345', 'kevin.brown@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:08:51.836606+00');
-INSERT INTO public.email_logs VALUES ('5a396830-8a7c-479e-9793-b9191d67e148', 'incoming', 'EO - Digital Transformation', 'westley.everette@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', false, NULL, '2025-08-29 18:08:51.836923+00');
-INSERT INTO public.email_logs VALUES ('96b22ada-48bc-4de8-8c6d-466a25ab0d27', 'outgoing', 'PMO Review Required: EO - Digital Transformation [EO ID: 4079e80f-781b-44ed-a759-527f97ef87f5]', NULL, '{kevin.brown@lumenlighthouse.ai}', 'Subject EO: EO - Digital Transformation
-EO ID: 4079e80f-781b-44ed-a759-527f97ef87f5
-EO Message-ID: <aeede9de-89b3-4dce-a511-5bb9270c5725@example.com>
-Received: 2025-08-29 18:08:51 UTC
-
-Below are the PENDING tasks for PMO action.
-
-INSTRUCTIONS:
-1. Copy the table below
-2. Paste it in your reply email
-3. Fill in the ''Status'' column with ''Approve'' or ''Reject''
-4. Fill in the ''Remarks'' column with your feedback
-5. Send the email back
-
-NOTE: Please refer to the attached files for detailed information:
-- CSV file: Complete task details in spreadsheet format
-- JSON file: Structured task data
-- TXT file: Full Executive Order text
-
-Task ID | Title | Owner | Assignee | Due | Status | Remarks
---------|-------|-------|----------|-----|--------|--------
-1 | Implement New Reporting System | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
-2 | Update System Documentation | — | Hibbi Iqbal | — | [Fill Here] | [Fill Here]
-3 | Conduct Security Review of Reporting System | — | Robert Springfiled | — | [Fill Here] | [Fill Here]', false, '4079e80f-781b-44ed-a759-527f97ef87f5', '2025-08-29 18:08:55.3141+00');
-INSERT INTO public.email_logs VALUES ('90646a6e-a24c-4bff-bad7-673a32577cdd', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.
-
-Working on the Implement new reporting system - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. Update documentation will start next week once the system is ready.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:11:28.305211+00');
-INSERT INTO public.email_logs VALUES ('b62ecf15-88e3-497d-8c2f-4dd3ae1fce9c', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.', true, NULL, '2025-08-29 18:12:28.224669+00');
-INSERT INTO public.email_logs VALUES ('e6dcef4e-9be8-40b8-8019-9bd8fb8ead4f', 'incoming', 'Task Update - Reporting System', 'ayesha.ahsan@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Task Update: Made progress on reporting system.', true, NULL, '2025-08-29 18:12:28.708791+00');
-INSERT INTO public.email_logs VALUES ('03e94396-b25b-410b-a9a4-d6f7aa17cbb7', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - All tasks progressing well.', true, NULL, '2025-08-29 18:14:26.540949+00');
-INSERT INTO public.email_logs VALUES ('881bb10c-2971-4508-b970-66cfa6fe0289', 'incoming', 'Task Update - Reporting System', 'ayesha.ahsan@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Task Update: Made progress on reporting system.', true, NULL, '2025-08-29 18:14:27.097757+00');
-INSERT INTO public.email_logs VALUES ('ae3adfc6-e59b-4bd1-94fc-d0b9c890c834', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:18:31.087728+00');
-INSERT INTO public.email_logs VALUES ('b6a0b0c2-6a7f-48d9-b3c6-93b68030b800', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:21:30.208547+00');
-INSERT INTO public.email_logs VALUES ('85b9ed34-5921-466d-bc5e-91ae165239e1', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:25:33.270719+00');
-INSERT INTO public.email_logs VALUES ('8a8375cd-3499-41ab-be30-26d8409e0ce9', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:29:00.75739+00');
-INSERT INTO public.email_logs VALUES ('777e618b-ee6f-4cf0-a7bf-59977a2263ee', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:29:31.579227+00');
-INSERT INTO public.email_logs VALUES ('21a7765d-2e6b-45ad-b589-e95e1da345e4', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:30:21.997375+00');
-INSERT INTO public.email_logs VALUES ('bcbeee40-e94f-4e3b-9452-828b863c3a7c', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:31:05.038335+00');
-INSERT INTO public.email_logs VALUES ('fc88300c-80dd-472a-a844-2e144ade3f0c', 'incoming', 'Daily Task Update - 2025-01-15', 'dylan.sachetti@lumenlighthouse.ai', '{kevin.brown@lumenlighthouse.ai}', 'Daily Update - 2025-01-15
-
-Working on the Update Privacy Act System of Records Notices for Treasury Data Sharing - about 60% complete, spent 3.5 hours today. Need PMO approval to proceed further. 
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 40% done, spent 2 hours today.
-
-Security review is pending until the system implementation is further along.
-
-Overall progress is good, but waiting for some approvals.', true, NULL, '2025-08-29 18:32:13.874976+00');
-INSERT INTO public.email_logs VALUES ('83cdf283-b20a-4664-bfe3-0eb372ce8a90', 'incoming', 'Task Update', 'kevin.brown@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Working on the Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) - about 75% complete, spent 4 hours today. Drafting the final guidance document and coordinating with Treasury stakeholders for review. Need to finalize the implementation timeline section.
-Made good progress on the Submit Treasury Implementation Report to President - about 60% done, spent 3 hours today. Completed the executive summary and started working on the progress tracking framework. Need to gather data from various agencies for the 180-day implementation timeline.
-Also worked on the Assess and Revoke Delegated Disbursing Authority as Appropriate - about 45% complete, spent 2.5 hours today. Conducted initial assessment of current delegated authorities and identified agencies that may need revocation notices. Need to schedule stakeholder meetings to discuss findings.
-The Ensure Use of Standard Financial Management Solutions task is about 30% done, spent 2 hours today. Started mapping current financial management solutions across CFO Act agencies and identifying gaps. Need to coordinate with the Financial Management Marketplace team.
-Finally, made some progress on the Issue Guidance for Non-CFO Act Agency Financial Service Consolidation - about 25% complete, spent 1.5 hours today. Began drafting the guidance framework and identifying key stakeholders from non-CFO Act agencies.
-Overall Status: Good progress across all tasks. Main blockers are stakeholder coordination and data gathering from agencies. Need to schedule follow-up meetings with Treasury and agency representatives next week.
-Hours Spent Today: 13 hours total
-Key Achievements: Completed executive summary for implementation report, drafted core guidance document, and initiated agency assessments.', true, NULL, '2025-08-29 19:14:34.004386+00');
-INSERT INTO public.email_logs VALUES ('1b6b474e-e41f-4772-b760-7ccc221196ba', 'incoming', 'Daily Task Update', 'hibbi.iqbal@lumenlighthouse.ai', '{admin@example.com}', 'Here are my daily updates:
-
-Task: Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)
-Status: In Progress
-Progress: 75%
-Notes: Completed authentication module, working on authorization
-Hours Spent: 6
-Blockers: Need clarification on role permissions
-Risks: Timeline might slip if requirements change', true, NULL, '2025-08-29 23:10:23.860476+00');
-INSERT INTO public.email_logs VALUES ('475079ff-4d0e-4203-997b-95653e091390', 'incoming', 'Daily Task Update', 'hibbi.iqbal@lumenlighthouse.ai', '{admin@example.com}', 'Here are my daily updates:
-
-Task: Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)
-Status: Completed
-Progress: 100%
-Notes: Finished all work on this task
-Hours Spent: 8
-Blockers: None
-Risks: None', true, NULL, '2025-08-29 23:12:30.43604+00');
-INSERT INTO public.email_logs VALUES ('88c750da-44d5-4d47-9cc2-00bd298fc7c2', 'incoming', 'Task Update', 'Hibbi.Iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Working on the Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) - about 75% complete, spent 4 hours today. Drafting the final guidance document and coordinating with Treasury stakeholders for review. Need to finalize the implementation timeline section.
-Made good progress on the Submit Treasury Implementation Report to President - about 60% done, spent 3 hours today. Completed the executive summary and started working on the progress tracking framework. Need to gather data from various agencies for the 180-day implementation timeline.
-Also worked on the Assess and Revoke Delegated Disbursing Authority as Appropriate - about 45% complete, spent 2.5 hours today. Conducted initial assessment of current delegated authorities and identified agencies that may need revocation notices. Need to schedule stakeholder meetings to discuss findings.
-The Ensure Use of Standard Financial Management Solutions task is about 30% done, spent 2 hours today. Started mapping current financial management solutions across CFO Act agencies and identifying gaps. Need to coordinate with the Financial Management Marketplace team.
-Finally, made some progress on the Issue Guidance for Non-CFO Act Agency Financial Service Consolidation - about 25% complete, spent 1.5 hours today. Began drafting the guidance framework and identifying key stakeholders from non-CFO Act agencies.
-Overall Status: Good progress across all tasks. Main blockers are stakeholder coordination and data gathering from agencies. Need to schedule follow-up meetings with Treasury and agency representatives next week.
-Hours Spent Today: 13 hours total
-Key Achievements: Completed executive summary for implementation report, drafted core guidance document, and initiated agency assessments.', true, NULL, '2025-08-29 19:15:50.522256+00');
-INSERT INTO public.email_logs VALUES ('612fcb03-a4a0-4bbe-958e-270ee63974c6', 'incoming', 'Task Update', 'Hibbi.Iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Working on the Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) - about 75% complete, spent 4 hours today. Drafting the final guidance document and coordinating with Treasury stakeholders for review. Need to finalize the implementation timeline section.
-Made good progress on the Submit Treasury Implementation Report to President - about 60% done, spent 3 hours today. Completed the executive summary and started working on the progress tracking framework. Need to gather data from various agencies for the 180-day implementation timeline.
-Also worked on the Assess and Revoke Delegated Disbursing Authority as Appropriate - about 45% complete, spent 2.5 hours today. Conducted initial assessment of current delegated authorities and identified agencies that may need revocation notices. Need to schedule stakeholder meetings to discuss findings.
-The Ensure Use of Standard Financial Management Solutions task is about 30% done, spent 2 hours today. Started mapping current financial management solutions across CFO Act agencies and identifying gaps. Need to coordinate with the Financial Management Marketplace team.
-Finally, made some progress on the Issue Guidance for Non-CFO Act Agency Financial Service Consolidation - about 25% complete, spent 1.5 hours today. Began drafting the guidance framework and identifying key stakeholders from non-CFO Act agencies.
-Overall Status: Good progress across all tasks. Main blockers are stakeholder coordination and data gathering from agencies. Need to schedule follow-up meetings with Treasury and agency representatives next week.
-Hours Spent Today: 13 hours total
-Key Achievements: Completed executive summary for implementation report, drafted core guidance document, and initiated agency assessments.', true, NULL, '2025-08-29 19:19:51.297536+00');
-INSERT INTO public.email_logs VALUES ('c8efd20f-4d77-4179-a084-89f7a7febbfb', 'incoming', 'Task Update', 'Hibbi.Iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Working on the Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) - about 75% complete, spent 4 hours today. Drafting the final guidance document and coordinating with Treasury stakeholders for review. Need to finalize the implementation timeline section.
-Made good progress on the Submit Treasury Implementation Report to President - about 60% done, spent 3 hours today. Completed the executive summary and started working on the progress tracking framework. Need to gather data from various agencies for the 180-day implementation timeline.
-Also worked on the Assess and Revoke Delegated Disbursing Authority as Appropriate - about 45% complete, spent 2.5 hours today. Conducted initial assessment of current delegated authorities and identified agencies that may need revocation notices. Need to schedule stakeholder meetings to discuss findings.
-The Ensure Use of Standard Financial Management Solutions task is about 30% done, spent 2 hours today. Started mapping current financial management solutions across CFO Act agencies and identifying gaps. Need to coordinate with the Financial Management Marketplace team.
-Finally, made some progress on the Issue Guidance for Non-CFO Act Agency Financial Service Consolidation - about 25% complete, spent 1.5 hours today. Began drafting the guidance framework and identifying key stakeholders from non-CFO Act agencies.
-Overall Status: Good progress across all tasks. Main blockers are stakeholder coordination and data gathering from agencies. Need to schedule follow-up meetings with Treasury and agency representatives next week.
-Hours Spent Today: 13 hours total
-Key Achievements: Completed executive summary for implementation report, drafted core guidance document, and initiated agency assessments.', true, NULL, '2025-08-29 20:12:32.981208+00');
-INSERT INTO public.email_logs VALUES ('6018f778-55ea-4210-b7af-c0e5ddf24541', 'incoming', 'Task update', 'Hibbi.Iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', '	Working on the Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) - about 75% complete, spent 4 hours today. Drafting the final guidance document and coordinating with Treasury stakeholders for review. Need to finalize the implementation timeline section.
-Made good progress on the Submit Treasury Implementation Report to President - about 60% done, spent 3 hours today. Completed the executive summary and started working on the progress tracking framework. Need to gather data from various agencies for the 180-day implementation timeline.
-Also worked on the Assess and Revoke Delegated Disbursing Authority as Appropriate - about 45% complete, spent 2.5 hours today. Conducted initial assessment of current delegated authorities and identified agencies that may need revocation notices. Need to schedule stakeholder meetings to discuss findings.
-The Ensure Use of Standard Financial Management Solutions task is about 30% done, spent 2 hours today. Started mapping current financial management solutions across CFO Act agencies and identifying gaps. Need to coordinate with the Financial Management Marketplace team.
-Finally, made some progress on the Issue Guidance for Non-CFO Act Agency Financial Service Consolidation - about 25% complete, spent 1.5 hours today. Began drafting the guidance framework and identifying key stakeholders from non-CFO Act agencies.
-Overall Status: Good progress across all tasks. Main blockers are stakeholder coordination and data gathering from agencies. Need to schedule follow-up meetings with Treasury and agency representatives next week.
-Hours Spent Today: 13 hours total
-Key Achievements: Completed executive summary for implementation report, drafted core guidance document, and initiated agency assessments.', true, NULL, '2025-08-29 20:13:39.789998+00');
-INSERT INTO public.email_logs VALUES ('f703665d-b172-44ca-852b-27d767b66690', 'incoming', 'Daily Task Update - 2025-01-16', 'dylan.sachetti@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Daily Update - 2025-01-16
-
-Made significant progress on the Issue Guidance on Data Access for Fraud Prevention - now 85% complete, spent 6 hours today. Finalized the technical specifications and submitted for legal review. Expecting feedback by end of week.
-
-The Update Privacy Act System of Records Notices for Treasury Data Sharing is 90% done, spent 4 hours today. Completed the draft notices and sent to Treasury for final approval. Should be ready for publication next week.
-
-Also worked on the Develop Transparent Exemption Request Process for Payment Verification - about 70% complete, spent 3 hours today. Created the process flow and started drafting the exemption criteria. Need stakeholder input on approval thresholds.
-
-The Submit Agency Compliance Plan to OMB Director task is 50% done, spent 2 hours today. Compiled initial compliance data and started drafting the plan structure. Need to coordinate with other agencies for comprehensive data.
-
-Finally, made some progress on the Update and Issue Payment Verification Guidance in Consultation with OMB Director - about 35% complete, spent 1.5 hours today. Began drafting the guidance framework and identified key consultation points.
-
-Overall Status: Excellent progress across all tasks. Main focus is on completing the fraud prevention guidance and privacy notices. Need to schedule stakeholder meetings for exemption process.
-
-Hours Spent Today: 16.5 hours total
-Key Achievements: Completed technical specs for fraud prevention, finalized privacy notices, and established exemption process framework.', true, NULL, '2025-08-29 20:21:47.731441+00');
-INSERT INTO public.email_logs VALUES ('a78d5b0b-f83c-4163-8946-76bc22cc2f21', 'incoming', 'Task Update - 2025-01-16', 'hibbi.iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Progress Update - 2025-01-16
-
-The Issue Guidance for Core Financial System Consolidation (CFO Act Agencies) is now 90% complete, spent 5 hours today. Finalized the guidance document and submitted for Treasury review. Awaiting final approval before publication.
-
-Completed the Submit Treasury Implementation Report to President - 100% done, spent 2 hours today for final review and submission. Report has been delivered to the President office as required.
-
-Made good progress on the Assess and Revoke Delegated Disbursing Authority as Appropriate - now 75% complete, spent 4 hours today. Completed stakeholder meetings and prepared revocation notices for identified agencies. Ready to issue notices next week.
-
-The Ensure Use of Standard Financial Management Solutions task is 60% done, spent 3 hours today. Successfully coordinated with the Financial Management Marketplace team and identified all gaps. Started implementation planning.
-
-The Issue Guidance for Non-CFO Act Agency Financial Service Consolidation is 45% complete, spent 2.5 hours today. Drafted the guidance framework and identified all non-CFO Act agencies. Need to schedule consultation meetings.
-
-Overall Status: Strong progress with one task completed. Focus on finalizing CFO Act guidance and issuing revocation notices. Need to accelerate non-CFO Act agency coordination.
-
-Hours Spent Today: 16.5 hours total
-Key Achievements: Completed implementation report, finalized CFO Act guidance, and prepared revocation notices.', true, NULL, '2025-08-29 20:23:41.860264+00');
-INSERT INTO public.email_logs VALUES ('ae76d937-eee7-4671-b84a-236146309a51', 'incoming', 'Update on Issue Guidance on Data Access for Fraud Prevention', 'dylan.sachetti@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Task Update: Issue Guidance on Data Access for Fraud Prevention
-
-Current Status: 95% Complete
-
-Progress Made Today:
-- Finalized all technical specifications
-- Completed legal review and incorporated feedback
-- Submitted for final Treasury approval
-- Prepared implementation timeline
-- Created training materials for agencies
-
-Hours Spent: 8 hours
-
-Blockers: None - awaiting final approval
-
-Next Steps:
-- Receive Treasury approval (expected by Friday)
-- Publish guidance document
-- Schedule agency training sessions
-- Monitor implementation progress
-
-Risks: Minimal - approval process is standard
-
-Summary: Task is essentially complete pending final approval. All deliverables are ready and implementation planning is in place.', true, NULL, '2025-08-29 20:24:01.748705+00');
-INSERT INTO public.email_logs VALUES ('3d3a0682-2c8a-4d1e-8145-1b38f5898020', 'incoming', 'Detailed Task Updates - 2025-01-16', 'hibbi.iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Detailed Task Updates - 2025-01-16
-
-Task: Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)
-Status: 90% Complete
-Hours: 5 hours today
-Progress: Finalized guidance document, submitted for Treasury review
-Blockers: Awaiting Treasury approval
-Next Actions: Publish upon approval, schedule agency briefings
-
-Task: Submit Treasury Implementation Report to President
-Status: 100% Complete
-Hours: 2 hours today
-Progress: Final review and submission completed
-Blockers: None
-Next Actions: Monitor for any follow-up requests
-
-Task: Assess and Revoke Delegated Disbursing Authority as Appropriate
-Status: 75% Complete
-Hours: 4 hours today
-Progress: Completed stakeholder meetings, prepared revocation notices
-Blockers: None
-Next Actions: Issue notices to identified agencies
-
-Task: Ensure Use of Standard Financial Management Solutions
-Status: 60% Complete
-Hours: 3 hours today
-Progress: Coordinated with Marketplace team, identified gaps
-Next Actions: Begin implementation planning
-
-Task: Issue Guidance for Non-CFO Act Agency Financial Service Consolidation
-Status: 45% Complete
-Hours: 2.5 hours today
-Progress: Drafted framework, identified agencies
-Blockers: Need stakeholder coordination
-Next Actions: Schedule consultation meetings
-
-Total Hours Today: 16.5 hours', true, NULL, '2025-08-29 20:24:43.259974+00');
-INSERT INTO public.email_logs VALUES ('7db240f8-204c-48a8-b190-5b06e0d06331', 'incoming', 'Late Task Update - 2025-01-16', 'dylan.sachetti@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Late Update - 2025-01-16
-
-Working late to catch up on the Update Privacy Act System of Records Notices for Treasury Data Sharing - now 95% complete, spent 3 hours this evening. Completed final revisions based on Treasury feedback. Ready for publication tomorrow.
-
-Also made progress on the Issue Guidance on Data Access for Fraud Prevention - about 90% done, spent 2 hours this evening. Finalized technical specifications and submitted for legal review. Expecting approval by end of week.
-
-The Develop Transparent Exemption Request Process for Payment Verification is 80% complete, spent 1.5 hours this evening. Completed the process flow and exemption criteria. Ready for stakeholder review.
-
-Overall Status: Good progress despite late start. Main blockers were earlier meetings and coordination calls. All tasks on track for completion.
-
-Hours Spent Today: 6.5 hours total
-Note: This is a late update due to earlier commitments.', true, NULL, '2025-08-29 20:25:04.061221+00');
-INSERT INTO public.email_logs VALUES ('f58a0d9b-0cba-4f51-ad49-9a69ca68c8a2', 'incoming', 'General Inquiry', 'unknown.user@example.com', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', 'Hello,
-
-I have a general question about the Executive Order implementation process.
-
-Best regards,
-Unknown User', true, NULL, '2025-08-29 20:26:39.960097+00');
-INSERT INTO public.email_logs VALUES ('70815a26-cb38-47d9-b4cf-a1559a01e80c', 'incoming', 'Daily Task Update', 'hibbi.iqbal@lumenlighthouse.ai', '{admin@example.com}', 'Here are my daily updates:
-
-Task: Develop API endpoints for user management
-Status: In Progress
-Progress: 75%
-Notes: Completed authentication module, working on authorization
-Hours Spent: 6
-Blockers: Need clarification on role permissions
-Risks: Timeline might slip if requirements change', true, NULL, '2025-08-29 23:08:34.268941+00');
+DOL EO Management System', false, 'caad98cf-0b8d-4968-b319-d09aa02cffaa', '2025-08-30 18:39:38.330017+00');
+INSERT INTO public.email_logs VALUES ('1d145386-b952-411a-a0fb-0e8d55a16293', 'incoming', 'Task Update', 'Hibbi.Iqbal@lumenlighthouse.ai', '{"EO 14249 Email <eo.14249@lumenlighthouse.ai>"}', '
+Started reaching out to financial institutions, consumer groups and stakeholders
+Got response from few of the financials and consumer groups but no response from stakeholder, 
+Please provide resources to reach out to them. So stuck here
+Just started with the implementation report worked for like 2 hours', true, NULL, '2025-08-30 18:50:20.730532+00');
 
 
 --
@@ -1546,23 +813,23 @@ Risks: Timeline might slip if requirements change', true, NULL, '2025-08-29 23:0
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.users VALUES ('1e882225-d379-40a0-a3af-2ba90f6ab76a', 'Kevin Brown', 'kevin.brown@lumenlighthouse.ai', 'reviewer', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Deputy CFO', '$2b$12$5.KYuZOoFBHC0ApmmQj1He8u0fIaU/bw3aV1d60R2yioPMiY5zgBK');
-INSERT INTO public.users VALUES ('e9df20f5-8a10-4261-be4f-584c10c60d74', 'Westley Everette', 'westley.everette@lumenlighthouse.ai', 'admin', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Associate Deputy CFO', '$2b$12$o7p66.NF8VB7GjlxHqB0iu2lAO45E0X79jI78kR2zFq096nslTmJe');
-INSERT INTO public.users VALUES ('6a445645-3029-4b62-aac7-10cd7e6558d0', 'Dylan Sachetti', 'dylan.sachetti@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Director of Compliance', '$2b$12$JM5JngFTW8vA8Mhh1L6BkuFVsk0j9.AbHLKdNvree45F0Ln8sp7BG');
-INSERT INTO public.users VALUES ('783a8139-367f-486c-9c19-05b9291cdf9a', 'Ayesha Ahsan', 'ayesha.ahsan@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Director of Division of Business Process Improvement', '$2b$12$ffcIGEdUyCMHSXm0jyFzYe.Zuz6zSTpJ9ANMpHOhrWR/okg2vFsDm');
-INSERT INTO public.users VALUES ('a7fa1461-11e3-4f91-ae42-8e4b85ed5a8e', 'Jack Smith', 'jack.smith@lumenlighthouse.ai', 'admin', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'CFO', '$2b$12$sNiRxauwjeeSWLPX6TTvtOtuX4qixatsd4AIFifKoN8StX3CDeK5.');
-INSERT INTO public.users VALUES ('5814f396-9360-41ad-adda-cd15afcbc88f', 'Hibbi Iqbal', 'hibbi.iqbal@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Director of Financial Reporting', '$2b$12$r9HjknKVSWbMoCdgtbSxX.UcA85Ge.L0O90xFeIuMPCOkK.INLC8m');
-INSERT INTO public.users VALUES ('e24c7d45-75b2-4f90-9b14-dcde4fd281d7', 'Sophia Carty', 'sophia.carty@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Director of Accounting', '$2b$12$n8znnH0tIo14KEBT0OBmBORcY3EYXZ2G5vN.L/qOpBHIxFLRVD/na');
-INSERT INTO public.users VALUES ('9e195007-1ca2-453e-b3d7-b6bbf32d0185', 'Robert Springfiled', 'robert.springfiled@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Director of Security and Technology', '$2b$12$e5YQ0Z57t3.5QRM.k7Y7geYdsoozsuCvk8tvYQkRsYcKERI57lRNi');
-INSERT INTO public.users VALUES ('0a50508d-2861-46b1-ba89-c77126606c42', 'Micheal Kim', 'micheal.kim@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Director of Travel Management', '$2b$12$yCbhRtywqP0qijz44p6xCufL7.IMUmJAZrRmin5MViaVA79Ms2RqW');
-INSERT INTO public.users VALUES ('da7d66bd-e296-47fb-92f0-cd5b93b15ba4', 'Zacira Copper', 'zacira.copper@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Supervisor (reports to Ayesha)', '$2b$12$Uo2i/En.K1lglebIK3VNRufCaCJSg/AW35eCX/49x5gedsDqvaDim');
-INSERT INTO public.users VALUES ('25038ac4-5da6-4634-b210-cff180d5bd9d', 'Jada Mccray', 'jada.mccray@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Lead Accountant (Reports to Zacira)', '$2b$12$DgScEPp7FW2ov1wvRJ14h.DPtlc.XaJH74qbvHTru7PNcvMRpfaQa');
-INSERT INTO public.users VALUES ('0c9067b4-72f7-4285-84a1-488352d4d956', 'Jose Flores', 'jose.flores@lumenlighthouse.ai', 'executor', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Lead Accountant (Reports to Zacira)', '$2b$12$8qMJPtR17BDeKlcDNYAqbuSk8o.1cq2263809t0LvYcSmz/n9UOdC');
-INSERT INTO public.users VALUES ('f52c4d2e-a1c6-4f3f-9a13-ad948e96d76e', 'EO 14249 Email', 'eo.14249@lumenlighthouse.ai', 'reviewer', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'EO 14249 Email', '$2b$12$6Cl5Ldl9.mZpVRDKs5G1juF/Q7.LilhdFQhiCCO1TeUJ1jxkJy84.');
-INSERT INTO public.users VALUES ('bc8eb760-3ffb-4e93-b197-773851b69c33', 'EO 14247 Email', 'eo.14247@lumenlighthouse.ai', 'reviewer', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'EO 14247 Email', '$2b$12$Zs7HEYHsZC3lhciM1c5PaufQ4TOKACKxqXZby8.RXtxcOKkCuxk46');
-INSERT INTO public.users VALUES ('9ac8c65f-d0fe-42d0-aaff-29e5531ca2f5', 'Sarah Johnson', 'sarah.johnson@lumenlighthouse.ai', 'reviewer', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Senior Project Manager', '$2b$12$97LEysJmeZYPHcWf1f5Gyu57J.VXMUyNQepb..8EPpG7K.R1JawLK');
-INSERT INTO public.users VALUES ('2c2ca07e-b379-46f1-99c3-b677f5fdbe79', 'David Chen', 'david.chen@lumenlighthouse.ai', 'reviewer', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Compliance Manager', '$2b$12$8TWXh4OeXb1a07sOHxOGMetHzlBHMxYK8hl0QQnFPAGCeuHuRADny');
-INSERT INTO public.users VALUES ('bf42c44e-3a96-42d4-8c82-d87115bfa2d8', 'Maria Rodriguez', 'maria.rodriguez@lumenlighthouse.ai', 'reviewer', true, '2025-08-28 17:21:23.407379+00', '2025-08-28 17:21:23.407379+00', 'Financial Operations Manager', '$2b$12$RVFqOmsO6kkm1x.IanEIr.N5IKP/sOHqodc310R5NNtOZ3/PPg5da');
+INSERT INTO public.users VALUES ('06c5ea3f-2af1-492b-bd12-9e2850bd6f74', 'Jack Smith', 'jack.smith@lumenlighthouse.ai', 'admin', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'CFO', '$2b$12$jTSsnAqYsW8vxxBae8RqsOmKkOUBlBU6CmadSYCx294qGxqOKW6Wq');
+INSERT INTO public.users VALUES ('dd878b12-9bec-4d74-a72a-a20735072212', 'Kevin Brown', 'kevin.brown@lumenlighthouse.ai', 'reviewer', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Deputy CFO', '$2b$12$JJwaa9jh8zWNaa6cWfkCbeubZcqXzMcUGtu7bLDnhQYJATjdIy8gC');
+INSERT INTO public.users VALUES ('1ec208ac-7acd-4b93-93e5-bdc7cd8f40f4', 'Westley Everette', 'westley.everette@lumenlighthouse.ai', 'admin', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Associate Deputy CFO', '$2b$12$IVvHYflCty8.63YPGgAuR.phJknjlgwhAQDwKNWzAggZdbH0Ev65.');
+INSERT INTO public.users VALUES ('1b6175cd-2a7f-4fe7-86d7-e8af97204313', 'Dylan Sachetti', 'dylan.sachetti@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Director of Compliance', '$2b$12$q4tn.sZdtNSd1IhqSzvVEepACQHcOnGCq5U3nlZDuZEWenA1s0JTS');
+INSERT INTO public.users VALUES ('de426ad5-2b3a-4522-a6c0-c3153ece9bb2', 'Ayesha Ahsan', 'ayesha.ahsan@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Director of Division of Business Process Improvement', '$2b$12$QmLEqJcb4iul60cniyxnwui2TufRixDUgedQgEpebhoi3Y3QOKEhy');
+INSERT INTO public.users VALUES ('498f3d26-6c1c-4c25-ae04-537a0e25f8f8', 'Hibbi Iqbal', 'hibbi.iqbal@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Director of Financial Reporting', '$2b$12$Y4x3KANMSO9OIqWlIgeiA.6h/2wjDqmaw1o8w9WitK6QrthtnTSjW');
+INSERT INTO public.users VALUES ('81dff93b-32b6-4825-85fa-07216f9e125e', 'Sophia Carty', 'sophia.carty@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Director of Accounting', '$2b$12$bDycB91vouP81oi3bXBKu.4Unz0O3F9mx36v.cYP20BtrAEZxIdx.');
+INSERT INTO public.users VALUES ('adcf072a-87e6-4ee6-afa9-de0233416f0a', 'Robert Springfiled', 'robert.springfiled@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Director of Security and Technology', '$2b$12$rauf3UXLJerqxu08UgRHPuRbTrRTguvPNReU9AtCA.obwQT4p0SZy');
+INSERT INTO public.users VALUES ('18e3020c-5dc0-4332-8cbb-4093ad2ad22d', 'Micheal Kim', 'micheal.kim@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Director of Travel Management', '$2b$12$o5KrxEd6CwcDKfoPvyLCeeRAhzaCSi90Qi/x3LouUwjG6WlcH7XgG');
+INSERT INTO public.users VALUES ('a4d31fc2-bbfd-49a8-85ae-08f0e32b4eef', 'Zacira Copper', 'zacira.copper@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Supervisor (reports to Ayesha)', '$2b$12$I/K6LYoOzt6LnHypuUKnxuHLhTS7B5qjuiXBqV3jd/VbYUdhVcdWu');
+INSERT INTO public.users VALUES ('b50a6180-6494-46a6-b652-79e01a43f6a9', 'Jada Mccray', 'jada.mccray@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Lead Accountant (Reports to Zacira)', '$2b$12$x1yCscvfSNiZBTRtCufZUuLhFIrBT62z/c6JxLO5IMXcagD2oxBT6');
+INSERT INTO public.users VALUES ('2e181d58-9abe-4831-891c-cc6d0a0f68b4', 'Jose Flores', 'jose.flores@lumenlighthouse.ai', 'executor', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Lead Accountant (Reports to Zacira)', '$2b$12$T.xtEpFG9HxTifARoisTAO0ATo59LEi6ooVw3cNAbbRQVl3eyN2bu');
+INSERT INTO public.users VALUES ('bbf10ce9-e691-4907-ac1e-b2ea52ce3019', 'EO 14249 Email', 'eo.14249@lumenlighthouse.ai', 'reviewer', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'EO 14249 Email', '$2b$12$8t3wUyq6RHVJmLLAwEbkH.IbY8bnfaFnkcGQtbmNl1K1K7CLkbUai');
+INSERT INTO public.users VALUES ('5d257691-72df-4d93-8abd-c3b086daba36', 'EO 14247 Email', 'eo.14247@lumenlighthouse.ai', 'reviewer', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'EO 14247 Email', '$2b$12$tpH9uI3aP7mixjI2Kjv3SegW5saodmq6eyzDCcLJYwJB74QXVyLvq');
+INSERT INTO public.users VALUES ('f643be30-cb6c-4cd5-b145-84efed3cb4ad', 'Sarah Johnson', 'sarah.johnson@lumenlighthouse.ai', 'reviewer', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Senior Project Manager', '$2b$12$JPHi88l274LUCpAuIi0mKukWcpeDUknVXTvNZnLnb40/9831AFAzq');
+INSERT INTO public.users VALUES ('560ec6ae-9b14-4474-9a6f-f4f026b9b297', 'David Chen', 'david.chen@lumenlighthouse.ai', 'reviewer', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Compliance Manager', '$2b$12$u.1nGiH/urKdnuW5NxGDXOTJ8ssGHKhZxz1wZG8IIksMUNCpGo7bC');
+INSERT INTO public.users VALUES ('c443b754-7493-4cfc-bb73-8aaa13122cdd', 'Maria Rodriguez', 'maria.rodriguez@lumenlighthouse.ai', 'reviewer', true, '2025-08-30 18:33:12.256886+00', '2025-08-30 18:33:12.256886+00', 'Financial Operations Manager', '$2b$12$gIoaczpUZkWvNVlqttTa/.QopqUpex2TCsMYoJa3WBfAE/LjZ6E.O');
 
 
 --
@@ -1572,95 +839,40 @@ INSERT INTO public.users VALUES ('bf42c44e-3a96-42d4-8c82-d87115bfa2d8', 'Maria 
 
 
 --
+-- Data for Name: celery_task_logs; Type: TABLE DATA; Schema: public; Owner: dol_user
+--
+
+INSERT INTO public.celery_task_logs VALUES ('54fa72af-ad87-40a7-bd36-103d8cb5c1bf', 'd5ffea97-0c84-4822-8e7d-16185fffee65', 'src.workflow.tasks.process_daily_update_email', 'success', 'celery@24652b1c34d4', '2025-08-30 18:50:20.755635+00', '2025-08-30 18:50:27.413886+00', 6.658255, '{"arg_0": {"message_id": "<12742FE1-37A1-4633-9BB3-E5DAAA007CED@lumenlighthouse.ai>", "subject": "Task Update", "sender": "Hibbi.Iqbal@lumenlighthouse.ai", "recipients": ["EO 14249 Email <eo.14249@lumenlighthouse.ai>"], "body_text": "\r\nStarted reaching out to financial institutions, consumer groups and stakeholders\r\nGot response from few of the financials and consumer groups but no response from stakeholder, \r\nPlease provide resources to reach out to them. So stuck here\r\nJust started with the implementation report worked for like 2 hours", "body_html": "\r\nStarted reaching out to financial institutions, consumer groups and stakeholders\r\nGot response from few of the financials and consumer groups but no response from stakeholder, \r\nPlease provide resources to reach out to them. So stuck here\r\nJust started with the implementation report worked for like 2 hours", "received_at": "2025-08-30 18:50:20.698137", "raw_mime_s3_key": null}}', '{}', '{"success": true, "sender": "Hibbi.Iqbal@lumenlighthouse.ai", "user_id": "498f3d26-6c1c-4c25-ae04-537a0e25f8f8", "extraction_case": "C1", "updates_saved": 2, "unmatched_mentions": [], "is_late": false}', NULL, NULL, 0, NULL, NULL, '2025-08-30 18:50:20.762711+00', '2025-08-30 18:50:27.41355+00');
+INSERT INTO public.celery_task_logs VALUES ('07ea32ee-8d63-4023-a3be-a00bf718b7ab', 'f10072bb-cbe2-442b-81f1-9fb652553eb7', 'src.workflow.tasks.store_email', 'success', 'celery@24652b1c34d4', '2025-08-30 18:33:58.277529+00', '2025-08-30 18:33:58.320376+00', 0.042851, '{"arg_0": {"message_id": "<9562E74C-E9A1-4918-BE1F-04E33E81EC3C@lumenlighthouse.ai>", "subject": "EO: Modernize workforce data ", "sender": "jack.smith@lumenlighthouse.ai", "recipients": ["EO 14249 Email <eo.14249@lumenlighthouse.ai>"], "received_at": "2025-08-30 18:33:57.739137", "body_text": "This document is scheduled to be published in the Federal Register on 03/28/2025 and available online at https://federalregister.gov/d/2025-05522, and on https://govinfo.gov \r\nEXECUTIVE ORDER 14247 - - - - - - - \r\nMODERNIZING PAYMENTS TO AND FROM AMERICA''S BANK ACCOUNT \r\nBy the authority vested in me as President by the \r\nConstitution and the laws of the United States of America, it is \r\nhereby ordered: \r\nSection 1. Purpose. The continued use of paper-based \r\npayments by the Federal Government, including checks and money \r\norders, flowing into and out of the United States General Fund, \r\nwhich might be thought of as America''s bank account, imposes \r\nunnecessary costs; delays; and risks of fraud, lost payments, \r\ntheft, and inefficiencies. Mail theft complaints have increased \r\nsubstantially since the COVID-19 pandemic. Historically, \r\nDepartment of the Treasury checks are 16 times more likely to be \r\nreported lost or stolen, returned undeliverable, or altered than \r\nan electronic funds transfer (EFT). Maintaining the physical \r\ninfrastructure and specialized technology for digitizing paper \r\nrecords cost the American taxpayer over $657 million in Fiscal \r\nYear 2024 alone. \r\nThis order promotes operational efficiency by mandating the \r\ntransition to electronic payments for all Federal disbursements \r\nand receipts by digitizing payments to the extent permissible \r\nunder applicable law (but not, for avoidance of doubt, to \r\nestablish a Central Bank Digital Currency). \r\nSec. 2. Policy. It is the policy of the United States to \r\ndefend against financial fraud and improper payments, increase \r\nefficiency, reduce costs, and enhance the security of Federal \r\npayments. \r\nSec. 3. Phase Out of Paper Check Disbursements \r\nand Receipts. (a) Effective September 30, 2025, and to the \r\n2 \r\nextent permitted by law, the Secretary of the Treasury shall \r\ncease issuing paper checks for all Federal disbursements \r\ninclusive of intragovernmental payments, benefits payments, \r\nvendor payments, and tax refunds, except as specified in \r\nsection 4 of this order. \r\n(b) All executive departments and agencies (agencies) \r\nshall comply with this directive by transitioning to EFT \r\nmethods, including direct deposit, prepaid card accounts, and \r\nother digital payment options, and take all steps necessary to \r\nenroll recipients in EFT payments, except as specified in \r\nsection 4 of this order. \r\n(c) As soon as practicable, and to the extent permitted by \r\nlaw, all payments made to the Federal Government shall be \r\nprocessed electronically, except as specified in section 4 of \r\nthis order. \r\n(d) The Secretary of State, the Secretary of the Treasury, \r\nthe Secretary of Health and Human Services, the Secretary of \r\nEducation, the Secretary of Veterans Affairs, and the Secretary \r\nof Homeland Security shall take appropriate action to eliminate \r\nthe need for the Department of the Treasury''s physical lockbox \r\nservices and expedite requirements to receive the payment of \r\nFederal receipts, including fees, fines, loans, and taxes, \r\nthrough electronic means except as specified in section 4 of \r\nthis order. \r\n(e) The Secretary of the Treasury shall support agencies'' \r\ntransition to digital payment methods, including by providing \r\naccess through the Department of the Treasury''s centralized \r\npayment systems to: \r\n(i) direct deposits; \r\n(ii) debit and credit card payments; \r\n3 \r\n(iii) digital wallets and real-time payment systems; \r\nand \r\n(iv) other modern electronic payment options. \r\nSec. 4. Exceptions and Accommodations for the Phase Out of \r\nPaper Check Disbursements and Receipts. (a) The Secretary of \r\nthe Treasury, shall review and, as appropriate, revise \r\nprocedures for granting limited exceptions where electronic \r\npayment and collection methods are not feasible, including \r\nexceptions for: \r\n(i) individuals who do not have access to banking \r\nservices or electronic payment systems; \r\n(ii) certain emergency payments where electronic \r\ndisbursement would cause undue hardship, as \r\ncontemplated in 31 C.F.R. Part 208; \r\n(iii) national security- or law enforcement-related \r\nactivities where non-EFT transactions are necessary or \r\ndesirable; and \r\n(iv) other circumstances as determined by the \r\nSecretary of the Treasury, as reflected in regulations \r\nor other guidance. \r\n(b) Individuals or entities qualifying for an exception \r\nunder this section or other applicable law shall be provided \r\nalternative payment options. \r\nSec. 5. Implementation and Compliance of Electronic \r\nTransactions. (a) The Secretary of the Treasury, in \r\ncoordination with the heads of agencies, shall develop and \r\nimplement a comprehensive public awareness campaign to inform \r\nFederal payment recipients of the transition to electronic \r\npayments, including guidance on accessing and setting up digital \r\npayment options. \r\n4 \r\n(b) Agencies shall coordinate with the Department of the \r\nTreasury to facilitate a smooth transition to digital payments, \r\nensuring that affected individuals and entities receive adequate \r\nsupport. \r\n(c) The Secretary of the Treasury shall work with \r\nfinancial institutions, consumer groups, and other stakeholders \r\nto address financial access for unbanked and underbanked \r\npopulations. \r\n(d) The Secretary of the Treasury and the heads of \r\nagencies shall take all necessary steps to protect classified \r\ninformation and systems, as well as personally identifiable \r\ninformation and tax return information, through the \r\nimplementation of this order. \r\nSec. 6. Reporting Requirements. (a) The heads of agencies \r\nshall submit a compliance plan to the Director of the Office of \r\nManagement and Budget within 90 days of the date of this order \r\ndetailing their strategy for eliminating paper-based \r\ntransactions. \r\n(b) The Secretary of the Treasury shall submit an \r\nimplementation report to the President through the Assistant to \r\nthe President for Economic Policy within 180 days of the date of \r\nthis order detailing progress on the matters set forth in this \r\norder.Sec. 7. General Provisions. (a) Nothing in this order \r\nshall be construed to impair or otherwise affect: \r\n(i) the authority granted by law to an executive \r\ndepartment or agency, or the head thereof; or \r\n(ii) the functions of the Director of the Office of \r\nManagement and Budget relating to budgetary, \r\nadministrative, or legislative proposals. \r\n5 \r\n(b) This order shall be implemented consistent with \r\napplicable law and subject to the availability of \r\nappropriations. \r\n(c) This order is not intended to, and does not, create \r\nany right or benefit, substantive or procedural, enforceable at \r\nlaw or in equity by any party against the United States, its \r\ndepartments, agencies, or entities, its officers, employees, or \r\nagents, or any other person. \r\nTHE WHITE HOUSE, \r\nMarch 25, 2025. \r\n[FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] \r\n\r\n", "raw_mime_s3_key": null}}', '{}', '{"eo_id": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "email_log_id": "fdf03f51-f6f2-4e43-a664-1587e035ee86"}', NULL, NULL, 0, NULL, NULL, '2025-08-30 18:33:58.289541+00', '2025-08-30 18:33:58.319963+00');
+INSERT INTO public.celery_task_logs VALUES ('8e747bf7-350e-4c8b-a41b-4653f3248f0b', '959eb878-8210-439c-ae78-20f2d0b345e0', 'src.workflow.tasks.persist_tasks', 'started', 'celery@24652b1c34d4', '2025-08-30 18:34:38.243982+00', NULL, NULL, '{"arg_0": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "arg_1": [{"id": 1, "title": "Cease Issuance of Paper Checks for Federal Disbursements", "description": "Transition all Federal disbursements, including intragovernmental payments, benefits, vendor payments, and tax refunds, to electronic funds transfer methods by the effective date, per Sec. 3(a).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": "2025-09-30", "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 2, "title": "Transition All Federal Receipts to Electronic Processing", "description": "Implement processes to ensure all payments made to the Federal Government are processed electronically, except as specified in Sec. 4, per Sec. 3(c).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 3, "title": "Eliminate Treasury Physical Lockbox Services", "description": "Take appropriate action to eliminate the need for the Department of the Treasury''s physical lockbox services and expedite requirements to receive Federal receipts electronically, per Sec. 3(d).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 4, "title": "Support Agency Transition to Digital Payment Methods", "description": "Provide access to centralized payment systems for direct deposits, debit/credit card payments, digital wallets, real-time payment systems, and other electronic options, per Sec. 3(e).", "category_dept": "Director of Accounting", "assignee": "Sophia Carty", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 5, "title": "Review and Revise Exception Procedures for Non-Electronic Payments", "description": "Review and, as appropriate, revise procedures for granting exceptions to electronic payment and collection methods, including for unbanked individuals, emergencies, and other circumstances, per Sec. 4(a).", "category_dept": "Director of Compliance", "assignee": "Dylan Sachetti", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 6, "title": "Provide Alternative Payment Options for Exception Cases", "description": "Ensure individuals or entities qualifying for exceptions to electronic payments are provided with alternative payment options, per Sec. 4(b).", "category_dept": "Director of Compliance", "assignee": "Dylan Sachetti", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 7, "title": "Develop and Implement Public Awareness Campaign", "description": "Develop and implement a comprehensive public awareness campaign to inform Federal payment recipients of the transition to electronic payments and provide guidance on digital payment setup, per Sec. 5(a).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 8, "title": "Coordinate Agency Support for Digital Payment Transition", "description": "Coordinate with relevant agencies to facilitate a smooth transition to digital payments and ensure adequate support for affected individuals and entities, per Sec. 5(b).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 9, "title": "Address Financial Access for Unbanked and Underbanked Populations", "description": "Work with financial institutions, consumer groups, and stakeholders to address financial access issues for unbanked and underbanked populations, per Sec. 5(c).", "category_dept": "Director of Financial Reporting", "assignee": "Hibbi Iqbal", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 10, "title": "Protect Classified and Sensitive Information During Implementation", "description": "Take all necessary steps to protect classified information, personally identifiable information, and tax return information during the implementation of this order, per Sec. 5(d).", "category_dept": "Director of Security and Technology", "assignee": "Robert Springfiled", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}]}', '{}', NULL, NULL, NULL, 0, NULL, NULL, '2025-08-30 18:34:38.249089+00', '2025-08-30 18:34:38.249089+00');
+INSERT INTO public.celery_task_logs VALUES ('c5e442d0-33a4-40d6-8014-cd2b9322ab17', 'dc6bee8b-888f-40b6-a4a7-8ed5e9aeadf6', 'src.workflow.tasks.process_pmo_response', 'success', 'celery@24652b1c34d4', '2025-08-30 18:39:37.302899+00', '2025-08-30 18:39:38.281104+00', 0.978211, '{"arg_0": {"message_id": "<81E6111E-B08E-453C-9075-E9EEBB4A7735@lumenlighthouse.ai>", "subject": "Re: PMO Review Required: EO: Modernize workforce data  [EO ID:\r\n caad98cf-0b8d-4968-b319-d09aa02cffaa]", "sender": "kevin.brown@lumenlighthouse.ai", "recipients": ["eo.14249@lumenlighthouse.ai"], "received_at": "2025-08-30 18:39:37.206738", "body_text": "\r\n\r\n> On Aug 30, 2025, at 2:35\u202fPM, eo.14249@lumenlighthouse.ai wrote:\r\n> \r\n> Task ID\tTitle\tOwner\tAssignee\tDue\tStatus\tRemarks\r\n> 1\tCease Issuance of Paper Checks for Federal Disbursements\t\u2014\tAyesha Ahsan\t2025-09-30\tApprove\t[Fill Here]\r\n> 2\tTransition All Federal Receipts to Electronic Processing\t\u2014\tAyesha Ahsan\t\u2014\tApprove\t[Fill Here]\r\n> 3\tEliminate Treasury Physical Lockbox Services\t\u2014\tAyesha Ahsan\t\u2014\tApprove\t[Fill Here]\r\n> 4\tSupport Agency Transition to Digital Payment Methods\t\u2014\tSophia Carty\t\u2014\tApprove\t[Fill Here]\r\n> 5\tReview and Revise Exception Procedures for Non-Electronic Payments\t\u2014\tDylan Sachetti\t\u2014\tApprove\t[Fill Here]\r\n> 6\tProvide Alternative Payment Options for Exception Cases\t\u2014\tDylan Sachetti\t\u2014\tApprove\t[Fill Here]\r\n> 7\tDevelop and Implement Public Awareness Campaign\t\u2014\tAyesha Ahsan\t\u2014\tApprove\t[Fill Here]\r\n> 8\tCoordinate Agency Support for Digital Payment Transition\t\u2014\tAyesha Ahsan\t\u2014\tApprove\t[Fill Here]\r\n> 9\tAddress Financial Access for Unbanked and Underbanked Populations\t\u2014\tHibbi Iqbal\t\u2014\tApprove\t[Fill Here]\r\n> 10\tProtect Classified and Sensitive Information During Implementation\t\u2014\tRobert Springfiled\t\u2014\tApprove\t[Fill Here]\r\n> 11\tSubmit Agency Compliance Plan for Eliminating Paper-Based Transactions\t\u2014\tDylan Sachetti\t2025-12-29\tApprove\t[Fill Here]\r\n> 12\tSubmit Treasury Implementation Report on EO Progress\t\u2014\tHibbi Iqbal\t2026-03-29\tApprove\t[Fill Here]\r\n> \r\n\r\n", "related_eo_id": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "email_log_id": "5374b470-bd00-47ab-b23d-776a0c26e8be"}}', '{}', '{"eo_id": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "intent": "APPROVE_ALL", "approved": 0, "rejected": 0}', NULL, NULL, 0, NULL, NULL, '2025-08-30 18:39:37.32354+00', '2025-08-30 18:39:38.280535+00');
+INSERT INTO public.celery_task_logs VALUES ('cf14f683-d504-4569-9774-450875bd8359', '49b906cd-3922-4c5c-9dfd-396eba4d9e29', 'src.workflow.tasks.ai_extract_tasks', 'started', 'celery@24652b1c34d4', '2025-08-30 18:33:58.337962+00', NULL, NULL, '{"arg_0": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "arg_1": "This document is scheduled to be published in the Federal Register on 03/28/2025 and available online at https://federalregister.gov/d/2025-05522, and on https://govinfo.gov \r\nEXECUTIVE ORDER 14247 - - - - - - - \r\nMODERNIZING PAYMENTS TO AND FROM AMERICA''S BANK ACCOUNT \r\nBy the authority vested in me as President by the \r\nConstitution and the laws of the United States of America, it is \r\nhereby ordered: \r\nSection 1. Purpose. The continued use of paper-based \r\npayments by the Federal Government, including checks and money \r\norders, flowing into and out of the United States General Fund, \r\nwhich might be thought of as America''s bank account, imposes \r\nunnecessary costs; delays; and risks of fraud, lost payments, \r\ntheft, and inefficiencies. Mail theft complaints have increased \r\nsubstantially since the COVID-19 pandemic. Historically, \r\nDepartment of the Treasury checks are 16 times more likely to be \r\nreported lost or stolen, returned undeliverable, or altered than \r\nan electronic funds transfer (EFT). Maintaining the physical \r\ninfrastructure and specialized technology for digitizing paper \r\nrecords cost the American taxpayer over $657 million in Fiscal \r\nYear 2024 alone. \r\nThis order promotes operational efficiency by mandating the \r\ntransition to electronic payments for all Federal disbursements \r\nand receipts by digitizing payments to the extent permissible \r\nunder applicable law (but not, for avoidance of doubt, to \r\nestablish a Central Bank Digital Currency). \r\nSec. 2. Policy. It is the policy of the United States to \r\ndefend against financial fraud and improper payments, increase \r\nefficiency, reduce costs, and enhance the security of Federal \r\npayments. \r\nSec. 3. Phase Out of Paper Check Disbursements \r\nand Receipts. (a) Effective September 30, 2025, and to the \r\n2 \r\nextent permitted by law, the Secretary of the Treasury shall \r\ncease issuing paper checks for all Federal disbursements \r\ninclusive of intragovernmental payments, benefits payments, \r\nvendor payments, and tax refunds, except as specified in \r\nsection 4 of this order. \r\n(b) All executive departments and agencies (agencies) \r\nshall comply with this directive by transitioning to EFT \r\nmethods, including direct deposit, prepaid card accounts, and \r\nother digital payment options, and take all steps necessary to \r\nenroll recipients in EFT payments, except as specified in \r\nsection 4 of this order. \r\n(c) As soon as practicable, and to the extent permitted by \r\nlaw, all payments made to the Federal Government shall be \r\nprocessed electronically, except as specified in section 4 of \r\nthis order. \r\n(d) The Secretary of State, the Secretary of the Treasury, \r\nthe Secretary of Health and Human Services, the Secretary of \r\nEducation, the Secretary of Veterans Affairs, and the Secretary \r\nof Homeland Security shall take appropriate action to eliminate \r\nthe need for the Department of the Treasury''s physical lockbox \r\nservices and expedite requirements to receive the payment of \r\nFederal receipts, including fees, fines, loans, and taxes, \r\nthrough electronic means except as specified in section 4 of \r\nthis order. \r\n(e) The Secretary of the Treasury shall support agencies'' \r\ntransition to digital payment methods, including by providing \r\naccess through the Department of the Treasury''s centralized \r\npayment systems to: \r\n(i) direct deposits; \r\n(ii) debit and credit card payments; \r\n3 \r\n(iii) digital wallets and real-time payment systems; \r\nand \r\n(iv) other modern electronic payment options. \r\nSec. 4. Exceptions and Accommodations for the Phase Out of \r\nPaper Check Disbursements and Receipts. (a) The Secretary of \r\nthe Treasury, shall review and, as appropriate, revise \r\nprocedures for granting limited exceptions where electronic \r\npayment and collection methods are not feasible, including \r\nexceptions for: \r\n(i) individuals who do not have access to banking \r\nservices or electronic payment systems; \r\n(ii) certain emergency payments where electronic \r\ndisbursement would cause undue hardship, as \r\ncontemplated in 31 C.F.R. Part 208; \r\n(iii) national security- or law enforcement-related \r\nactivities where non-EFT transactions are necessary or \r\ndesirable; and \r\n(iv) other circumstances as determined by the \r\nSecretary of the Treasury, as reflected in regulations \r\nor other guidance. \r\n(b) Individuals or entities qualifying for an exception \r\nunder this section or other applicable law shall be provided \r\nalternative payment options. \r\nSec. 5. Implementation and Compliance of Electronic \r\nTransactions. (a) The Secretary of the Treasury, in \r\ncoordination with the heads of agencies, shall develop and \r\nimplement a comprehensive public awareness campaign to inform \r\nFederal payment recipients of the transition to electronic \r\npayments, including guidance on accessing and setting up digital \r\npayment options. \r\n4 \r\n(b) Agencies shall coordinate with the Department of the \r\nTreasury to facilitate a smooth transition to digital payments, \r\nensuring that affected individuals and entities receive adequate \r\nsupport. \r\n(c) The Secretary of the Treasury shall work with \r\nfinancial institutions, consumer groups, and other stakeholders \r\nto address financial access for unbanked and underbanked \r\npopulations. \r\n(d) The Secretary of the Treasury and the heads of \r\nagencies shall take all necessary steps to protect classified \r\ninformation and systems, as well as personally identifiable \r\ninformation and tax return information, through the \r\nimplementation of this order. \r\nSec. 6. Reporting Requirements. (a) The heads of agencies \r\nshall submit a compliance plan to the Director of the Office of \r\nManagement and Budget within 90 days of the date of this order \r\ndetailing their strategy for eliminating paper-based \r\ntransactions. \r\n(b) The Secretary of the Treasury shall submit an \r\nimplementation report to the President through the Assistant to \r\nthe President for Economic Policy within 180 days of the date of \r\nthis order detailing progress on the matters set forth in this \r\norder.Sec. 7. General Provisions. (a) Nothing in this order \r\nshall be construed to impair or otherwise affect: \r\n(i) the authority granted by law to an executive \r\ndepartment or agency, or the head thereof; or \r\n(ii) the functions of the Director of the Office of \r\nManagement and Budget relating to budgetary, \r\nadministrative, or legislative proposals. \r\n5 \r\n(b) This order shall be implemented consistent with \r\napplicable law and subject to the availability of \r\nappropriations. \r\n(c) This order is not intended to, and does not, create \r\nany right or benefit, substantive or procedural, enforceable at \r\nlaw or in equity by any party against the United States, its \r\ndepartments, agencies, or entities, its officers, employees, or \r\nagents, or any other person. \r\nTHE WHITE HOUSE, \r\nMarch 25, 2025. \r\n[FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] \r\n\r\n"}', '{}', NULL, NULL, NULL, 0, NULL, NULL, '2025-08-30 18:33:58.35578+00', '2025-08-30 18:33:58.35578+00');
+INSERT INTO public.celery_task_logs VALUES ('11046af0-0466-4e83-9db6-120e1e11ec43', '497183c0-9cc6-4c94-b481-cc5e78a5b387', 'src.workflow.tasks.send_pmo_review_email', 'started', 'celery@24652b1c34d4', '2025-08-30 18:34:38.284859+00', NULL, NULL, '{"arg_0": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "arg_1": [{"id": 1, "title": "Cease Issuance of Paper Checks for Federal Disbursements", "description": "Transition all Federal disbursements, including intragovernmental payments, benefits, vendor payments, and tax refunds, to electronic funds transfer methods by the effective date, per Sec. 3(a).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": "2025-09-30", "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 2, "title": "Transition All Federal Receipts to Electronic Processing", "description": "Implement processes to ensure all payments made to the Federal Government are processed electronically, except as specified in Sec. 4, per Sec. 3(c).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 3, "title": "Eliminate Treasury Physical Lockbox Services", "description": "Take appropriate action to eliminate the need for the Department of the Treasury''s physical lockbox services and expedite requirements to receive Federal receipts electronically, per Sec. 3(d).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 4, "title": "Support Agency Transition to Digital Payment Methods", "description": "Provide access to centralized payment systems for direct deposits, debit/credit card payments, digital wallets, real-time payment systems, and other electronic options, per Sec. 3(e).", "category_dept": "Director of Accounting", "assignee": "Sophia Carty", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 5, "title": "Review and Revise Exception Procedures for Non-Electronic Payments", "description": "Review and, as appropriate, revise procedures for granting exceptions to electronic payment and collection methods, including for unbanked individuals, emergencies, and other circumstances, per Sec. 4(a).", "category_dept": "Director of Compliance", "assignee": "Dylan Sachetti", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 6, "title": "Provide Alternative Payment Options for Exception Cases", "description": "Ensure individuals or entities qualifying for exceptions to electronic payments are provided with alternative payment options, per Sec. 4(b).", "category_dept": "Director of Compliance", "assignee": "Dylan Sachetti", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 7, "title": "Develop and Implement Public Awareness Campaign", "description": "Develop and implement a comprehensive public awareness campaign to inform Federal payment recipients of the transition to electronic payments and provide guidance on digital payment setup, per Sec. 5(a).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 8, "title": "Coordinate Agency Support for Digital Payment Transition", "description": "Coordinate with relevant agencies to facilitate a smooth transition to digital payments and ensure adequate support for affected individuals and entities, per Sec. 5(b).", "category_dept": "Director of Division of Business Process Improvement", "assignee": "Ayesha Ahsan", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 9, "title": "Address Financial Access for Unbanked and Underbanked Populations", "description": "Work with financial institutions, consumer groups, and stakeholders to address financial access issues for unbanked and underbanked populations, per Sec. 5(c).", "category_dept": "Director of Financial Reporting", "assignee": "Hibbi Iqbal", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}, {"id": 10, "title": "Protect Classified and Sensitive Information During Implementation", "description": "Take all necessary steps to protect classified information, personally identifiable information, and tax return information during the implementation of this order, per Sec. 5(d).", "category_dept": "Director of Security and Technology", "assignee": "Robert Springfiled", "status": "Pending", "due_date": null, "created_at": "2025-08-30T18:33:58.369542+00:00"}]}', '{}', NULL, NULL, NULL, 0, NULL, NULL, '2025-08-30 18:34:38.286087+00', '2025-08-30 18:34:38.286087+00');
+INSERT INTO public.celery_task_logs VALUES ('7d23e541-07c8-43e5-ab2f-8c11bcd426f5', '8bdfcb7f-20b5-4528-94f3-6c3878b0e9ba', 'src.workflow.tasks.notify_assignees', 'success', 'celery@24652b1c34d4', '2025-08-30 18:39:38.285196+00', '2025-08-30 18:39:38.334735+00', 0.049543, '{"arg_0": "caad98cf-0b8d-4968-b319-d09aa02cffaa"}', '{}', '{"eo_id": "caad98cf-0b8d-4968-b319-d09aa02cffaa", "notified": 5}', NULL, NULL, 0, NULL, NULL, '2025-08-30 18:39:38.292102+00', '2025-08-30 18:39:38.334499+00');
+
+
+--
 -- Data for Name: daily_eo_summaries; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.daily_eo_summaries VALUES ('b7d06bba-5396-436a-9e97-8839924838dc', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Need to coordinate with the Financial Management Marketplace team", "Need stakeholder coordination", "Earlier meetings and coordination calls delayed progress earlier in the day", "Need to coordinate with other agencies for comprehensive data", "Security review pending until system implementation progresses", "Finalizing implementation timeline section", "Awaiting final approval from Treasury before publication", "Pending PMO approval", "Need stakeholder input on approval thresholds", "Earlier meetings and coordination calls caused delays earlier in the day.", "Stakeholder coordination", "Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Awaiting Treasury approval", "Need to gather data from various agencies", "Need to schedule stakeholder meetings to discuss findings"]', '["Potential delay if Treasury approval is not received promptly", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delay if legal review takes longer than expected.", "Delays due to pending approvals", "Implementation timeline may be delayed if not finalized soon", "Potential delays if coordination with other agencies is not timely", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays if security review is not completed in time", "Potential delays if stakeholder input is not received promptly", "Potential delays if Treasury stakeholder feedback is not received promptly", "Potential delays in data collection from agencies could impact the 180-day timeline"]', 'null', '[]', 22, 22, false, NULL, '2025-08-29 20:35:43.792431+00', '2025-08-29 20:35:43.792431+00');
-INSERT INTO public.daily_eo_summaries VALUES ('6bef094f-010d-4e94-9e95-87a55e218196', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Need to coordinate with the Financial Management Marketplace team", "Need stakeholder coordination", "Earlier meetings and coordination calls delayed progress earlier in the day", "Need to coordinate with other agencies for comprehensive data", "Security review pending until system implementation progresses", "Finalizing implementation timeline section", "Awaiting final approval from Treasury before publication", "Pending PMO approval", "Need stakeholder input on approval thresholds", "Earlier meetings and coordination calls caused delays earlier in the day.", "Stakeholder coordination", "Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Awaiting Treasury approval", "Need to gather data from various agencies", "Need to schedule stakeholder meetings to discuss findings"]', '["Potential delay if Treasury approval is not received promptly", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delay if legal review takes longer than expected.", "Delays due to pending approvals", "Implementation timeline may be delayed if not finalized soon", "Potential delays if coordination with other agencies is not timely", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays if security review is not completed in time", "Potential delays if stakeholder input is not received promptly", "Potential delays if Treasury stakeholder feedback is not received promptly", "Potential delays in data collection from agencies could impact the 180-day timeline"]', 'null', '[]', 22, 22, false, NULL, '2025-08-29 20:44:09.774746+00', '2025-08-29 20:44:09.774746+00');
-INSERT INTO public.daily_eo_summaries VALUES ('dfdf37ab-502e-430a-b48a-4be28805eda2', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Awaiting final approval from Treasury before publication", "Stakeholder coordination", "Need to gather data from various agencies", "Need to schedule stakeholder meetings to discuss findings", "Earlier meetings and coordination calls delayed progress earlier in the day", "Security review pending until system implementation progresses", "Finalizing implementation timeline section", "Need stakeholder coordination", "Awaiting Treasury approval", "Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Pending PMO approval", "Need to coordinate with the Financial Management Marketplace team", "Need stakeholder input on approval thresholds", "Need to coordinate with other agencies for comprehensive data", "Earlier meetings and coordination calls caused delays earlier in the day."]', '["Potential delay if legal review takes longer than expected.", "Potential delays if coordination with other agencies is not timely", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays if stakeholder input is not received promptly", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays in data collection from agencies could impact the 180-day timeline", "Potential delays if security review is not completed in time", "Delays due to pending approvals", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delays if Treasury stakeholder feedback is not received promptly", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Implementation timeline may be delayed if not finalized soon", "Potential delay if Treasury approval is not received promptly"]', 'null', '[]', 22, 22, false, NULL, '2025-08-29 20:46:27.818575+00', '2025-08-29 20:46:27.818575+00');
-INSERT INTO public.daily_eo_summaries VALUES ('d7e1ea1b-0e73-44f5-9b9f-7da2094ae54e', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Awaiting final approval from Treasury before publication", "Stakeholder coordination", "Need to gather data from various agencies", "Need to schedule stakeholder meetings to discuss findings", "Earlier meetings and coordination calls delayed progress earlier in the day", "Security review pending until system implementation progresses", "Finalizing implementation timeline section", "Need stakeholder coordination", "Awaiting Treasury approval", "Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Pending PMO approval", "Need to coordinate with the Financial Management Marketplace team", "Need stakeholder input on approval thresholds", "Need to coordinate with other agencies for comprehensive data", "Earlier meetings and coordination calls caused delays earlier in the day."]', '["Potential delay if legal review takes longer than expected.", "Potential delays if coordination with other agencies is not timely", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays if stakeholder input is not received promptly", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays in data collection from agencies could impact the 180-day timeline", "Potential delays if security review is not completed in time", "Delays due to pending approvals", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delays if Treasury stakeholder feedback is not received promptly", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Implementation timeline may be delayed if not finalized soon", "Potential delay if Treasury approval is not received promptly"]', 'null', '[]', 22, 22, false, NULL, '2025-08-29 20:48:45.560524+00', '2025-08-29 20:48:45.560524+00');
-INSERT INTO public.daily_eo_summaries VALUES ('7c449f7b-d139-4247-bb7d-7f5439e125ab', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Need stakeholder coordination", "Need stakeholder input on approval thresholds", "Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Awaiting final approval from Treasury before publication", "Awaiting Treasury approval", "Need to schedule stakeholder meetings to discuss findings", "Need to coordinate with other agencies for comprehensive data", "Pending PMO approval", "Need to coordinate with the Financial Management Marketplace team", "Need to gather data from various agencies", "Stakeholder coordination", "Finalizing implementation timeline section", "Earlier meetings and coordination calls caused delays earlier in the day.", "Earlier meetings and coordination calls delayed progress earlier in the day", "Security review pending until system implementation progresses"]', '["Potential delays if Treasury stakeholder feedback is not received promptly", "Potential delays if stakeholder input is not received promptly", "Implementation timeline may be delayed if not finalized soon", "Potential delay if Treasury approval is not received promptly", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delays in data collection from agencies could impact the 180-day timeline", "Delays due to pending approvals", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays if security review is not completed in time", "Potential delay if legal review takes longer than expected.", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays if coordination with other agencies is not timely"]', 'null', '[]', 22, 22, true, '2025-08-29 20:49:26.539258+00', '2025-08-29 20:49:24.085524+00', '2025-08-29 20:49:26.538739+00');
-INSERT INTO public.daily_eo_summaries VALUES ('e69b5294-fd28-4cd6-a8b9-cf673c7316fc', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Earlier meetings and coordination calls caused delays earlier in the day.", "Need to coordinate with other agencies for comprehensive data", "Need to coordinate with the Financial Management Marketplace team", "Awaiting final approval from Treasury before publication", "Stakeholder coordination", "Finalizing implementation timeline section", "Awaiting Treasury approval", "Need to gather data from various agencies", "Need stakeholder input on approval thresholds", "Earlier meetings and coordination calls delayed progress earlier in the day", "Pending PMO approval", "Need stakeholder coordination", "Need to schedule stakeholder meetings to discuss findings", "Security review pending until system implementation progresses"]', '["Potential delay if legal review takes longer than expected.", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Potential delays if coordination with other agencies is not timely", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delay if Treasury approval is not received promptly", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Implementation timeline may be delayed if not finalized soon", "Potential delays if stakeholder input is not received promptly", "Potential delays if security review is not completed in time", "Delays due to pending approvals", "Potential delays if Treasury stakeholder feedback is not received promptly", "Potential delays in data collection from agencies could impact the 180-day timeline"]', 'null', '[]', 22, 22, true, '2025-08-29 22:52:01.760358+00', '2025-08-29 22:51:59.363492+00', '2025-08-29 22:52:01.75899+00');
-INSERT INTO public.daily_eo_summaries VALUES ('e71007ac-04d8-456d-968c-a63e539e7115', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 22
-- Completed: 6
-- In Progress: 16
-- Blocked: 0
-
-Overall Progress: 6/22 tasks completed', '["Need to schedule stakeholder meetings to discuss findings", "Need to coordinate with the Financial Management Marketplace team", "Earlier meetings and coordination calls delayed progress earlier in the day", "Need to gather data from various agencies", "Need stakeholder coordination", "Finalizing implementation timeline section", "Pending PMO approval", "Awaiting Treasury approval", "Need to coordinate with other agencies for comprehensive data", "Stakeholder coordination", "Security review pending until system implementation progresses", "Need stakeholder input on approval thresholds", "Awaiting final approval from Treasury before publication", "Earlier meetings and coordination calls caused delays earlier in the day.", "Consultation meetings with non-CFO Act agencies have not yet been scheduled."]', '["Delays due to pending approvals", "Potential delays if coordination with other agencies is not timely", "Potential delay if Treasury approval is not received promptly", "Potential delays if security review is not completed in time", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delays if stakeholder input is not received promptly", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Potential delays if Treasury stakeholder feedback is not received promptly", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays in data collection from agencies could impact the 180-day timeline", "Implementation timeline may be delayed if not finalized soon", "Delays in scheduling or conducting agency consultations may slow overall progress.", "Potential delay if legal review takes longer than expected."]', 'null', '[]', 22, 22, true, '2025-08-29 23:00:21.23092+00', '2025-08-29 23:00:19.722029+00', '2025-08-29 23:00:21.230561+00');
-INSERT INTO public.daily_eo_summaries VALUES ('3c323266-72e2-40ce-96a1-05fac533eef4', '8fd95066-1662-4482-b1f8-3801f037f356', '2025-08-29', 'Daily Progress Summary for EO: Modernize Workforce Data
-
-Tasks Updated: 20
-- Completed: 6
-- In Progress: 14
-- Blocked: 0
-
-Overall Progress: 6/20 tasks completed', '["Need to coordinate with the Financial Management Marketplace team", "Need stakeholder input on approval thresholds", "Security review pending until system implementation progresses", "Need to coordinate with other agencies for comprehensive data", "Earlier meetings and coordination calls delayed progress earlier in the day", "Pending PMO approval", "Stakeholder coordination", "Need stakeholder coordination", "Consultation meetings with non-CFO Act agencies have not yet been scheduled.", "Need to schedule stakeholder meetings to discuss findings", "Need to gather data from various agencies", "Earlier meetings and coordination calls caused delays earlier in the day."]', '["Potential delays if stakeholder input is not received promptly", "Potential delays if coordination with other agencies is not timely", "Potential delays in data collection from agencies could impact the 180-day timeline", "Potential delays if stakeholder meetings are not scheduled promptly", "Potential delay if legal review takes longer than expected.", "Delays due to pending approvals", "Potential delays if security review is not completed in time", "Potential delays due to difficulty in coordinating with non-CFO Act agency stakeholders", "Potential delays if coordination with the Financial Management Marketplace team is not timely", "Delays in scheduling or conducting agency consultations may slow overall progress."]', 'null', '[]', 20, 20, true, '2025-08-29 23:13:53.101937+00', '2025-08-29 23:13:50.688579+00', '2025-08-29 23:13:53.101375+00');
 
 
 --
 -- Data for Name: tasks; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.tasks VALUES ('d6b4ef70-cd60-4612-a027-3a353234d0e1', '8fd95066-1662-4482-b1f8-3801f037f356', 'Issue Guidance on Data Access for Fraud Prevention', 'Issue guidance to agency heads on circumstances for providing Treasury with access to necessary data for fraud and improper payment detection, excluding sensitive data types. Per Sec. 3(e).', '6a445645-3029-4b62-aac7-10cd7e6558d0', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Compliance', 'N/A');
-INSERT INTO public.tasks VALUES ('f9ae9927-17eb-436c-a1f6-9e2c25958926', '8fd95066-1662-4482-b1f8-3801f037f356', 'Update and Issue Payment Verification Guidance in Consultation with OMB Director', 'In consultation with the OMB Director, update and issue guidance to ensure all payments made by the Department of the Treasury on behalf of agencies are subject to pre-certification verification processes. The guidance must: (1) set forth guidelines for compliance with the Do Not Pay Working System as described in 31 U.S.C. 3351 et seq.; (2) include requirements for other payment, account, and payee validation programs and services as determined beneficial for reducing financial fraud and improper payments; (3) specify the data elements and formats agencies must provide for payment submissions; and (4) outline procedures for agencies and Treasury to conduct verification prior to disbursement, as required by law. Reference the legal authorities (31 U.S.C. 3321, 31 U.S.C. 3351 et seq.) and ensure the guidance is actionable for agency implementation.', '6a445645-3029-4b62-aac7-10cd7e6558d0', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Secretary of the Treasury (in consultation with OMB Director)', 'N/A');
-INSERT INTO public.tasks VALUES ('18138d50-e87b-4226-9a8b-2e6145ea1a79', '8fd95066-1662-4482-b1f8-3801f037f356', 'Protect Classified and Sensitive Information During Implementation', 'Take all necessary steps to protect classified information, personally identifiable information, and tax return information during EO implementation. Per Sec. 7(c).', '9e195007-1ca2-453e-b3d7-b6bbf32d0185', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Security and Technology', 'N/A');
-INSERT INTO public.tasks VALUES ('0c8147be-d07e-40b6-9031-c39aaf280ad4', '8fd95066-1662-4482-b1f8-3801f037f356', 'Implement Pre-Certification Payment Verification Processes', 'Ensure all disbursements comply with Treasury''s pre-certification requirements, including validation of funds, payee information, and contract references. Per Sec. 4(a)-(b).', '783a8139-367f-486c-9c19-05b9291cdf9a', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Division of Business Process Improvement', 'N/A');
-INSERT INTO public.tasks VALUES ('5c1900be-8058-4faf-aa10-5f4a8c5bf85b', '8fd95066-1662-4482-b1f8-3801f037f356', 'Submit Payment Files with Sufficient Lead Time for Screening', 'Submit payment files to Treasury with sufficient lead time for fraud and improper payment screening, as determined by Treasury requirements. Per Sec. 4(c).', '783a8139-367f-486c-9c19-05b9291cdf9a', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Division of Business Process Improvement', 'N/A');
-INSERT INTO public.tasks VALUES ('0924dcbc-9246-4e0b-b0cd-30bc48d0ae20', '8fd95066-1662-4482-b1f8-3801f037f356', 'Develop Transparent Exemption Request Process for Payment Verification', 'Develop and include a transparent process for agencies to request exemptions from payment verification requirements for specific payments. Per Sec. 4(e).', '6a445645-3029-4b62-aac7-10cd7e6558d0', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Compliance', 'N/A');
-INSERT INTO public.tasks VALUES ('4ad4258e-029a-4531-90cb-29bb88a94a53', '8fd95066-1662-4482-b1f8-3801f037f356', 'Issue Guidance for Core Financial System Consolidation (CFO Act Agencies)', 'Issue guidance directing CFO Act agencies to consolidate their core financial systems. Per Sec. 5(a).', '5814f396-9360-41ad-adda-cd15afcbc88f', 'approved', '2025-09-21', '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Financial Reporting', 'N/A');
-INSERT INTO public.tasks VALUES ('fb03d023-7293-4a37-8d5b-f6cc6939e83a', '8fd95066-1662-4482-b1f8-3801f037f356', 'Issue Guidance for Non-CFO Act Agency Financial Service Consolidation', 'Issue guidance directing non-CFO Act agencies to consolidate transactional financial management services under a single Treasury-approved provider. Per Sec. 5(b).', '5814f396-9360-41ad-adda-cd15afcbc88f', 'approved', '2025-09-21', '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Financial Reporting', 'N/A');
-INSERT INTO public.tasks VALUES ('ec87e386-0e30-4c2b-b050-39a2889f76fc', '8fd95066-1662-4482-b1f8-3801f037f356', 'Ensure Use of Standard Financial Management Solutions', 'Ensure all CFO Act agencies use standard financial management solutions available through the Financial Management Marketplace. Per Sec. 5(c).', '5814f396-9360-41ad-adda-cd15afcbc88f', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Financial Reporting', 'N/A');
-INSERT INTO public.tasks VALUES ('e6abe8fa-22c8-4c45-9c93-46810b4f9f45', '8fd95066-1662-4482-b1f8-3801f037f356', 'Ensure Core Financial Systems Comply with Federal Standards', 'Ensure core financial systems comply with Federal accounting and financial reporting standards and relevant Treasury guidance. Per Sec. 5(d).', 'e24c7d45-75b2-4f90-9b14-dcde4fd281d7', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Accounting', 'N/A');
-INSERT INTO public.tasks VALUES ('577e3c17-9ef8-446b-b124-36bb6e7b46ea', '8fd95066-1662-4482-b1f8-3801f037f356', 'Submit Treasury Implementation Report to President', 'Submit an implementation report to the President within 180 days detailing progress on EO implementation. Per Sec. 7(b).', '5814f396-9360-41ad-adda-cd15afcbc88f', 'approved', '2025-09-21', '2025-08-28 19:15:50.277558+00', '2025-08-28 19:17:12.831931+00', 'Director of Financial Reporting', 'N/A');
-INSERT INTO public.tasks VALUES ('6419fdfa-59d4-4854-abee-f94622e2916c', '8fd95066-1662-4482-b1f8-3801f037f356', 'Assess and Revoke Delegated Disbursing Authority as Appropriate', 'Assess whether to maintain or revoke delegated disbursing authority to agencies and issue revocation notices as appropriate. Per Sec. 6(a).', '5814f396-9360-41ad-adda-cd15afcbc88f', 'approved', '2025-04-24', '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Financial Reporting', 'N/A');
-INSERT INTO public.tasks VALUES ('eb50a7b5-636c-4e49-a1ec-772b76e63110', '8fd95066-1662-4482-b1f8-3801f037f356', 'Develop Plan to Centralize and Manage NTDO Payments', 'Develop a plan to centralize and manage all payments previously disbursed by NTDOs, ensuring seamless continuity of government payments. Per Sec. 6(d).', '783a8139-367f-486c-9c19-05b9291cdf9a', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Division of Business Process Improvement', 'N/A');
-INSERT INTO public.tasks VALUES ('1e02623a-cc8c-4c0d-b4a7-5b8a040640b1', '8fd95066-1662-4482-b1f8-3801f037f356', 'Establish Transition Plan for NTDO Agencies', 'Establish a transition plan for agencies currently operating as NTDOs, including staffing, system integrations, and legal/regulatory modifications for consolidation. Per Sec. 6(e).', '783a8139-367f-486c-9c19-05b9291cdf9a', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Division of Business Process Improvement', 'N/A');
-INSERT INTO public.tasks VALUES ('ed539622-bbd4-4e44-881e-a5c50326f332', '8fd95066-1662-4482-b1f8-3801f037f356', 'Decommission Internal Payment Systems and Transition to Treasury Systems', 'Decommission all internal payment systems and transition to using Treasury’s disbursement systems, except as otherwise authorized. Per Sec. 6(f).', '9e195007-1ca2-453e-b3d7-b6bbf32d0185', 'approved', NULL, '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Security and Technology', 'N/A');
-INSERT INTO public.tasks VALUES ('48426c30-e66a-4e5b-9bc9-1c07fb088368', '8fd95066-1662-4482-b1f8-3801f037f356', 'Submit Agency Compliance Plan to OMB Director', 'Submit a compliance plan within 90 days detailing strategy for transitioning disbursing authority, updating systems, verifying payment information, and reporting improper payments. Per Sec. 7(a).', '6a445645-3029-4b62-aac7-10cd7e6558d0', 'approved', '2025-06-23', '2025-08-28 19:15:50.277558+00', '2025-08-28 19:26:36.615798+00', 'Director of Compliance', 'N/A');
+INSERT INTO public.tasks VALUES ('ed7dd061-51bb-4f6e-aad3-00aa88216052', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Cease Issuance of Paper Checks for Federal Disbursements', 'Transition all Federal disbursements, including intragovernmental payments, benefits, vendor payments, and tax refunds, to electronic funds transfer methods by the effective date, per Sec. 3(a).', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', 'approved', '2025-09-30', '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Division of Business Process Improvement', 'N/A');
+INSERT INTO public.tasks VALUES ('03cfb2b9-ab44-44a6-9e0d-1e60b0bd0542', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Transition All Federal Receipts to Electronic Processing', 'Implement processes to ensure all payments made to the Federal Government are processed electronically, except as specified in Sec. 4, per Sec. 3(c).', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Division of Business Process Improvement', 'N/A');
+INSERT INTO public.tasks VALUES ('66578e26-16a8-49f8-badb-f98fe770bbe4', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Eliminate Treasury Physical Lockbox Services', 'Take appropriate action to eliminate the need for the Department of the Treasury''s physical lockbox services and expedite requirements to receive Federal receipts electronically, per Sec. 3(d).', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Division of Business Process Improvement', 'N/A');
+INSERT INTO public.tasks VALUES ('a8febc0c-f49c-4d82-b7df-11767d802145', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Support Agency Transition to Digital Payment Methods', 'Provide access to centralized payment systems for direct deposits, debit/credit card payments, digital wallets, real-time payment systems, and other electronic options, per Sec. 3(e).', '81dff93b-32b6-4825-85fa-07216f9e125e', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Accounting', 'N/A');
+INSERT INTO public.tasks VALUES ('a3ad409d-748e-4d47-91ef-a5520648258c', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Review and Revise Exception Procedures for Non-Electronic Payments', 'Review and, as appropriate, revise procedures for granting exceptions to electronic payment and collection methods, including for unbanked individuals, emergencies, and other circumstances, per Sec. 4(a).', '1b6175cd-2a7f-4fe7-86d7-e8af97204313', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Compliance', 'N/A');
+INSERT INTO public.tasks VALUES ('7e84b641-d779-4d0f-8bc7-6ac71f0b3876', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Provide Alternative Payment Options for Exception Cases', 'Ensure individuals or entities qualifying for exceptions to electronic payments are provided with alternative payment options, per Sec. 4(b).', '1b6175cd-2a7f-4fe7-86d7-e8af97204313', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Compliance', 'N/A');
+INSERT INTO public.tasks VALUES ('040f7a99-78d5-43e0-b573-866380da2d66', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Develop and Implement Public Awareness Campaign', 'Develop and implement a comprehensive public awareness campaign to inform Federal payment recipients of the transition to electronic payments and provide guidance on digital payment setup, per Sec. 5(a).', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Division of Business Process Improvement', 'N/A');
+INSERT INTO public.tasks VALUES ('99167b0f-388e-4074-af7e-196b6182962d', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Coordinate Agency Support for Digital Payment Transition', 'Coordinate with relevant agencies to facilitate a smooth transition to digital payments and ensure adequate support for affected individuals and entities, per Sec. 5(b).', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Division of Business Process Improvement', 'N/A');
+INSERT INTO public.tasks VALUES ('b07e98c2-eecc-46d2-82ba-ad893d3fda1a', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Address Financial Access for Unbanked and Underbanked Populations', 'Work with financial institutions, consumer groups, and stakeholders to address financial access issues for unbanked and underbanked populations, per Sec. 5(c).', '498f3d26-6c1c-4c25-ae04-537a0e25f8f8', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Financial Reporting', 'N/A');
+INSERT INTO public.tasks VALUES ('35148c98-faf0-4467-b4be-eb7fd1420712', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Protect Classified and Sensitive Information During Implementation', 'Take all necessary steps to protect classified information, personally identifiable information, and tax return information during the implementation of this order, per Sec. 5(d).', 'adcf072a-87e6-4ee6-afa9-de0233416f0a', 'approved', NULL, '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Security and Technology', 'N/A');
+INSERT INTO public.tasks VALUES ('bfbf0f30-4dcc-473e-93a5-284c42d41371', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Submit Agency Compliance Plan for Eliminating Paper-Based Transactions', 'Prepare and submit a compliance plan to the Director of the Office of Management and Budget within 90 days of the order date, detailing the strategy for eliminating paper-based transactions, per Sec. 6(a).', '1b6175cd-2a7f-4fe7-86d7-e8af97204313', 'approved', '2025-12-29', '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Compliance', 'N/A');
+INSERT INTO public.tasks VALUES ('e45711c7-97f4-46d5-a0d2-c6c00eeece4d', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'Submit Treasury Implementation Report on EO Progress', 'Prepare and submit an implementation report to the President through the Assistant to the President for Economic Policy within 180 days of the order date, detailing progress on the EO, per Sec. 6(b).', '498f3d26-6c1c-4c25-ae04-537a0e25f8f8', 'approved', '2026-03-29', '2025-08-30 18:34:38.252465+00', '2025-08-30 18:39:38.269917+00', 'Director of Financial Reporting', 'N/A');
 
 
 --
@@ -1670,10 +882,22 @@ INSERT INTO public.tasks VALUES ('48426c30-e66a-4e5b-9bc9-1c07fb088368', '8fd950
 
 
 --
+-- Data for Name: email_queue_logs; Type: TABLE DATA; Schema: public; Owner: dol_user
+--
+
+INSERT INTO public.email_queue_logs VALUES ('b674fd81-c72d-401e-9e5a-2f5a3caa2807', 'c526611b-1a2a-4837-8f3e-c78444e9428f', 'redis_email_queue', '{kevin.brown@lumenlighthouse.ai}', 'PMO Review Required: EO: Modernize workforce data  [EO ID: caad98cf-0b8d-4968-b319-d09aa02cffaa]', 'eo_review', 2, 'sent', 'redis_email_processor', '2025-08-30 18:34:38.301287+00', '2025-08-30 18:35:51.397172+00', '2025-08-30 18:35:53.743293+00', 'lumenlighthouse.ai', 250, 'OK', 2, 3, 'Processing failed, retrying', false, true, 'outbox/eo_review/b2c19c51-5f33-473c-9cb9-9698c0626937', NULL, '2e789b36-9a60-4914-a042-7962a4b1f3da', NULL, '2025-08-30 18:34:38.302277+00', '2025-08-30 18:35:53.742436+00');
+INSERT INTO public.email_queue_logs VALUES ('57d89dd0-2dba-472b-aef3-fa245efcb9b6', '4423af2d-59bb-4c9f-9571-d09d9df126dd', 'redis_email_queue', '{sophia.carty@lumenlighthouse.ai}', 'Task Assignment: EO: Modernize workforce data ', 'notify_employees', 2, 'sent', 'redis_email_processor', '2025-08-30 18:39:38.317252+00', '2025-08-30 18:40:51.341816+00', '2025-08-30 18:40:53.643491+00', 'lumenlighthouse.ai', 250, 'OK', 0, 3, NULL, false, true, 'outbox/notify_employees/303baf15-4c5a-4e6f-9ddc-b82584dfeb2c', NULL, 'ee2147a8-1899-4c4c-96b7-850a972a9980', NULL, '2025-08-30 18:39:38.317868+00', '2025-08-30 18:40:53.642654+00');
+INSERT INTO public.email_queue_logs VALUES ('c2fbe4f5-b373-4e16-b52b-33b306f41618', '740319cc-3b0f-4b53-9089-8b32503d8769', 'redis_email_queue', '{ayesha.ahsan@lumenlighthouse.ai}', 'Task Assignment: EO: Modernize workforce data ', 'notify_employees', 2, 'sent', 'redis_email_processor', '2025-08-30 18:39:38.30964+00', '2025-08-30 18:41:03.666575+00', '2025-08-30 18:41:04.949336+00', 'lumenlighthouse.ai', 250, 'OK', 0, 3, NULL, false, true, 'outbox/notify_employees/ee27b06c-7ab4-43d6-8067-718c80be69f3', NULL, '578cd81d-42da-4589-b5ad-6a19e025d82a', NULL, '2025-08-30 18:39:38.310505+00', '2025-08-30 18:41:04.948096+00');
+INSERT INTO public.email_queue_logs VALUES ('a75d4ef1-a715-43b8-b540-5b6988bd5059', '88c54fc4-0083-48c0-8661-83ea8ce5df66', 'redis_email_queue', '{hibbi.iqbal@lumenlighthouse.ai}', 'Task Assignment: EO: Modernize workforce data ', 'notify_employees', 2, 'sent', 'redis_email_processor', '2025-08-30 18:39:38.326761+00', '2025-08-30 18:41:14.979301+00', '2025-08-30 18:41:16.26222+00', 'lumenlighthouse.ai', 250, 'OK', 0, 3, NULL, false, true, 'outbox/notify_employees/5195fb9d-ce90-4791-8483-70741847c101', NULL, '53498f8a-a14e-47fe-9032-9b5227b859e0', NULL, '2025-08-30 18:39:38.327546+00', '2025-08-30 18:41:16.255335+00');
+INSERT INTO public.email_queue_logs VALUES ('c181e1fe-47df-48f1-bfdb-2522ab19890b', 'aaccd902-1984-41f9-bb1a-da0c18ad3220', 'redis_email_queue', '{robert.springfiled@lumenlighthouse.ai}', 'Task Assignment: EO: Modernize workforce data ', 'notify_employees', 2, 'sent', 'redis_email_processor', '2025-08-30 18:39:38.331216+00', '2025-08-30 18:41:26.287726+00', '2025-08-30 18:41:27.52729+00', 'lumenlighthouse.ai', 250, 'OK', 0, 3, NULL, false, true, 'outbox/notify_employees/e30cf085-f212-43b6-804e-61581084296f', NULL, 'c2a46425-c694-4d5a-91ad-1cf6b3e0fa1b', NULL, '2025-08-30 18:39:38.331551+00', '2025-08-30 18:41:27.526302+00');
+INSERT INTO public.email_queue_logs VALUES ('17fcd1af-3c3b-4c55-8e36-fc130bbde9d0', '02d32f9e-09cd-4a30-9897-09b83f409e75', 'redis_email_queue', '{dylan.sachetti@lumenlighthouse.ai}', 'Task Assignment: EO: Modernize workforce data ', 'notify_employees', 2, 'sent', 'redis_email_processor', '2025-08-30 18:39:38.322736+00', '2025-08-30 18:41:37.548396+00', '2025-08-30 18:41:38.80383+00', 'lumenlighthouse.ai', 250, 'OK', 2, 3, 'Processing failed, retrying', false, true, 'outbox/notify_employees/9a75c5b9-e836-4c59-a509-8350ee5e2d29', NULL, '00f89790-51d9-4f62-91bc-2686286dcb5f', NULL, '2025-08-30 18:39:38.323159+00', '2025-08-30 18:41:38.801792+00');
+
+
+--
 -- Data for Name: eo_pmo_assignments; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.eo_pmo_assignments VALUES ('a37fdd81-813d-4322-8f34-f76aff0f8593', '8fd95066-1662-4482-b1f8-3801f037f356', '1e882225-d379-40a0-a3af-2ba90f6ab76a', '2025-08-29 20:43:25.53752+00', 'e9df20f5-8a10-4261-be4f-584c10c60d74', true);
+INSERT INTO public.eo_pmo_assignments VALUES ('0e9aeca6-e38c-4374-8a69-08c50abe2461', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'dd878b12-9bec-4d74-a72a-a20735072212', '2025-08-30 18:46:31.221531+00', '06c5ea3f-2af1-492b-bd12-9e2850bd6f74', true);
 
 
 --
@@ -1692,25 +916,25 @@ INSERT INTO public.eo_pmo_assignments VALUES ('a37fdd81-813d-4322-8f34-f76aff0f8
 -- Data for Name: task_updates; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
+INSERT INTO public.task_updates VALUES ('6c89ae12-c3f3-44c9-95cb-b3570149cb88', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'b07e98c2-eecc-46d2-82ba-ad893d3fda1a', '498f3d26-6c1c-4c25-ae04-537a0e25f8f8', '2025-08-30', 20, 'InProgress', 'Initial outreach to financial institutions and consumer groups has begun, with some responses received. No responses yet from stakeholders. Implementation report work has started.', '["No response from stakeholders", "Need resources to reach out to stakeholders"]', '["Delay in stakeholder engagement may slow progress"]', NULL, 2.00, '<12742FE1-37A1-4633-9BB3-E5DAAA007CED@lumenlighthouse.ai>', 'b05c49323a97d1a98003a6bb7885b973de5fb68df02156e338d7c196a465b7ea', false, '2025-08-30 18:50:27.403014+00', '2025-08-30 18:50:27.403014+00', 'Initial outreach to financial institutions and consumer groups has started with some responses, but no stakeholder responses yet. Progress is blocked by lack of resources to reach stakeholders, which may delay the task.');
+INSERT INTO public.task_updates VALUES ('ac5e0060-a6a6-4bb4-a8cf-d35c7a0097e2', 'caad98cf-0b8d-4968-b319-d09aa02cffaa', 'e45711c7-97f4-46d5-a0d2-c6c00eeece4d', '498f3d26-6c1c-4c25-ae04-537a0e25f8f8', '2025-08-30', 10, 'InProgress', 'Initial outreach to financial institutions and consumer groups has begun, with some responses received. No responses yet from other stakeholders. Work on the implementation report has just started.', '["No response from certain stakeholders", "Need additional resources to reach out to stakeholders"]', '["Delays in stakeholder responses may impact timely completion of the report"]', NULL, 2.00, '<12742FE1-37A1-4633-9BB3-E5DAAA007CED@lumenlighthouse.ai>', 'e64fe780687dbdbb9b84cea9b531e203d4de16a3f14aadd0782edf37aa53e42a', false, '2025-08-30 18:50:27.403014+00', '2025-08-30 18:50:27.403014+00', 'Initial work on the implementation report has begun, with outreach to financial institutions and consumer groups yielding some responses. Lack of response from other stakeholders and need for additional outreach resources are current blockers.');
 
 
 --
 -- Data for Name: token_blacklist; Type: TABLE DATA; Schema: public; Owner: dol_user
 --
 
-INSERT INTO public.token_blacklist VALUES ('677b9cc6-52af-444c-95ee-f1b8935984bd', 'db4345184a8a409d44911deadb6c17578ae8da3d282ae3b9720fc16f8fe554ef', 'dcd920f0-6e8c-4f01-a67c-bc0ce415a7ac', '2025-08-25 16:41:36+00', '2025-08-25 16:11:43.597326+00');
-INSERT INTO public.token_blacklist VALUES ('73381922-6729-405b-876a-0b91594ca3e0', '0a65bdbda82a7c33412370ca6dfcce89430978ed00eed7cf8154f5718a611480', 'a7fa1461-11e3-4f91-ae42-8e4b85ed5a8e', '2025-08-29 00:20:33+00', '2025-08-28 23:58:59.746689+00');
-INSERT INTO public.token_blacklist VALUES ('35b264cf-fce7-4ae5-a696-65f8c4c0d178', '15cab62d8c5675a2f825df61d5e60381eaab450b99f009e6d0e484b085897728', '6a445645-3029-4b62-aac7-10cd7e6558d0', '2025-08-29 00:29:49+00', '2025-08-29 00:03:52.750785+00');
-INSERT INTO public.token_blacklist VALUES ('a13e827a-d25d-4c21-8d08-3fbf7782bc33', 'c305455579a250007e0f4291a7a554d9b437b06d7e6542b346f3139249faad29', '1e882225-d379-40a0-a3af-2ba90f6ab76a', '2025-08-29 00:34:23+00', '2025-08-29 00:06:17.498977+00');
-INSERT INTO public.token_blacklist VALUES ('83248d31-0564-4b93-88d0-364013e067f8', 'eb837bcd460e30f746ea6690b482c5fe87c9b1a3a397af96889fb69239e9dbeb', 'a7fa1461-11e3-4f91-ae42-8e4b85ed5a8e', '2025-08-29 03:05:13+00', '2025-08-29 02:38:48.698574+00');
-INSERT INTO public.token_blacklist VALUES ('b5e622c5-bc7c-48ed-9dd4-e724892d10e4', 'fb14f516a296054b764064b361a8da6c9f748f5ac00912e2be781f721ac2eb2a', '6a445645-3029-4b62-aac7-10cd7e6558d0', '2025-08-29 03:10:37+00', '2025-08-29 02:43:06.018675+00');
-INSERT INTO public.token_blacklist VALUES ('54ea80b3-71b8-48c6-9ee4-4eba6676ba41', '77448839371b5659c92858afbb33e8646b6d803a403be5c56956a897396ff7a7', '1e882225-d379-40a0-a3af-2ba90f6ab76a', '2025-08-29 03:13:37+00', '2025-08-29 02:56:12.839294+00');
-INSERT INTO public.token_blacklist VALUES ('12fb8c7e-20a8-43eb-8f4a-7c396c2d40bd', '13e4cea83a81d44fd48e0f437755c77e6437a766ebe244f429c86d89561ae0f4', 'a7fa1461-11e3-4f91-ae42-8e4b85ed5a8e', '2025-08-29 03:26:25+00', '2025-08-29 03:11:43.371091+00');
+INSERT INTO public.token_blacklist VALUES ('4bcc28e0-eed6-4f34-9817-7655b250765e', 'ab900f8cb9aabd3a110c8c36716085d2aec2c2aa9e85d3ae8951532a6ed25a42', 'bda97f8d-bb0c-463e-8b94-3f9abdce8940', '2025-08-30 18:39:33+00', '2025-08-30 18:10:33.867045+00');
+INSERT INTO public.token_blacklist VALUES ('aaa10af0-d6b0-4800-b0fd-bf2cae1176f1', '47a0b0e3e13d49be528d4ad206d08ec97e94333bc62b4e78ea30397abd3aabc0', 'f8133a5a-d3d3-4206-b371-1d3761ed98bd', '2025-08-30 18:40:54+00', '2025-08-30 18:11:36.188903+00');
+INSERT INTO public.token_blacklist VALUES ('ce20dd3f-5155-4e6b-b59c-742c9280febc', '1f227d24b99cfd3a39d29cc021f83e97725aed808bcd0b848e85536749aae944', '06c5ea3f-2af1-492b-bd12-9e2850bd6f74', '2025-08-30 19:13:18+00', '2025-08-30 18:45:17.137594+00');
+INSERT INTO public.token_blacklist VALUES ('27e30671-ac8b-4d08-a115-0ba26c4c270b', 'e53c069db460164197c54e00504f66a73ff8896ab78b8a71c2b775cc30e472b4', 'dd878b12-9bec-4d74-a72a-a20735072212', '2025-08-30 19:15:29+00', '2025-08-30 18:45:50.024049+00');
+INSERT INTO public.token_blacklist VALUES ('3a8526f2-4e69-4f91-9465-9ba0d37aa0b8', '316113dac5695f4ba0e6e35633101f02aaef95ce06514dcdbdfd1a40184b3579', '06c5ea3f-2af1-492b-bd12-9e2850bd6f74', '2025-08-30 19:16:16+00', '2025-08-30 18:46:48.160413+00');
+INSERT INTO public.token_blacklist VALUES ('c55a81ce-b172-430f-a3cb-73f699cf868f', '591137fb6b49e27d7ac9d0d435ab6aa52508c7cd8c80184d2b1dacdcd9413a8b', 'dd878b12-9bec-4d74-a72a-a20735072212', '2025-08-30 19:17:10+00', '2025-08-30 18:51:36.717834+00');
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict IDjWHO99LPzcPgErO8X3KkCx9tc28OsMjlyDfPRTDe6Vbeqd1agT1LseM9MoOkb
+\unrestrict tBKSzCROtTcejyQ9ErV8jQQTMP16qgLxmpNUYYfcQeudJ8kPHl4gPdH4anHGkuB
 

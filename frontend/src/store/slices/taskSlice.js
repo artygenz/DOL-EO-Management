@@ -78,13 +78,43 @@ export const assignTaskToExecutor = createAsyncThunk(
   }
 );
 
+// New async thunks for daily updates
+export const fetchEmployeeDailyUpdates = createAsyncThunk(
+  'task/fetchEmployeeDailyUpdates',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/dashboard/employee/my-updates');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch daily updates');
+    }
+  }
+);
+
+export const fetchPMODailyUpdates = createAsyncThunk(
+  'task/fetchPMODailyUpdates',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/dashboard/pmo/daily-updates');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch PMO daily updates');
+    }
+  }
+);
+
 const initialState = {
   tasks: [],
   allTasks: [],
   selectedTask: null,
   dailyUpdates: [],
+  pmoDailyUpdates: [],
   loading: false,
+  dailyUpdatesLoading: false,
+  pmoDailyUpdatesLoading: false,
   error: null,
+  dailyUpdatesError: null,
+  pmoDailyUpdatesError: null,
 };
 
 const taskSlice = createSlice({
@@ -183,6 +213,35 @@ const taskSlice = createSlice({
       .addCase(assignTaskToExecutor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // New daily update reducers
+      .addCase(fetchEmployeeDailyUpdates.pending, (state) => {
+        state.dailyUpdatesLoading = true;
+        state.dailyUpdatesError = null;
+      })
+      .addCase(fetchEmployeeDailyUpdates.fulfilled, (state, action) => {
+        state.dailyUpdatesLoading = false;
+        const updatesList = action.payload?.data?.updates || action.payload?.updates || [];
+        state.dailyUpdates = Array.isArray(updatesList) ? updatesList : [];
+        state.dailyUpdatesError = null;
+      })
+      .addCase(fetchEmployeeDailyUpdates.rejected, (state, action) => {
+        state.dailyUpdatesLoading = false;
+        state.dailyUpdatesError = action.payload;
+      })
+      .addCase(fetchPMODailyUpdates.pending, (state) => {
+        state.pmoDailyUpdatesLoading = true;
+        state.pmoDailyUpdatesError = null;
+      })
+      .addCase(fetchPMODailyUpdates.fulfilled, (state, action) => {
+        state.pmoDailyUpdatesLoading = false;
+        const updatesList = action.payload?.data?.daily_updates || action.payload?.daily_updates || [];
+        state.pmoDailyUpdates = Array.isArray(updatesList) ? updatesList : [];
+        state.pmoDailyUpdatesError = null;
+      })
+      .addCase(fetchPMODailyUpdates.rejected, (state, action) => {
+        state.pmoDailyUpdatesLoading = false;
+        state.pmoDailyUpdatesError = action.payload;
       });
   },
 });
