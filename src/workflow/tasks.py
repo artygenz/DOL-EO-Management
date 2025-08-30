@@ -511,6 +511,14 @@ def handle_rejected_tasks(eo_id: str | None, rejected_ids: list[str] | None, glo
         print(f"LLM improved {len(improved_tasks)} tasks")
         print(f"Improvement summary: {improvement_summary}")
         
+        # Assign tasks based on category_dept (the LLM leaves assignee empty)
+        if improved_tasks:
+            print("Assigning tasks based on category_dept...")
+            from src.app.extract_directives import assign_tasks
+            improved_result_with_assignments = assign_tasks(improved_result, roles_text)
+            improved_tasks = improved_result_with_assignments.get("tasks", improved_tasks)
+            print(f"Task assignment completed")
+        
         # Update tasks in database with improved versions
         if improved_tasks:
             # Create a mapping from simple task ID to improved task data

@@ -346,6 +346,17 @@ def update_tasks_with_improved_data(task_updates: dict[str, dict]) -> int:
                     db_task.category = improved_data.get("category_dept", db_task.category)
                     db_task.status = "Pending PMO approval"  # Reset to pending for re-review
                     db_task.remarks = improved_data.get("remarks", db_task.remarks)
+                    
+                    # Handle assignee updates from LLM rewiring
+                    if "assignee" in improved_data and improved_data["assignee"]:
+                        assignee_name = improved_data["assignee"]
+                        assignee_id = resolve_assignee_name_to_id(assignee_name)
+                        if assignee_id:
+                            db_task.assignee_id = assignee_id
+                            print(f"[DEBUG] Updated assignee for task {task_id_str}: '{assignee_name}' -> {assignee_id}")
+                        else:
+                            print(f"[WARNING] Could not resolve assignee '{assignee_name}' for task {task_id_str}")
+                    
                     db_task.updated_at = datetime.now(timezone.utc)
                     updated_count += 1
                     
