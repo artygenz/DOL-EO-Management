@@ -45,8 +45,8 @@ celery_app.conf.update(
         },
         'aggregate-daily-updates': {
             'task': 'src.workflow.tasks.aggregate_daily_updates',
-            'schedule': crontab(minute=45, hour=17),  # Testing at 01:42 UTC
-            'args': ('e06b798b-2972-456b-8e76-459ebf751cf6',),  # EO ID for EO 14249
+            'schedule': crontab(minute=44, hour=21),  # Testing at 01:42 UTC
+            'args': ('c54091da-e0ee-4157-8de7-678594be0098',),  # EO ID for EO 14249
         },
     },
     # Timezone configuration for ET-based scheduling
