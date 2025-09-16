@@ -1,0 +1,441 @@
+[admin] FAIL: 'Show tasks by category.' -> visible=False, expected=True
+route:{'entity': 'tasks', 'intents': ['aggregate'], 'hints': {'group_by': 'category'}}
+tool:aggregate_tasks
+args:{'group_by': 'category'}
+
+LLM response (non-streaming): Here is a breakdown of tasks by category across the organization:
+
+- **Director of Compliance:** 3 tasks
+- **Director of Accounting:** 3 tasks
+- **Director of Security and Technology:** 2 tasks
+- **Director of Financial Reporting:** 2 tasks
+- **Director of Division of Business Process Improvement:** 2 tasks
+
+This distribution shows that the highest number of tasks are currently assigned to the Director of Compliance and the Director of Accounting, each with 3 tasks. The other categories each have 2 tasks assigned.
+
+If you would like more detail on the specific tasks within any of these categories—such as task titles, statuses, or due dates—please let me know.
+
+
+
+[admin] PASS: 'List the task updates with blockers and risks' -> visible=True, expected=True
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {'has_blockers': True, 'has_risks': True}}
+tool:search_task_updates
+args:{'has_blockers': True, 'has_risks': True, 'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): Here are the task updates that currently have both blockers and risks identified:
+
+1. **Task d9ee80ab**  
+   - **Status:** In Progress (40% complete)  
+   - **Notes:** Coordination with most departments has begun and r...  
+   - **Blockers/Risks:** This task is experiencing both blockers and risks, which may be affecting progress.
+
+2. **Task 5f98f987**  
+   - **Status:** Completed (90% complete)  
+   - **Notes:** Implementation report is almost complete; coordina...  
+   - **Blockers/Risks:** Despite being marked as completed, this task had blockers and risks noted during its lifecycle.
+
+If you need more details on the specific blockers or risks for these tasks, or would like a broader view of tasks with only blockers or only risks, please let me know.
+
+
+
+[admin] PASS: 'Show all executive orders' -> visible=True, expected=True
+route:{'entity': 'executive_orders', 'intents': ['search'], 'hints': {}}
+tool:search_eos
+args:{'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): Here is the executive order currently available in the system:
+
+- **Title:** Modernize workforce data  
+  **Status:** Processed
+
+This is the only executive order found at this time. If you need more details about this order or would like to see additional executive orders as they become available, please let me know how you’d like to proceed.
+
+
+
+[reviewer] PASS: 'Show tasks under my EOs.' -> visible=True, expected=True
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:get_my_tasks
+args:{'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): You currently have 12 tasks assigned under your Executive Orders. Here are some specific examples:
+
+1. **Cease Issuance of Paper Checks for Disbursements**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+2. **Submit Agency Compliance Plan to OMB**  
+   - Status: Approved  
+   - Category: Director of Compliance
+
+3. **Submit Treasury Implementation Report to President**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+4. **Transition All Receipts to Electronic Processing**  
+   - Status: Approved  
+   - Category: Director of Accounting
+
+5. **Coordinate Agency Support for Digital Payments Transition**  
+   - Status: Approved  
+   - Category: Director of Division of Business Process Improvement
+
+These tasks reflect a range of responsibilities across different categories, all currently marked as "approved." If you need to see the full list of all 12 tasks or want details on a specific task (such as deadlines or progress), please let me know, and I can provide more information.
+
+
+
+[reviewer] PASS: 'Show tasks under someone else's EO' -> visible=False, expected=False
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:None
+args:None
+
+LLM response (non-streaming): Could you please provide the name of the person whose EO tasks you want to see? This will help me find the relevant tasks for you.
+
+
+
+[reviewer] PASS: 'Show updates with blockers and risks' -> visible=True, expected=True
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {'has_blockers': True, 'has_risks': True}}
+tool:search_task_updates
+args:{'has_blockers': True, 'has_risks': True, 'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): Here are the latest updates on Executive Order tasks that currently have both blockers and risks identified:
+
+1. **Task d9ee80ab**  
+   - **Status:** In Progress (40% complete)  
+   - **Notes:** Coordination with most departments has begun and r...  
+   - **Blockers/Risks:** This task is experiencing both blockers and risks, which may be impacting its progress.  
+
+2. **Task 5f98f987**  
+   - **Status:** Completed (90% complete)  
+   - **Notes:** Implementation report is almost complete; coordina...  
+   - **Blockers/Risks:** Despite being marked as completed, this task has reported blockers and risks, potentially related to final coordination or reporting steps.
+
+If you need more details on the specific blockers or risks for these tasks, or if you would like updates on additional tasks, please let me know.
+
+
+
+[reviewer] FAIL: 'Show all tasks' -> visible=True, expected=False
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:get_my_tasks
+args:{'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): Here are your currently assigned tasks related to Executive Orders. A total of 12 tasks were found. Below are specific examples with their current status and responsible category:
+
+1. **Cease Issuance of Paper Checks for Disbursements**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+2. **Submit Agency Compliance Plan to OMB**  
+   - Status: Approved  
+   - Category: Director of Compliance
+
+3. **Submit Treasury Implementation Report to President**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+4. **Transition All Receipts to Electronic Processing**  
+   - Status: Approved  
+   - Category: Director of Accounting
+
+5. **Coordinate Agency Support for Digital Payments Transition**  
+   - Status: Approved  
+   - Category: Director of Division of Business Process Improvement
+
+There are additional tasks beyond these first five. If you would like to see the full list or details on specific tasks (such as deadlines, responsible parties, or progress updates), please let me know. 
+
+All tasks shown are within your authorized access as a PMO reviewer. If you need a breakdown by status, category, or another filter, I can provide that as well.
+
+
+
+[executor] PASS: 'Show my tasks.' -> visible=True, expected=True
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:get_my_tasks
+args:{'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): Here are your current tasks:
+
+1. **Cease Issuance of Paper Checks for Disbursements**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+2. **Submit Treasury Implementation Report to President**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+Both tasks are in the "Director of Financial Reporting" category and have been approved. If you need more details about any of these tasks or want to see additional tasks, please let me know!
+
+
+
+[executor] PASS: 'Show tasks assigned to Kevin Brown' -> visible=False, expected=False
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {'users': 'Kevin Brown'}}
+tool:search_tasks_by_assignee_name
+args:{'assignee_name': 'Kevin Brown', 'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): There are currently no tasks assigned to Kevin Brown in the system based on your search. This means that, as of now, Kevin Brown does not have any active or pending assignments visible to you.
+
+Possible reasons for this could include:
+- Kevin Brown has not been assigned any tasks yet.
+- Any tasks previously assigned to Kevin Brown may have been completed or reassigned.
+- Your current access level may limit the visibility of some tasks, depending on system permissions.
+
+If you were expecting to see tasks for Kevin Brown, you might want to:
+- Double-check the spelling of the assignee's name.
+- Confirm with your manager or system administrator whether there are any access restrictions in place.
+- Try searching again later in case new assignments are added.
+
+If you need to find tasks for a different team member or have other criteria to search by, please let me know how I can assist further.
+
+
+
+[executor] PASS: 'Show updates from my tasks' -> visible=True, expected=True
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {}}
+tool:search_task_updates
+args:{'limit': 20, 'offset': 0}
+
+LLM response (non-streaming): Here are the latest updates from your tasks:
+
+1. **Task d9ee80ab**  
+   - **Status:** In Progress (40% complete)  
+   - **Notes:** Coordination with most departments has begun and remaining steps are underway.
+
+2. **Task 5f98f987**  
+   - **Status:** Completed (90% progress)  
+   - **Notes:** Implementation report is almost complete; coordination efforts are wrapping up.
+
+If you need more details about any specific task or want to see additional updates, please let me know!
+
+
+
+[executor] PASS: 'Show updates from Dylan's tasks' -> visible=False, expected=False
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {'users': 'Dylan'}}
+tool:None
+args:None
+
+LLM response (non-streaming): There are no updates available for tasks assigned to Dylan. Please verify the identifier or provide additional details to assist with your request.
+
+
+
+[admin] FAIL: 'Show tasks by category.' -> visible=False, expected=True
+route:{'entity': 'tasks', 'intents': ['aggregate'], 'hints': {'group_by': 'category'}}
+tool:aggregate_tasks
+args:{'group_by': 'category'}
+
+LLM response (streaming): Here is a breakdown of tasks by category across the organization:
+
+- **Director of Compliance:** 3 tasks
+- **Director of Accounting:** 3 tasks
+- **Director of Security and Technology:** 2 tasks
+- **Director of Financial Reporting:** 2 tasks
+- **Director of Division of Business Process Improvement:** 2 tasks
+
+This distribution shows that the highest number of tasks currently fall under Compliance and Accounting, each with 3 tasks. The other categories each have 2 tasks assigned. This overview can help you identify where current workload is concentrated and may inform resource allocation or follow-up actions.
+
+If you need more detailed information—such as task titles, statuses, or due dates within each category—please let me know, and I can provide a more granular breakdown.
+
+
+
+[admin] PASS: 'List the task updates with blockers and risks' -> visible=True, expected=True
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {'has_blockers': True, 'has_risks': True}}
+tool:search_task_updates
+args:{'has_blockers': True, 'has_risks': True, 'limit': 20, 'offset': 0}
+
+LLM response (streaming): Here are the task updates that currently have both blockers and risks identified:
+
+1. **Task d9ee80ab**  
+   - **Status:** In Progress (40% complete)  
+   - **Notes:** Coordination with most departments has begun and r...  
+   - **Blockers/Risks:** Blockers and risks are present, potentially impacting further progress.
+
+2. **Task 5f98f987**  
+   - **Status:** Completed (90% complete)  
+   - **Notes:** Implementation report is almost complete; coordina...  
+   - **Blockers/Risks:** Despite nearing completion, this task has documented blockers and risks that may affect final delivery or post-completion follow-up.
+
+If you need more details on the specific blockers and risks for each task, or would like to see additional updates, please let me know.
+
+
+
+[admin] PASS: 'Show all executive orders' -> visible=True, expected=True
+route:{'entity': 'executive_orders', 'intents': ['search'], 'hints': {}}
+tool:search_eos
+args:{'limit': 20, 'offset': 0}
+
+LLM response (streaming): Here is the executive order currently available in the system:
+
+- **Modernize workforce data** (Status: processed)
+
+This executive order has been processed and is the only one found at this time. If you need further details about this order or would like to see additional executive orders as they become available, please let me know how you’d like to proceed.
+
+
+
+[reviewer] PASS: 'Show tasks under my EOs.' -> visible=True, expected=True
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:get_my_tasks
+args:{'limit': 20}
+
+LLM response (streaming): Here are the tasks currently assigned under your Executive Orders:
+
+1. **Cease Issuance of Paper Checks for Disbursements**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+2. **Submit Agency Compliance Plan to OMB**  
+   - Status: Approved  
+   - Category: Director of Compliance
+
+3. **Submit Treasury Implementation Report to President**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+4. **Transition All Receipts to Electronic Processing**  
+   - Status: Approved  
+   - Category: Director of Accounting
+
+5. **Coordinate Agency Support for Digital Payments Transition**  
+   - Status: Approved  
+   - Category: Director of Division of Business Process Improvement
+
+There are a total of 12 tasks under your assigned Executive Orders. The examples above show a range of responsibilities, including financial reporting, compliance, accounting, and business process improvement. All listed tasks currently have an "approved" status, indicating they have passed the necessary review stages.
+
+If you need to see the full list of all 12 tasks or want more details on any specific task, please let me know!
+
+
+
+[reviewer] PASS: 'Show tasks under someone else's EO' -> visible=False, expected=False
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:None
+args:None
+
+LLM response (streaming): Could you please provide the name of the person whose EO tasks you want to see? This will help me search for the relevant tasks.
+
+
+
+[reviewer] PASS: 'Show updates with blockers and risks' -> visible=True, expected=True
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {'has_blockers': True, 'has_risks': True}}
+tool:search_task_updates
+args:{'has_blockers': True, 'has_risks': True, 'limit': 20, 'offset': 0}
+
+LLM response (streaming): Here are the latest updates on Executive Order tasks that currently have both blockers and risks identified:
+
+1. **Task d9ee80ab**  
+   - **Status:** In Progress (40% complete)  
+   - **Notes:** Coordination with most departments has begun and r...  
+   - **Blockers/Risks:** This update indicates that while coordination has started, there are ongoing blockers and risks impacting progress.
+
+2. **Task 5f98f987**  
+   - **Status:** Completed (90% complete)  
+   - **Notes:** Implementation report is almost complete; coordina...  
+   - **Blockers/Risks:** Despite nearing completion, there are still outstanding blockers and risks, particularly related to final coordination and report completion.
+
+If you need more details on the specific blockers or risks for these tasks, please let me know which task you’d like to review further.
+
+
+
+[reviewer] FAIL: 'Show all tasks' -> visible=True, expected=False
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:get_my_tasks
+args:{'limit': 20, 'offset': 0}
+
+LLM response (streaming): Here are your currently assigned tasks related to Executive Orders. There are a total of 12 tasks. Here are the first five, including their status and responsible category:
+
+1. **Cease Issuance of Paper Checks for Disbursements**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+2. **Submit Agency Compliance Plan to OMB**  
+   - Status: Approved  
+   - Category: Director of Compliance
+
+3. **Submit Treasury Implementation Report to President**  
+   - Status: Approved  
+   - Category: Director of Financial Reporting
+
+4. **Transition All Receipts to Electronic Processing**  
+   - Status: Approved  
+   - Category: Director of Accounting
+
+5. **Coordinate Agency Support for Digital Payments Transition**  
+   - Status: Approved  
+   - Category: Director of Division of Business Process Improvement
+
+These tasks are all marked as "approved," indicating they have passed the necessary review stages. If you need to see the remaining tasks or want details about a specific task, please let me know.
+
+
+
+[executor] PASS: 'Show my tasks.' -> visible=True, expected=True
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {}}
+tool:get_my_tasks
+args:{'limit': 20, 'offset': 0}
+
+LLM response (streaming): Here are your current tasks:
+
+1. **Cease Issuance of Paper Checks for Disbursements**
+   - Status: Approved
+   - Category: Director of Financial Reporting
+
+2. **Submit Treasury Implementation Report to President**
+   - Status: Approved
+   - Category: Director of Financial Reporting
+
+Both tasks are in the "approved" status and fall under the "Director of Financial Reporting" category. If you need more details about any of these tasks or would like to see additional tasks, please let me know!
+
+
+
+[executor] PASS: 'Show tasks assigned to Kevin Brown' -> visible=False, expected=False
+route:{'entity': 'tasks', 'intents': ['search'], 'hints': {'users': 'Kevin Brown'}}
+tool:search_tasks_by_assignee_name
+args:{'assignee_name': 'Kevin Brown', 'limit': 20, 'offset': 0}
+
+LLM response (streaming): There are currently no tasks assigned to Kevin Brown in the system based on your search. This means that, within your current access and the available data, Kevin Brown does not have any active or pending assignments.
+
+This could be because:
+- Kevin Brown has not been assigned any tasks yet.
+- Any tasks previously assigned to him may have been completed, reassigned, or removed.
+- Your access permissions may limit the visibility of certain tasks, so you may not see all assignments if there are restrictions in place.
+
+If you believe there should be tasks assigned to Kevin Brown, you may want to:
+- Double-check the spelling of the assignee’s name.
+- Confirm with your manager or system administrator if there are any access restrictions affecting your view.
+- Try searching for tasks assigned to other team members or with different filters.
+
+Let me know if you’d like help searching for tasks by a different assignee or with other criteria.
+
+
+
+[executor] PASS: 'Show updates from my tasks' -> visible=True, expected=True
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {}}
+tool:search_task_updates
+args:{'limit': 20, 'offset': 0}
+
+LLM response (streaming): Here are the latest updates from your tasks:
+
+1. **Task d9ee80ab**  
+   - Status: In Progress (40% complete)  
+   - Notes: Coordination with most departments has begun and relevant activities are underway.
+
+2. **Task 5f98f987**  
+   - Status: Completed (90% complete)  
+   - Notes: Implementation report is almost complete; coordination efforts are wrapping up.
+
+If you need more details on any specific task or want to see additional updates, please let me know!
+
+
+
+[executor] FAIL: 'Show updates from Dylan's tasks' -> visible=True, expected=False
+route:{'entity': 'task_updates', 'intents': ['search'], 'hints': {'users': 'Dylan'}}
+tool:search_task_updates
+args:{'eo_id': None, 'task_id': None, 'status': None, 'min_progress': None, 'has_blockers': None, 'has_risks': None, 'notes_contains': None, 'date_from': None, 'date_to': None, 'limit': 20, 'offset': 0, 'users': 'Dylan'}
+
+LLM response (streaming): Here are the latest updates from Dylan's tasks:
+
+1. **Task d9ee80ab**  
+   - **Status:** In Progress (40% complete)  
+   - **Notes:** Coordination with most departments has begun and r...
+
+2. **Task 5f98f987**  
+   - **Status:** Completed (90% complete)  
+   - **Notes:** Implementation report is almost complete; coordina...
+
+If you need more details about any of these tasks or want updates from a different time period or user, let me know!
+
+
+
