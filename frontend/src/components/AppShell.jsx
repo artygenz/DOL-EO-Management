@@ -6,6 +6,7 @@ import { useThemeMode } from "../ui/ThemeModeProvider";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import PageFade from "../ui/PageFade";
+import { FloatingChatIcon } from "./chat";
 
 export default function AppShell({ children }) {
   const { isAuthenticated, loading, user, logout } = useAuth();
@@ -71,6 +72,9 @@ export default function AppShell({ children }) {
       <Container sx={{ py: 3 }}>
         <PageFade key={pathname}>{children}</PageFade>
       </Container>
+
+      {/* Floating Chat Icon - Only show when user is authenticated */}
+      {isAuthenticated && <FloatingChatIcon />}
     </>
   );
 }
