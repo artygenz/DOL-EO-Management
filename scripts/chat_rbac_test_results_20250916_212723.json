@@ -1,0 +1,997 @@
+{
+  "timestamp": "2025-09-16T21:26:30.337924",
+  "total_roles": 3,
+  "role_results": {
+    "admin": {
+      "role": "admin",
+      "total_tests": 4,
+      "passed": 3,
+      "failed": 1,
+      "test_results": [
+        {
+          "test_case": "Admin can view all tasks",
+          "question": "Show me all tasks in the system",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "There are a total of 12 tasks currently in the system. Here are some examples of the tasks, along with their current status and responsible category:\n\n1. **Cease Issuance of Paper Checks for Disbursements**  \n   - Status: Approved  \n   - Category: Director of Financial Reporting\n\n2. **Submit Agency Compliance Plan to OMB**  \n   - Status: Approved  \n   - Category: Director of Compliance\n\n3. **Submit Treasury Implementation Report to President**  \n   - Status: Approved  \n   - Category: Director of Financial Reporting\n\n4. **Develop Alternative Payment Options for Exception Cases**  \n   - Status: Approved  \n   - Category: Director of Accounting\n\n5. **Develop Public Awareness Campaign for Electronic Payments Transition**  \n   - Status: Approved  \n   - Category: Director of Division of Business Process Improvement\n\nThese tasks reflect key initiatives across multiple departments, all of which are currently in the \"approved\" status. If you would like to see details for all 12 tasks or filter by a specific status, category, or department, please let me know how you\u2019d like to proceed.",
+              "tool": "search_tasks",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 12,
+                "tasks": [
+                  {
+                    "id": "d9ee80ab-1fce-49e1-8f87-106524c9552b",
+                    "title": "Cease Issuance of Paper Checks for Disbursements",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": "2025-09-30",
+                    "category": "Director of Financial Reporting"
+                  },
+                  {
+                    "id": "e76bcfec-3cbe-46ac-b00f-85e699eaeb72",
+                    "title": "Submit Agency Compliance Plan to OMB",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": "2025-12-29",
+                    "category": "Director of Compliance"
+                  },
+                  {
+                    "id": "5f98f987-5a5a-40d1-8435-14d6af37762b",
+                    "title": "Submit Treasury Implementation Report to President",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": "2026-03-29",
+                    "category": "Director of Financial Reporting"
+                  },
+                  {
+                    "id": "387d3019-49c5-4bb8-835d-5f3769618f21",
+                    "title": "Develop Alternative Payment Options for Exception Cases",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Accounting"
+                  },
+                  {
+                    "id": "7cbe3e84-d62a-49f0-b9ef-0271d344afe2",
+                    "title": "Develop Public Awareness Campaign for Electronic Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "22ca38d3-316c-4293-b1c1-ef5d43b1b15d",
+                    "title": "Coordinate Agency Support for Digital Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "c1fa632d-0ed1-4229-8966-0ed8f52f89cd",
+                    "title": "Review and Revise Exception Procedures for Non-Electronic Payments",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Compliance"
+                  },
+                  {
+                    "id": "bb29583e-bb5c-49d8-8299-9706ac8941ec",
+                    "title": "Transition All Receipts to Electronic Processing",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Accounting"
+                  },
+                  {
+                    "id": "345ffad4-67e6-439a-b075-a0a3f95e49db",
+                    "title": "Address Financial Access for Unbanked and Underbanked Populations",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Compliance"
+                  },
+                  {
+                    "id": "62a81c4f-03cb-4e0d-a0c3-2c8d90cc59d4",
+                    "title": "Protect Classified and Sensitive Information During Implementation",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Security and Technology"
+                  },
+                  {
+                    "id": "cee9fb98-24cc-44da-9c9c-72f6537478a9",
+                    "title": "Provide Access to Modern Electronic Payment Options",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Security and Technology"
+                  },
+                  {
+                    "id": "c2cedf72-4ee3-4a1c-a950-d29fde646e93",
+                    "title": "Eliminate Treasury Physical Lockbox Services",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Accounting"
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as admin.",
+                "Understanding your question as about tasks.",
+                "Plan: searching tasks with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 12 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "search_tasks"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 12 tasks"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Admin can view all users",
+          "question": "List all users in the system",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Here is a detailed list of all users currently in the system, based on the latest data available. There are a total of 17 users, each with their role, organizational title, and active status:\n\n1. **Ayesha Ahsan**  \n   - Email: ayesha.ahsan@lumenlighthouse.ai  \n   - Role: Executor  \n   - Org Role: Director of Division of Business Process Improvement  \n   - Status: Active\n\n2. **David Chen**  \n   - Email: david.chen@lumenlighthouse.ai  \n   - Role: Reviewer  \n   - Org Role: Compliance Manager  \n   - Status: Active\n\n3. **Dylan Sachetti**  \n   - Email: dylan.sachetti@lumenlighthouse.ai  \n   - Role: Executor  \n   - Org Role: Director of Compliance  \n   - Status: Active\n\n4. **EO 14247 Email**  \n   - Email: eo.14247@lumenlighthouse.ai  \n   - Role: Reviewer  \n   - Org Role: EO 14247 Email  \n   - Status: Active\n\n5. **EO 14249 Email**  \n   - Email: eo.14249@lumenlighthouse.ai  \n   - Role: Reviewer  \n   - Org Role: EO 14249 Email  \n   - Status: Active\n\n6. **Hibbi Iqbal**  \n   - Email: hibbi.iqbal@lumenlighthouse",
+              "tool": "search_users",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 17,
+                "users": [
+                  {
+                    "id": "de426ad5-2b3a-4522-a6c0-c3153ece9bb2",
+                    "name": "Ayesha Ahsan",
+                    "email": "ayesha.ahsan@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Division of Business Process Improvement",
+                    "is_active": true
+                  },
+                  {
+                    "id": "560ec6ae-9b14-4474-9a6f-f4f026b9b297",
+                    "name": "David Chen",
+                    "email": "david.chen@lumenlighthouse.ai",
+                    "role": "reviewer",
+                    "org_role": "Compliance Manager",
+                    "is_active": true
+                  },
+                  {
+                    "id": "1b6175cd-2a7f-4fe7-86d7-e8af97204313",
+                    "name": "Dylan Sachetti",
+                    "email": "dylan.sachetti@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Compliance",
+                    "is_active": true
+                  },
+                  {
+                    "id": "5d257691-72df-4d93-8abd-c3b086daba36",
+                    "name": "EO 14247 Email",
+                    "email": "eo.14247@lumenlighthouse.ai",
+                    "role": "reviewer",
+                    "org_role": "EO 14247 Email",
+                    "is_active": true
+                  },
+                  {
+                    "id": "bbf10ce9-e691-4907-ac1e-b2ea52ce3019",
+                    "name": "EO 14249 Email",
+                    "email": "eo.14249@lumenlighthouse.ai",
+                    "role": "reviewer",
+                    "org_role": "EO 14249 Email",
+                    "is_active": true
+                  },
+                  {
+                    "id": "498f3d26-6c1c-4c25-ae04-537a0e25f8f8",
+                    "name": "Hibbi Iqbal",
+                    "email": "hibbi.iqbal@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Financial Reporting",
+                    "is_active": true
+                  },
+                  {
+                    "id": "06c5ea3f-2af1-492b-bd12-9e2850bd6f74",
+                    "name": "Jack Smith",
+                    "email": "jack.smith@lumenlighthouse.ai",
+                    "role": "admin",
+                    "org_role": "CFO",
+                    "is_active": true
+                  },
+                  {
+                    "id": "b50a6180-6494-46a6-b652-79e01a43f6a9",
+                    "name": "Jada Mccray",
+                    "email": "jada.mccray@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Lead Accountant (Reports to Zacira)",
+                    "is_active": true
+                  },
+                  {
+                    "id": "2e181d58-9abe-4831-891c-cc6d0a0f68b4",
+                    "name": "Jose Flores",
+                    "email": "jose.flores@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Lead Accountant (Reports to Zacira)",
+                    "is_active": true
+                  },
+                  {
+                    "id": "dd878b12-9bec-4d74-a72a-a20735072212",
+                    "name": "Kevin Brown",
+                    "email": "kevin.brown@lumenlighthouse.ai",
+                    "role": "reviewer",
+                    "org_role": "Deputy CFO",
+                    "is_active": true
+                  },
+                  {
+                    "id": "c443b754-7493-4cfc-bb73-8aaa13122cdd",
+                    "name": "Maria Rodriguez",
+                    "email": "maria.rodriguez@lumenlighthouse.ai",
+                    "role": "reviewer",
+                    "org_role": "Financial Operations Manager",
+                    "is_active": true
+                  },
+                  {
+                    "id": "18e3020c-5dc0-4332-8cbb-4093ad2ad22d",
+                    "name": "Micheal Kim",
+                    "email": "micheal.kim@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Travel Management",
+                    "is_active": true
+                  },
+                  {
+                    "id": "adcf072a-87e6-4ee6-afa9-de0233416f0a",
+                    "name": "Robert Springfiled",
+                    "email": "robert.springfiled@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Security and Technology",
+                    "is_active": true
+                  },
+                  {
+                    "id": "f643be30-cb6c-4cd5-b145-84efed3cb4ad",
+                    "name": "Sarah Johnson",
+                    "email": "sarah.johnson@lumenlighthouse.ai",
+                    "role": "reviewer",
+                    "org_role": "Senior Project Manager",
+                    "is_active": true
+                  },
+                  {
+                    "id": "81dff93b-32b6-4825-85fa-07216f9e125e",
+                    "name": "Sophia Carty",
+                    "email": "sophia.carty@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Accounting",
+                    "is_active": true
+                  },
+                  {
+                    "id": "1ec208ac-7acd-4b93-93e5-bdc7cd8f40f4",
+                    "name": "Westley Everette",
+                    "email": "westley.everette@lumenlighthouse.ai",
+                    "role": "admin",
+                    "org_role": "Associate Deputy CFO",
+                    "is_active": true
+                  },
+                  {
+                    "id": "a4d31fc2-bbfd-49a8-85ae-08f0e32b4eef",
+                    "name": "Zacira Copper",
+                    "email": "zacira.copper@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Supervisor (reports to Ayesha)",
+                    "is_active": true
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as admin.",
+                "Understanding your question as about users.",
+                "Plan: running search_users with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 17 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "search_users"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 17 users"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Admin can access user summaries",
+          "question": "Show me a summary for any user",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Here is a summary of users in the organization, grouped by their roles:\n\n- **Admin:** There are 2 users with the admin role. These individuals typically have full access to system settings and user management.\n- **Reviewer:** There are 6 users assigned as reviewers. Reviewers are generally responsible for evaluating or approving tasks and deliverables.\n- **Executor:** There are 9 users in the executor role. Executors are usually responsible for carrying out and completing assigned tasks.\n\nThis breakdown provides insight into the distribution of responsibilities across your organization. If you need a more detailed list of users within each role or additional information about their activities, please let me know.",
+              "tool": "aggregate_users",
+              "args": {
+                "group_by": "role"
+              },
+              "data": [
+                {
+                  "group": "admin",
+                  "metrics": {
+                    "count": 2
+                  }
+                },
+                {
+                  "group": "reviewer",
+                  "metrics": {
+                    "count": 6
+                  }
+                },
+                {
+                  "group": "executor",
+                  "metrics": {
+                    "count": 9
+                  }
+                }
+              ],
+              "processing": [
+                "Signed in as admin.",
+                "Understanding your question as about users.",
+                "Plan: running aggregate_users with safe parameters.",
+                "Queried the database via a safe, role-scoped tool."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": false,
+            "issues": [
+              "Unexpected tool used: aggregate_users"
+            ],
+            "tool_usage": [
+              "aggregate_users"
+            ],
+            "data_access": [
+              "Data returned in response"
+            ],
+            "recommendations": []
+          },
+          "passed": false
+        },
+        {
+          "test_case": "Admin can view task aggregations",
+          "question": "Show me task statistics by status and category",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Based on the latest data available, there are a total of 12 tasks in the \"approved\" status across the organization. No other statuses or categories are represented in the current data set.\n\nThis means that, at this time, all tracked tasks fall under the \"approved\" status, and there is no further breakdown by category or other statuses (such as \"in progress,\" \"pending,\" or \"completed\"). If you are looking for a more detailed breakdown\u2014such as statistics by both status and category, or visibility into other statuses\u2014it may be helpful to ensure that tasks are being categorized appropriately in the system, or to adjust the query parameters for a broader view.\n\nIf you need a more granular analysis or wish to see statistics by both status and category, please let me know, and I can refine the request accordingly.",
+              "tool": "aggregate_tasks",
+              "args": {
+                "group_by": "status"
+              },
+              "data": {
+                "approved": 12
+              },
+              "processing": [
+                "Signed in as admin.",
+                "Understanding your question as about tasks.",
+                "Extracted a few helpful filters from your question.",
+                "Plan: counting tasks with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 0 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "aggregate_tasks"
+            ],
+            "data_access": [
+              "Data returned in response"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        }
+      ]
+    },
+    "reviewer": {
+      "role": "reviewer",
+      "total_tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "test_results": [
+        {
+          "test_case": "Reviewer can view assigned tasks",
+          "question": "Show me my assigned tasks",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "You currently have 12 assigned tasks related to Executive Orders. Here are some of your specific tasks, along with their statuses and categories:\n\n1. **Cease Issuance of Paper Checks for Disbursements**  \n   - Status: Approved  \n   - Category: Director of Financial Reporting\n\n2. **Submit Agency Compliance Plan to OMB**  \n   - Status: Approved  \n   - Category: Director of Compliance\n\n3. **Submit Treasury Implementation Report to President**  \n   - Status: Approved  \n   - Category: Director of Financial Reporting\n\n4. **Transition All Receipts to Electronic Processing**  \n   - Status: Approved  \n   - Category: Director of Accounting\n\n5. **Coordinate Agency Support for Digital Payments Transition**  \n   - Status: Approved  \n   - Category: Director of Division of Business Process Improvement\n\nAll of the tasks listed above are currently in the \"approved\" status, and each falls under a specific director-level category. If you need to see the full list of all 12 tasks or would like details on tasks with a different status or category, please let me know!",
+              "tool": "get_my_tasks",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 12,
+                "tasks": [
+                  {
+                    "id": "d9ee80ab-1fce-49e1-8f87-106524c9552b",
+                    "title": "Cease Issuance of Paper Checks for Disbursements",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": "2025-09-30",
+                    "category": "Director of Financial Reporting"
+                  },
+                  {
+                    "id": "e76bcfec-3cbe-46ac-b00f-85e699eaeb72",
+                    "title": "Submit Agency Compliance Plan to OMB",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": "2025-12-29",
+                    "category": "Director of Compliance"
+                  },
+                  {
+                    "id": "5f98f987-5a5a-40d1-8435-14d6af37762b",
+                    "title": "Submit Treasury Implementation Report to President",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": "2026-03-29",
+                    "category": "Director of Financial Reporting"
+                  },
+                  {
+                    "id": "bb29583e-bb5c-49d8-8299-9706ac8941ec",
+                    "title": "Transition All Receipts to Electronic Processing",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Accounting"
+                  },
+                  {
+                    "id": "22ca38d3-316c-4293-b1c1-ef5d43b1b15d",
+                    "title": "Coordinate Agency Support for Digital Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "7cbe3e84-d62a-49f0-b9ef-0271d344afe2",
+                    "title": "Develop Public Awareness Campaign for Electronic Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "387d3019-49c5-4bb8-835d-5f3769618f21",
+                    "title": "Develop Alternative Payment Options for Exception Cases",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Accounting"
+                  },
+                  {
+                    "id": "c1fa632d-0ed1-4229-8966-0ed8f52f89cd",
+                    "title": "Review and Revise Exception Procedures for Non-Electronic Payments",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Compliance"
+                  },
+                  {
+                    "id": "cee9fb98-24cc-44da-9c9c-72f6537478a9",
+                    "title": "Provide Access to Modern Electronic Payment Options",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Security and Technology"
+                  },
+                  {
+                    "id": "c2cedf72-4ee3-4a1c-a950-d29fde646e93",
+                    "title": "Eliminate Treasury Physical Lockbox Services",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Accounting"
+                  },
+                  {
+                    "id": "62a81c4f-03cb-4e0d-a0c3-2c8d90cc59d4",
+                    "title": "Protect Classified and Sensitive Information During Implementation",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Security and Technology"
+                  },
+                  {
+                    "id": "345ffad4-67e6-439a-b075-a0a3f95e49db",
+                    "title": "Address Financial Access for Unbanked and Underbanked Populations",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Compliance"
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as reviewer.",
+                "Understanding your question as about tasks.",
+                "Plan: listing your tasks with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 12 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "get_my_tasks"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 12 tasks"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Reviewer can view PMO executors",
+          "question": "Show me executors I can review",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "You can review the following executors currently assigned to Executive Orders within your scope:\n\n1. **Ayesha Ahsan**  \n   - Email: ayesha.ahsan@lumenlighthouse.ai  \n   - Role: Director of Division of Business Process Improvement\n\n2. **Dylan Sachetti**  \n   - Email: dylan.sachetti@lumenlighthouse.ai  \n   - Role: Director of Compliance\n\n3. **Hibbi Iqbal**  \n   - Email: hibbi.iqbal@lumenlighthouse.ai  \n   - Role: Director of Financial Reporting\n\n4. **Robert Springfiled**  \n   - Email: robert.springfiled@lumenlighthouse.ai  \n   - Role: Director of Security and Technology\n\n5. **Sophia Carty**  \n   - Email: sophia.carty@lumenlighthouse.ai  \n   - Role: Director of Accounting\n\nThese are the executors you are authorized to review as a PMO reviewer. If you need more details about their assigned Executive Orders or wish to filter by specific criteria, please let me know!",
+              "tool": "pmo_visible_executors",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 5,
+                "users": [
+                  {
+                    "id": "de426ad5-2b3a-4522-a6c0-c3153ece9bb2",
+                    "name": "Ayesha Ahsan",
+                    "email": "ayesha.ahsan@lumenlighthouse.ai",
+                    "org_role": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "1b6175cd-2a7f-4fe7-86d7-e8af97204313",
+                    "name": "Dylan Sachetti",
+                    "email": "dylan.sachetti@lumenlighthouse.ai",
+                    "org_role": "Director of Compliance"
+                  },
+                  {
+                    "id": "498f3d26-6c1c-4c25-ae04-537a0e25f8f8",
+                    "name": "Hibbi Iqbal",
+                    "email": "hibbi.iqbal@lumenlighthouse.ai",
+                    "org_role": "Director of Financial Reporting"
+                  },
+                  {
+                    "id": "adcf072a-87e6-4ee6-afa9-de0233416f0a",
+                    "name": "Robert Springfiled",
+                    "email": "robert.springfiled@lumenlighthouse.ai",
+                    "org_role": "Director of Security and Technology"
+                  },
+                  {
+                    "id": "81dff93b-32b6-4825-85fa-07216f9e125e",
+                    "name": "Sophia Carty",
+                    "email": "sophia.carty@lumenlighthouse.ai",
+                    "org_role": "Director of Accounting"
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as reviewer.",
+                "Understanding your question as about users.",
+                "Extracted a few helpful filters from your question.",
+                "Plan: running pmo_visible_executors with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 5 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "pmo_visible_executors"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 5 users"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Reviewer cannot access all users",
+          "question": "Show me all users in the system",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Here are all the users currently in the system, along with their roles and organizational positions:\n\n1. **Ayesha Ahsan**  \n   - Email: ayesha.ahsan@lumenlighthouse.ai  \n   - Role: Executor  \n   - Organizational Role: Director of Division of Business Process Improvement  \n   - Status: Active\n\n2. **Dylan Sachetti**  \n   - Email: dylan.sachetti@lumenlighthouse.ai  \n   - Role: Executor  \n   - Organizational Role: Director of Compliance  \n   - Status: Active\n\n3. **Hibbi Iqbal**  \n   - Email: hibbi.iqbal@lumenlighthouse.ai  \n   - Role: Executor  \n   - Organizational Role: Director of Financial Reporting  \n   - Status: Active\n\n4. **Robert Springfiled**  \n   - Email: robert.springfiled@lumenlighthouse.ai  \n   - Role: Executor  \n   - Organizational Role: Director of Security and Technology  \n   - Status: Active\n\n5. **Sophia Carty**  \n   - Email: sophia.carty@lumenlighthouse.ai  \n   - Role: Executor  \n   - Organizational Role: Director of Accounting  \n   - Status: Active\n\nAll listed users are currently active and hold the \"executor\" role, each leading a key division relevant to Executive Order management. If you need more details about a specific user or want to see users with different roles,",
+              "tool": "search_users",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 5,
+                "users": [
+                  {
+                    "id": "de426ad5-2b3a-4522-a6c0-c3153ece9bb2",
+                    "name": "Ayesha Ahsan",
+                    "email": "ayesha.ahsan@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Division of Business Process Improvement",
+                    "is_active": true
+                  },
+                  {
+                    "id": "1b6175cd-2a7f-4fe7-86d7-e8af97204313",
+                    "name": "Dylan Sachetti",
+                    "email": "dylan.sachetti@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Compliance",
+                    "is_active": true
+                  },
+                  {
+                    "id": "498f3d26-6c1c-4c25-ae04-537a0e25f8f8",
+                    "name": "Hibbi Iqbal",
+                    "email": "hibbi.iqbal@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Financial Reporting",
+                    "is_active": true
+                  },
+                  {
+                    "id": "adcf072a-87e6-4ee6-afa9-de0233416f0a",
+                    "name": "Robert Springfiled",
+                    "email": "robert.springfiled@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Security and Technology",
+                    "is_active": true
+                  },
+                  {
+                    "id": "81dff93b-32b6-4825-85fa-07216f9e125e",
+                    "name": "Sophia Carty",
+                    "email": "sophia.carty@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Accounting",
+                    "is_active": true
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as reviewer.",
+                "Understanding your question as about users.",
+                "Plan: running search_users with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 5 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "search_users"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 5 users"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Reviewer can view task updates",
+          "question": "Show me recent task updates",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Here are the most recent task updates for your assigned Executive Orders:\n\n1. Task d9ee80ab is currently In Progress with 40% completion. Notes indicate that coordination with most departments has begun and related activities are underway.\n\n2. Task 5f98f987 has reached 90% completion and is marked as Completed. The notes mention that the implementation report is almost complete and coordination efforts are ongoing.\n\nIf you need more details on any of these tasks or would like to see updates beyond the most recent 20, please let me know.",
+              "tool": "search_task_updates",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 2,
+                "updates": [
+                  {
+                    "id": "27ff6268-f856-47a3-ae60-f4281a3f5a26",
+                    "task_id": "d9ee80ab-1fce-49e1-8f87-106524c9552b",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "user_id": "498f3d26-6c1c-4c25-ae04-537a0e25f8f8",
+                    "date": "2025-08-30",
+                    "status": "InProgress",
+                    "progress_pct": 40,
+                    "notes": "Coordination with most departments has begun and responses have been received, but there is difficulty identifying the correct contact for tax refund disbursements. The implementation report is nearly complete and awaiting review by the assistant of the president.",
+                    "spent_hours": null
+                  },
+                  {
+                    "id": "8c302392-f6f6-4303-9810-cd20312c68db",
+                    "task_id": "5f98f987-5a5a-40d1-8435-14d6af37762b",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "user_id": "498f3d26-6c1c-4c25-ae04-537a0e25f8f8",
+                    "date": "2025-08-30",
+                    "status": "Completed",
+                    "progress_pct": 90,
+                    "notes": "Implementation report is almost complete; coordination with most departments is done, but there is difficulty reaching the appropriate party regarding the tax refund. Awaiting input from the Assistant to the President.",
+                    "spent_hours": null
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as reviewer.",
+                "Understanding your question as about task updates.",
+                "Plan: searching task updates with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 2 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "search_task_updates"
+            ],
+            "data_access": [
+              "Data returned in response"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        }
+      ]
+    },
+    "executor": {
+      "role": "executor",
+      "total_tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "test_results": [
+        {
+          "test_case": "Executor can view own tasks",
+          "question": "Show me my tasks",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "You currently have 2 assigned tasks:\n\n1. **Develop Public Awareness Campaign for Electronic Payments Transition**\n   - **Status:** Approved\n   - **Category:** Director of Division of Business Process Improvement\n\n2. **Coordinate Agency Support for Digital Payments Transition**\n   - **Status:** Approved\n   - **Category:** Director of Division of Business Process Improvement\n\nBoth tasks are approved and fall under the Director of Division of Business Process Improvement category. If you need more details about any of these tasks or want to see additional assignments, please let me know!",
+              "tool": "get_my_tasks",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 2,
+                "tasks": [
+                  {
+                    "id": "7cbe3e84-d62a-49f0-b9ef-0271d344afe2",
+                    "title": "Develop Public Awareness Campaign for Electronic Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "22ca38d3-316c-4293-b1c1-ef5d43b1b15d",
+                    "title": "Coordinate Agency Support for Digital Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as executor.",
+                "Understanding your question as about tasks.",
+                "Plan: listing your tasks with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 2 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "get_my_tasks"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 2 tasks"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Executor cannot view other users' tasks",
+          "question": "Show me tasks assigned to other users",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Here are the tasks currently assigned to other users:\n\n1. **Develop Public Awareness Campaign for Electronic Payments Transition**\n   - **Status:** Approved\n   - **Category:** Director of Division of Business Process Improvement\n\n2. **Coordinate Agency Support for Digital Payments Transition**\n   - **Status:** Approved\n   - **Category:** Director of Division of Business Process Improvement\n\nBoth tasks are in the \"approved\" status and fall under the responsibility of the Director of the Division of Business Process Improvement. If you need more details about these tasks or want to see additional assignments, please let me know.",
+              "tool": "search_tasks",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 2,
+                "tasks": [
+                  {
+                    "id": "7cbe3e84-d62a-49f0-b9ef-0271d344afe2",
+                    "title": "Develop Public Awareness Campaign for Electronic Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  },
+                  {
+                    "id": "22ca38d3-316c-4293-b1c1-ef5d43b1b15d",
+                    "title": "Coordinate Agency Support for Digital Payments Transition",
+                    "status": "approved",
+                    "eo_id": "c54091da-e0ee-4157-8de7-678594be0098",
+                    "due_date": null,
+                    "category": "Director of Division of Business Process Improvement"
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as executor.",
+                "Understanding your question as about tasks.",
+                "Extracted a few helpful filters from your question.",
+                "Plan: searching tasks with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 2 results within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "search_tasks"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 2 tasks"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Executor cannot access user management",
+          "question": "Show me all users",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Here is the user information available to you:\n\n- **Name:** Ayesha Ahsan  \n- **Email:** ayesha.ahsan@lumenlighthouse.ai  \n- **Role:** Executor  \n- **Organization Role:** Director of Division of Business Process Improvement  \n- **Active:** Yes\n\nBased on your current access, only this user is visible. If you were expecting to see more users, your access may be limited to your assignments or organizational role. If you need information about additional users, please contact your system administrator or request expanded access.",
+              "tool": "search_users",
+              "args": {
+                "limit": 20,
+                "offset": 0
+              },
+              "data": {
+                "total": 1,
+                "users": [
+                  {
+                    "id": "de426ad5-2b3a-4522-a6c0-c3153ece9bb2",
+                    "name": "Ayesha Ahsan",
+                    "email": "ayesha.ahsan@lumenlighthouse.ai",
+                    "role": "executor",
+                    "org_role": "Director of Division of Business Process Improvement",
+                    "is_active": true
+                  }
+                ]
+              },
+              "processing": [
+                "Signed in as executor.",
+                "Understanding your question as about users.",
+                "Plan: running search_users with safe parameters.",
+                "Queried the database via a safe, role-scoped tool.",
+                "Found 1 result within your visibility."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [
+              "search_users"
+            ],
+            "data_access": [
+              "Data returned in response",
+              "Returned 1 users"
+            ],
+            "recommendations": []
+          },
+          "passed": true
+        },
+        {
+          "test_case": "Executor can view task details",
+          "question": "Show me details of my specific task",
+          "result": {
+            "success": true,
+            "status_code": 200,
+            "response": {
+              "response": "Could you please provide the task ID for the specific task you want details about?",
+              "tool": null,
+              "args": null,
+              "data": null,
+              "processing": [
+                "Signed in as executor.",
+                "Understanding your question as about tasks."
+              ]
+            },
+            "error": null
+          },
+          "analysis": {
+            "rbac_compliant": true,
+            "issues": [],
+            "tool_usage": [],
+            "data_access": [],
+            "recommendations": []
+          },
+          "passed": true
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_tests": 12,
+    "total_passed": 11,
+    "total_failed": 1,
+    "success_rate": 91.66666666666666
+  }
+}

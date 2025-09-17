@@ -36,6 +36,11 @@ export const getCurrentUser = createAsyncThunk(
       // your backend returns { data: {...} }
       return res.data;
     } catch (err) {
+      // If we get a 401, the token is invalid/expired - remove it
+      if (err.response?.status === 401) {
+        console.log('getCurrentUser: 401 error, removing invalid token');
+        localStorage.removeItem('token');
+      }
       return rejectWithValue("Failed to get user");
     }
   }
@@ -98,6 +103,7 @@ const authSlice = createSlice({
       })
       .addCase(getCurrentUser.rejected, (state) => {
         state.user = null;
+        state.token = null; // Clear token state on rejection
         state.isAuthenticated = false;
         state.loading = false;
       });

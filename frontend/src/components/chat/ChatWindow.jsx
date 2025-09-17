@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { flushSync } from 'react-dom';
 import ReactMarkdown from 'react-markdown';
 import {
   Paper,
@@ -9,7 +8,6 @@ import {
   IconButton,
   Avatar,
   Divider,
-  Chip,
   CircularProgress,
   useTheme,
   useMediaQuery,
@@ -20,7 +18,8 @@ import {
   Send as SendIcon,
   SmartToy as BotIcon,
   Person as PersonIcon,
-  Close as CloseIcon
+  Close as CloseIcon,
+  BugReport as BugReportIcon
 } from '@mui/icons-material';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -28,44 +27,37 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isStreaming, setIsStreaming] = useState(false);
-  const [streamingMessage, setStreamingMessage] = useState('');
+  const [debugInfo, setDebugInfo] = useState({
+    parsedData: [],
+    errors: [],
+    connectionStatus: 'disconnected'
+  });
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
   const messagesEndRef = useRef(null);
-  const streamingMessageRef = useRef(null);
   const { user } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Auto-scroll to bottom when new messages arrive
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  // Show greeting message on mount
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, streamingMessage]);
-
-  // Send initial greeting when chat opens
-  useEffect(() => {
-    if (user && messages.length === 0) {
-      const greeting = getRoleBasedGreeting(user);
-      setMessages([{
+    if (messages.length === 0 && user) {
+      const greetingMessage = {
         id: Date.now(),
         type: 'bot',
-        content: greeting,
+        content: `Hello! I'm your AI assistant. I can help you with tasks, executive orders, and other work-related queries. How can I assist you today?`,
         timestamp: new Date()
-      }]);
+      };
+      
+      setTimeout(() => {
+        setMessages([greetingMessage]);
+      }, 300);
     }
   }, [user, messages.length]);
 
-  const getRoleBasedGreeting = (user) => {
-    const roleGreetings = {
-      admin: `Hello ${user.name || 'Admin'}! I'm your AI assistant. I can help you manage the system, review tasks, and provide insights. How can I assist you today?`,
-      reviewer: `Hi ${user.name || 'Reviewer'}! I'm here to help you review tasks, analyze data, and provide recommendations. What would you like to know?`,
-      executor: `Hello ${user.name || 'Executor'}! I can help you with your tasks, provide updates, and answer questions about your work. How can I help you today?`
-    };
-    return roleGreetings[user.role] || `Hello ${user.name || 'User'}! I'm your AI assistant. How can I help you today?`;
-  };
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -77,26 +69,29 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    console.log('👤 Adding user message:', userMessage);
+    setMessages(prev => {
+      const newMessages = [...prev, userMessage];
+      console.log('📝 Updated messages array after user message:', newMessages);
+      return newMessages;
+    });
     setInputMessage('');
     setIsLoading(true);
-    setIsStreaming(true);
-    setStreamingMessage('');
+    setDebugInfo({
+      parsedData: [],
+      errors: [],
+      connectionStatus: 'connecting'
+    });
 
     try {
-      // Use streaming endpoint by default
-      console.log('Sending message to chat stream:', {
-        message: inputMessage.trim(),
-        context: { role: user.role, user_id: user.id }
-      });
+      console.log('🚀 Sending message to query endpoint...');
       
-      const response = await fetch('/chat/stream', {
+      const response = await fetch('/chat/query', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive'
+          'Cache-Control': 'no-cache'
         },
         body: JSON.stringify({
           message: inputMessage.trim(),
@@ -107,447 +102,179 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
         })
       });
 
-      console.log('Response status:', response.status, response.statusText);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-      
+      console.log('📊 Response status:', response.status);
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Response error:', errorText);
-        throw new Error(`Failed to send message: ${response.status} ${response.statusText}`);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      if (!response.body) {
-        console.error('No response body available for streaming');
-        throw new Error('No response body available for streaming');
+      const data = await response.json();
+      console.log('🎯 Response data:', data);
+
+      // Update debug info
+      setDebugInfo(prev => ({
+        ...prev,
+        parsedData: [{
+          timestamp: new Date().toLocaleTimeString(),
+          type: 'response',
+          content: `Tool: ${data.tool || 'none'}, Response length: ${data.response?.length || 0}`
+        }],
+        connectionStatus: 'completed'
+      }));
+
+      // Add bot response
+      const botMessage = {
+        id: Date.now() + 1,
+        type: 'bot',
+        content: data.response || 'No response received',
+        timestamp: new Date(),
+        tool: data.tool,
+        args: data.args,
+        data: data.data,
+        processing: data.processing
+      };
+      
+      console.log('🤖 Adding bot message:', botMessage);
+      setMessages(prev => {
+        const newMessages = [...prev, botMessage];
+        console.log('📝 Updated messages array:', newMessages);
+        return newMessages;
+      });
+      
+      // Call onNewMessage callback if provided
+      if (onNewMessage) {
+        onNewMessage(botMessage);
       }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let fullResponse = '';
-
-      const processStreamChunk = async (chunk, currentResponse, setStreamingCallback) => {
-        const lines = chunk.split('\n');
-        let updatedResponse = currentResponse;
-
-        for (const line of lines) {
-          // Handle SSE format: data: <json>
-          if (line.startsWith('data: ')) {
-            try {
-              const jsonStr = line.slice(6).trim();
-              if (jsonStr === '') continue; // Skip empty data lines
-              
-              const data = JSON.parse(jsonStr);
-              console.log('Parsed streaming data:', data);
-              
-              if (data.type === 'chunk') {
-                updatedResponse += data.content;
-                console.log('Updated fullResponse:', updatedResponse);
-                // Force immediate UI update
-                setStreamingCallback(updatedResponse);
-                // Add a small delay to make streaming more visible
-                await new Promise(resolve => setTimeout(resolve, 5));
-              } else if (data.type === 'complete') {
-                console.log('Stream complete, adding message:', updatedResponse);
-                // Add the complete message to messages
-                setMessages(prev => [...prev, {
-                  id: Date.now() + 1,
-                  type: 'bot',
-                  content: updatedResponse,
-                  timestamp: new Date()
-                }]);
-                setStreamingMessage('');
-                setIsStreaming(false);
-                return { done: true, response: updatedResponse };
-              } else if (data.type === 'error') {
-                throw new Error(data.message);
-              } else if (data.type === 'metadata') {
-                console.log('Received metadata:', data);
-                // Continue processing, don't update response
-              }
-            } catch (e) {
-              console.error('Error parsing streaming data:', e, 'Line:', line);
-            }
-          } else if (line.trim() === '') {
-            // Empty line in SSE - this is normal, continue
-            continue;
-          } else if (line.startsWith('event: ')) {
-            // SSE event type - log for debugging
-            console.log('SSE event type:', line.slice(7));
-          } else if (line.startsWith('id: ')) {
-            // SSE event ID - log for debugging
-            console.log('SSE event ID:', line.slice(4));
-          } else {
-            // Unknown line format - log for debugging
-            console.log('Unknown SSE line format:', line);
-          }
-        }
-        
-        return { done: false, response: updatedResponse };
-      };
-
-      const processStream = async () => {
-        try {
-          let hasReceivedData = false;
-          let lastDataTime = Date.now();
-          const STREAM_TIMEOUT = 10000; // 10 seconds timeout
-          
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            const chunk = decoder.decode(value);
-            console.log('Received chunk:', chunk);
-            hasReceivedData = true;
-            lastDataTime = Date.now();
-            
-            const result = await processStreamChunk(chunk, fullResponse, (newText) => {
-              flushSync(() => {
-                setStreamingMessage(newText);
-              });
-              // Also directly update DOM for immediate visual feedback
-              if (streamingMessageRef.current) {
-                // Find the first text node and update it
-                const textNode = streamingMessageRef.current.querySelector('p');
-                if (textNode) {
-                  textNode.textContent = newText;
-                } else {
-                  streamingMessageRef.current.textContent = newText;
-                }
-              }
-            });
-            fullResponse = result.response;
-            
-            if (result.done) {
-              return;
-            }
-            
-            // Check for timeout
-            if (Date.now() - lastDataTime > STREAM_TIMEOUT) {
-              console.log('Stream timeout, falling back to non-streaming');
-              throw new Error('Stream timeout');
-            }
-          }
-          
-          // If we received data but no completion signal, treat as complete
-          if (hasReceivedData && fullResponse) {
-            console.log('Stream ended without completion signal, treating as complete');
-            setMessages(prev => [...prev, {
-              id: Date.now() + 1,
-              type: 'bot',
-              content: fullResponse,
-              timestamp: new Date()
-            }]);
-            setStreamingMessage('');
-            setIsStreaming(false);
-          } else if (!hasReceivedData) {
-            // If no data was received, the streaming might be buffered
-            console.log('No streaming data received, response might be buffered');
-            // Fall back to non-streaming endpoint
-            throw new Error('No streaming data received');
-          }
-        } catch (streamError) {
-          console.error('Streaming error:', streamError);
-          throw streamError;
-        }
-      };
-
-      await processStream();
+      
     } catch (error) {
-      console.error('Chat streaming error:', error);
-      
-      // Fallback to non-streaming endpoint
-      try {
-        console.log('Falling back to non-streaming endpoint');
-        const fallbackResponse = await fetch('/chat/query', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          body: JSON.stringify({
-            message: inputMessage.trim(),
-            context: {
-              role: user.role,
-              user_id: user.id
-            }
-          })
-        });
-
-        if (fallbackResponse.ok) {
-          const fallbackData = await fallbackResponse.json();
-          const responseText = fallbackData.response || 'No response received';
-          
-          // Simulate streaming by displaying text character by character
-          console.log('Simulating streaming for fallback response');
-          setIsStreaming(true);
-          setStreamingMessage('');
-          
-          let currentText = '';
-          for (let i = 0; i < responseText.length; i++) {
-            currentText += responseText[i];
-            setStreamingMessage(currentText);
-            await new Promise(resolve => setTimeout(resolve, 20)); // 20ms delay per character
-          }
-          
-          // Add the complete message
-          setMessages(prev => [...prev, {
-            id: Date.now() + 1,
-            type: 'bot',
-            content: responseText,
-            timestamp: new Date()
-          }]);
-          setStreamingMessage('');
-          setIsStreaming(false);
-        } else {
-          throw new Error('Fallback also failed');
-        }
-      } catch (fallbackError) {
-        console.error('Fallback error:', fallbackError);
-        setMessages(prev => [...prev, {
-          id: Date.now() + 1,
-          type: 'bot',
-          content: 'Sorry, I encountered an error. Please try again.',
-          timestamp: new Date()
-        }]);
-      }
-      
-      setStreamingMessage('');
-      setIsStreaming(false);
+      console.error('❌ Chat error:', error);
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        type: 'bot',
+        content: `Error: ${error.message}`,
+        timestamp: new Date()
+      }]);
+      setDebugInfo(prev => ({
+        ...prev,
+        errors: [...prev.errors, { timestamp: new Date().toLocaleTimeString(), error: error.message }],
+        connectionStatus: 'error'
+      }));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSendMessage();
     }
   };
 
-  // Test function to simulate streaming (for debugging)
-  const testStreaming = () => {
-    const testMessage = "This is a test streaming message that should appear word by word.";
-    const words = testMessage.split(' ');
-    let currentText = '';
-    
-    setIsStreaming(true);
-    setStreamingMessage('');
-    
-    const interval = setInterval(() => {
-      if (words.length === 0) {
-        clearInterval(interval);
-        setMessages(prev => [...prev, {
-          id: Date.now(),
-          type: 'bot',
-          content: currentText,
-          timestamp: new Date()
-        }]);
-        setStreamingMessage('');
-        setIsStreaming(false);
-        return;
-      }
-      
-      const word = words.shift();
-      currentText += (currentText ? ' ' : '') + word;
-      setStreamingMessage(currentText);
-    }, 200);
-  };
-
-  const formatTime = (timestamp) => {
-    return new Date(timestamp).toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
+  // 🧪 TEST FUNCTION for query endpoint
+  const testQuery = () => {
+    setInputMessage('Show me my tasks');
+    setTimeout(() => handleSendMessage(), 100);
   };
 
   return (
-    <Slide direction="up" in={true} timeout={300}>
+    <Slide direction="up" in={true} mountOnEnter unmountOnExit>
       <Paper
         elevation={8}
         sx={{
           position: 'fixed',
-          bottom: isMobile ? 80 : 100,
-          right: isMobile ? 16 : 24,
-          width: isMobile ? 'calc(100vw - 32px)' : 400,
-          height: 500,
-          zIndex: 999,
+          bottom: isMobile ? 0 : 20,
+          right: isMobile ? 0 : 20,
+          width: isMobile ? '100vw' : 400,
+          height: isMobile ? '100vh' : 600,
           display: 'flex',
           flexDirection: 'column',
-          borderRadius: 2,
-          overflow: 'hidden',
-          border: `1px solid ${theme.palette.divider}`,
+          zIndex: 1300,
+          borderRadius: isMobile ? 0 : 2
         }}
       >
         {/* Header */}
-        <Box
-          sx={{
-            p: 2,
-            bgcolor: 'primary.main',
-            color: 'primary.contrastText',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
+        <Box sx={{ 
+          p: 2, 
+          borderBottom: 1, 
+          borderColor: 'divider',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText'
+        }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.light' }}>
-              <BotIcon />
-            </Avatar>
-            <Box>
-              <Typography variant="subtitle1" fontWeight="bold">
-                AI Assistant
-              </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                {user?.role && (
-                  <Chip 
-                    label={user.role.charAt(0).toUpperCase() + user.role.slice(1)} 
-                    size="small" 
-                    sx={{ 
-                      height: 16, 
-                      fontSize: '0.7rem',
-                      bgcolor: 'rgba(255,255,255,0.2)',
-                      color: 'inherit'
-                    }} 
-                  />
-                )}
-              </Typography>
-            </Box>
+            <BotIcon color="primary" />
+            <Typography variant="h6">AI Assistant {user?.role && `(${user.role})`}</Typography>
           </Box>
-          <IconButton 
-            onClick={testStreaming} 
-            size="small"
-            sx={{ color: 'inherit', mr: 1 }}
-            title="Test Streaming"
-          >
-            <Typography variant="caption" sx={{ fontSize: '0.7rem' }}>TEST</Typography>
-          </IconButton>
-          <IconButton 
-            onClick={onClose} 
-            size="small"
-            sx={{ color: 'inherit' }}
-          >
-            <CloseIcon />
-          </IconButton>
+          <Box>
+            <IconButton 
+              onClick={testQuery}
+              size="small"
+              sx={{ color: 'inherit', mr: 1 }}
+              title="Test Query"
+            >
+              <Typography variant="caption" sx={{ fontSize: '0.7rem' }}>TEST</Typography>
+            </IconButton>
+            <IconButton 
+              onClick={() => setShowDebugPanel(!showDebugPanel)} 
+              size="small"
+              sx={{ color: 'inherit', mr: 1 }}
+              title="Toggle Debug Panel"
+            >
+              <BugReportIcon fontSize="small" />
+            </IconButton>
+            <IconButton 
+              onClick={onClose} 
+              size="small"
+              sx={{ color: 'inherit' }}
+              title="Close Chat"
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Box>
         </Box>
 
         {/* Messages */}
-        <Box
-          sx={{
-            flex: 1,
-            overflow: 'auto',
-            p: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          {messages.map((message) => (
+        <Box sx={{ 
+          flex: 1, 
+          overflow: 'auto', 
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1
+        }}>
+          {console.log('🎨 Rendering messages:', messages.length, 'messages')}
+          {messages.map((message) => {
+            console.log('🎨 Rendering message:', message.id, message.type, message.content?.substring(0, 50));
+            return (
             <Fade key={message.id} in={true} timeout={300}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: message.type === 'user' ? 'flex-end' : 'flex-start',
-                  gap: 1,
-                }}
-              >
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: message.type === 'user' ? 'flex-end' : 'flex-start',
+                mb: 2,
+                gap: 1
+              }}>
                 {message.type === 'bot' && (
-                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.light' }}>
+                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
                     <BotIcon />
                   </Avatar>
                 )}
-                <Box
-                  sx={{
-                    maxWidth: '70%',
-                    bgcolor: message.type === 'user' ? 'primary.main' : 'grey.100',
-                    color: message.type === 'user' ? 'primary.contrastText' : 'text.primary',
-                    p: 1.5,
-                    borderRadius: 2,
-                    position: 'relative',
-                  }}
-                >
-                  {message.type === 'bot' ? (
-                    <ReactMarkdown
-                      components={{
-                        p: ({ children }) => (
-                          <Typography variant="body2" sx={{ wordBreak: 'break-word', mb: 1 }}>
-                            {children}
-                          </Typography>
-                        ),
-                        strong: ({ children }) => (
-                          <Typography component="span" sx={{ fontWeight: 'bold' }}>
-                            {children}
-                          </Typography>
-                        ),
-                        em: ({ children }) => (
-                          <Typography component="span" sx={{ fontStyle: 'italic' }}>
-                            {children}
-                          </Typography>
-                        ),
-                        ul: ({ children }) => (
-                          <Box component="ul" sx={{ pl: 2, mb: 1 }}>
-                            {children}
-                          </Box>
-                        ),
-                        ol: ({ children }) => (
-                          <Box component="ol" sx={{ pl: 2, mb: 1 }}>
-                            {children}
-                          </Box>
-                        ),
-                        li: ({ children }) => (
-                          <Typography component="li" variant="body2" sx={{ mb: 0.5 }}>
-                            {children}
-                          </Typography>
-                        ),
-                        code: ({ children }) => (
-                          <Typography
-                            component="code"
-                            sx={{
-                              backgroundColor: 'grey.100',
-                              px: 0.5,
-                              py: 0.25,
-                              borderRadius: 0.5,
-                              fontFamily: 'monospace',
-                              fontSize: '0.875em'
-                            }}
-                          >
-                            {children}
-                          </Typography>
-                        ),
-                        pre: ({ children }) => (
-                          <Box
-                            component="pre"
-                            sx={{
-                              backgroundColor: 'grey.100',
-                              p: 1,
-                              borderRadius: 1,
-                              overflow: 'auto',
-                              mb: 1
-                            }}
-                          >
-                            {children}
-                          </Box>
-                        )
-                      }}
-                    >
-                      {message.content}
-                    </ReactMarkdown>
-                  ) : (
-                    <Typography variant="body2" sx={{ wordBreak: 'break-word' }}>
-                      {message.content}
+                <Box sx={{ 
+                  maxWidth: '80%', 
+                  p: 2, 
+                  borderRadius: 2,
+                  bgcolor: message.type === 'user' ? 'primary.main' : 'grey.100',
+                  color: message.type === 'user' ? 'primary.contrastText' : 'text.primary'
+                }}>
+                  <ReactMarkdown>{message.content}</ReactMarkdown>
+                  {message.tool && (
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                      Tool: {message.tool}
                     </Typography>
                   )}
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      display: 'block',
-                      mt: 0.5,
-                      opacity: 0.7,
-                      fontSize: '0.7rem',
-                    }}
-                  >
-                    {formatTime(message.timestamp)}
-                  </Typography>
                 </Box>
                 {message.type === 'user' && (
                   <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
@@ -556,86 +283,33 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
                 )}
               </Box>
             </Fade>
-          ))}
+            );
+          })}
 
-          {/* Streaming message */}
-          {isStreaming && (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                gap: 1,
-              }}
-            >
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.light' }}>
+          {/* Loading indicator */}
+          {isLoading && (
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'flex-start',
+              mb: 2,
+              gap: 1
+            }}>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
                 <BotIcon />
               </Avatar>
-              <Box
-                sx={{
-                  maxWidth: '70%',
-                  bgcolor: 'grey.100',
-                  color: 'text.primary',
-                  p: 1.5,
-                  borderRadius: 2,
-                  position: 'relative',
-                }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
-                  <Box sx={{ flex: 1 }} ref={streamingMessageRef}>
-                    <ReactMarkdown
-                      components={{
-                        p: ({ children }) => (
-                          <Typography variant="body2" sx={{ wordBreak: 'break-word', mb: 1 }}>
-                            {children}
-                          </Typography>
-                        ),
-                        strong: ({ children }) => (
-                          <Typography component="span" sx={{ fontWeight: 'bold' }}>
-                            {children}
-                          </Typography>
-                        ),
-                        em: ({ children }) => (
-                          <Typography component="span" sx={{ fontStyle: 'italic' }}>
-                            {children}
-                          </Typography>
-                        ),
-                        ul: ({ children }) => (
-                          <Box component="ul" sx={{ pl: 2, mb: 1 }}>
-                            {children}
-                          </Box>
-                        ),
-                        ol: ({ children }) => (
-                          <Box component="ol" sx={{ pl: 2, mb: 1 }}>
-                            {children}
-                          </Box>
-                        ),
-                        li: ({ children }) => (
-                          <Typography component="li" variant="body2" sx={{ mb: 0.5 }}>
-                            {children}
-                          </Typography>
-                        ),
-                        code: ({ children }) => (
-                          <Typography
-                            component="code"
-                            sx={{
-                              backgroundColor: 'grey.100',
-                              px: 0.5,
-                              py: 0.25,
-                              borderRadius: 0.5,
-                              fontFamily: 'monospace',
-                              fontSize: '0.875em'
-                            }}
-                          >
-                            {children}
-                          </Typography>
-                        )
-                      }}
-                    >
-                      {streamingMessage || 'Thinking...'}
-                    </ReactMarkdown>
-                  </Box>
-                  <CircularProgress size={12} sx={{ mt: 0.5 }} />
-                </Box>
+              <Box sx={{ 
+                maxWidth: '80%', 
+                p: 2, 
+                borderRadius: 2,
+                bgcolor: 'grey.100',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}>
+                <CircularProgress size={16} />
+                <Typography variant="body2" color="text.secondary">
+                  Thinking...
+                </Typography>
               </Box>
             </Box>
           )}
@@ -647,48 +321,71 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
 
         {/* Input */}
         <Box sx={{ p: 2 }}>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}>
-            <TextField
-              fullWidth
-              multiline
-              maxRows={3}
-              placeholder="Type your message..."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              disabled={isLoading}
-              variant="outlined"
-              size="small"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
-              }}
-            />
-            <IconButton
-              onClick={handleSendMessage}
-              disabled={!inputMessage.trim() || isLoading}
-              color="primary"
-              sx={{
-                bgcolor: 'primary.main',
-                color: 'primary.contrastText',
-                '&:hover': {
-                  bgcolor: 'primary.dark',
-                },
-                '&:disabled': {
-                  bgcolor: 'grey.300',
-                  color: 'grey.500',
-                },
-              }}
-            >
-              {isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                <SendIcon />
-              )}
-            </IconButton>
-          </Box>
+          <TextField
+            fullWidth
+            multiline
+            maxRows={4}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type your message..."
+            disabled={isLoading}
+            InputProps={{
+              endAdornment: (
+                <IconButton 
+                  onClick={handleSendMessage} 
+                  disabled={!inputMessage.trim() || isLoading}
+                  color="primary"
+                >
+                  <SendIcon />
+                </IconButton>
+              )
+            }}
+          />
         </Box>
+
+        {/* Debug Panel */}
+        {showDebugPanel && (
+          <Box sx={{ 
+            p: 2, 
+            bgcolor: '#f5f5f5', 
+            maxHeight: '200px', 
+            overflow: 'auto' 
+          }}>
+            <Typography variant="h6" gutterBottom>🐛 Query Debug</Typography>
+            
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="subtitle2">Status: {debugInfo.connectionStatus}</Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="subtitle2">Response Data ({debugInfo.parsedData.length})</Typography>
+                {debugInfo.parsedData.map((data, i) => (
+                  <Box key={i} sx={{ fontSize: '0.8rem', mb: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      {data.timestamp} - {data.type}
+                    </Typography>
+                    <Typography variant="caption" sx={{ display: 'block', fontFamily: 'monospace' }}>
+                      {data.content}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="subtitle2">Errors ({debugInfo.errors.length})</Typography>
+                {debugInfo.errors.map((error, i) => (
+                  <Box key={i} sx={{ fontSize: '0.8rem', mb: 0.5 }}>
+                    <Typography variant="caption" color="error">
+                      {error.timestamp} - {error.error}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+        )}
       </Paper>
     </Slide>
   );
