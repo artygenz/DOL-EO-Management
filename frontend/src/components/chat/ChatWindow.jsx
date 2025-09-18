@@ -19,9 +19,11 @@ import {
   SmartToy as BotIcon,
   Person as PersonIcon,
   Close as CloseIcon,
-  BugReport as BugReportIcon
+  BugReport as BugReportIcon,
+  Refresh as RefreshIcon
 } from '@mui/icons-material';
 import { useAuth } from '../../hooks/useAuth';
+import api from '../../services/api';
 
 const ChatWindow = ({ onClose, onNewMessage }) => {
   const [messages, setMessages] = useState([]);
@@ -86,30 +88,21 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
     try {
       console.log('🚀 Sending message to query endpoint...');
       
-      const response = await fetch('/chat/query', {
-        method: 'POST',
+      const response = await api.post('/chat/query', {
+        message: inputMessage.trim(),
+        context: {
+          role: user.role,
+          user_id: user.id
+        }
+      }, {
+        timeout: 30000, // 30 seconds timeout for chat requests
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Cache-Control': 'no-cache'
-        },
-        body: JSON.stringify({
-          message: inputMessage.trim(),
-          context: {
-            role: user.role,
-            user_id: user.id
-          }
-        })
+        }
       });
 
       console.log('📊 Response status:', response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
-      }
-
-      const data = await response.json();
+      const data = response.data;
       console.log('🎯 Response data:', data);
 
       // Update debug info
@@ -149,15 +142,40 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
       
     } catch (error) {
       console.error('❌ Chat error:', error);
+      
+      // Determine user-friendly error message
+      let errorMessage = 'Sorry, something went wrong. Please try again.';
+      
+      if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+        errorMessage = '⏱️ Request timed out. The server is taking too long to respond. Please try again with a simpler question or check your connection.';
+      } else if (error.response?.status === 500) {
+        errorMessage = '🔧 Server error occurred. Our team has been notified. Please try again in a few moments.';
+      } else if (error.response?.status === 401) {
+        errorMessage = '🔐 Authentication expired. Please refresh the page and log in again.';
+      } else if (error.response?.status === 403) {
+        errorMessage = '🚫 You don\'t have permission to perform this action.';
+      } else if (error.response?.status >= 400 && error.response?.status < 500) {
+        errorMessage = '📝 There was an issue with your request. Please check your input and try again.';
+      } else if (!navigator.onLine) {
+        errorMessage = '🌐 You appear to be offline. Please check your internet connection and try again.';
+      } else if (error.userMessage) {
+        errorMessage = error.userMessage;
+      }
+      
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
         type: 'bot',
-        content: `Error: ${error.message}`,
-        timestamp: new Date()
+        content: errorMessage,
+        timestamp: new Date(),
+        isError: true
       }]);
       setDebugInfo(prev => ({
         ...prev,
-        errors: [...prev.errors, { timestamp: new Date().toLocaleTimeString(), error: error.message }],
+        errors: [...prev.errors, { 
+          timestamp: new Date().toLocaleTimeString(), 
+          error: error.message,
+          userMessage: errorMessage
+        }],
         connectionStatus: 'error'
       }));
     } finally {
@@ -169,6 +187,20 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
+    }
+  };
+
+  const handleRetryMessage = (messageId) => {
+    // Find the message before the error message
+    const messageIndex = messages.findIndex(msg => msg.id === messageId);
+    if (messageIndex > 0) {
+      const previousMessage = messages[messageIndex - 1];
+      if (previousMessage.type === 'user') {
+        // Remove the error message and retry with the previous user message
+        setMessages(prev => prev.filter(msg => msg.id !== messageId));
+        setInputMessage(previousMessage.content);
+        setTimeout(() => handleSendMessage(), 100);
+      }
     }
   };
 
@@ -266,14 +298,42 @@ const ChatWindow = ({ onClose, onNewMessage }) => {
                   maxWidth: '80%', 
                   p: 2, 
                   borderRadius: 2,
-                  bgcolor: message.type === 'user' ? 'primary.main' : 'grey.100',
-                  color: message.type === 'user' ? 'primary.contrastText' : 'text.primary'
+                  bgcolor: message.type === 'user' 
+                    ? 'primary.main' 
+                    : message.isError 
+                      ? 'error.light' 
+                      : 'grey.100',
+                  color: message.type === 'user' 
+                    ? 'primary.contrastText' 
+                    : message.isError 
+                      ? 'error.contrastText' 
+                      : 'text.primary',
+                  border: message.isError ? '1px solid' : 'none',
+                  borderColor: message.isError ? 'error.main' : 'transparent'
                 }}>
                   <ReactMarkdown>{message.content}</ReactMarkdown>
-                  {message.tool && (
+                  {message.tool && !message.isError && (
                     <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
                       Tool: {message.tool}
                     </Typography>
+                  )}
+                  {message.isError && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+                      <IconButton 
+                        size="small" 
+                        onClick={() => handleRetryMessage(message.id)}
+                        sx={{ 
+                          color: 'inherit',
+                          '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
+                        }}
+                        title="Retry this request"
+                      >
+                        <RefreshIcon fontSize="small" />
+                      </IconButton>
+                      <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                        Click to retry
+                      </Typography>
+                    </Box>
                   )}
                 </Box>
                 {message.type === 'user' && (

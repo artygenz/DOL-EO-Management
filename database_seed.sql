@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict GS05fgcst8LhOlYNXvLQXbeh9fwymgqMCaD1qcKuybx0YjlZ6QUHqDy4ONCHIVQ
+\restrict zdHj7I5zVgYFuLEV0sfZx7aEob2DJBDRL2Lsrr3OQF0fXbpwZh5jOKWALOco48j
 
 -- Dumped from database version 13.22 (Debian 13.22-1.pgdg13+1)
 -- Dumped by pg_dump version 13.22 (Debian 13.22-1.pgdg13+1)
@@ -164,7 +164,7 @@ THE WHITE HOUSE,
 March 25, 2025. 
 [FR Doc. 2025-05522 Filed: 3/27/2025 8:45 am; Publication Date: 3/28/2025] 
 
-', 'jack.smith@lumenlighthouse.ai', '2025-08-30 21:15:17.561241+00', NULL, 'error', '2025-08-30 21:15:18.259903+00', '2025-08-30 21:15:18.264799+00', '<16E82534-B47B-4CAD-B89A-BB98D4FDE236@lumenlighthouse.ai>');
+', 'jack.smith@lumenlighthouse.ai', '2025-08-30 21:15:17.561241+00', NULL, 'processed', '2025-08-30 21:15:18.259903+00', '2025-08-30 21:15:18.264799+00', '<16E82534-B47B-4CAD-B89A-BB98D4FDE236@lumenlighthouse.ai>');
 
 
 --
@@ -976,6 +976,12 @@ INSERT INTO public.celery_task_logs VALUES ('aa57b26d-e9e5-470f-9987-50aa9c3de99
 INSERT INTO public.celery_task_logs VALUES ('ef7019f7-cefe-4c17-a0a8-7c26abec1b20', '2b0fc26c-d43e-433e-9c71-35d8cba1f772', 'src.workflow.tasks.send_daily_reminders', 'success', 'celery@24652b1c34d4', '2025-09-13 03:22:24.099647+00', '2025-09-13 03:22:24.127681+00', 0.028042, '{}', '{}', '{"success": true, "date": "2025-09-13", "reminders_sent": 0}', NULL, NULL, 0, NULL, NULL, '2025-09-13 03:22:24.106559+00', '2025-09-13 03:22:24.126874+00');
 INSERT INTO public.celery_task_logs VALUES ('15b071ad-bc4b-4151-bbc4-f8fcf785cfc5', 'e68e82c8-b38d-4b29-8ca6-3d036760eda5', 'src.workflow.tasks.aggregate_daily_updates', 'success', 'celery@24652b1c34d4', '2025-09-12 23:49:48.880682+00', '2025-09-12 23:49:49.080414+00', 0.199746, '{"arg_0": "c54091da-e0ee-4157-8de7-678594be0098"}', '{}', '{"error": "No updates found", "eo_id": "c54091da-e0ee-4157-8de7-678594be0098", "date": "2025-09-12"}', NULL, NULL, 0, NULL, NULL, '2025-09-12 23:49:48.967283+00', '2025-09-12 23:49:49.076292+00');
 INSERT INTO public.celery_task_logs VALUES ('47267dbc-6b0f-4369-8a61-783e3e86c00a', '8db29e2d-9038-4e95-914b-2bdecdf721cd', 'src.workflow.tasks.aggregate_daily_updates', 'success', 'celery@24652b1c34d4', '2025-09-13 21:44:00.090111+00', '2025-09-13 21:44:00.156991+00', 0.066887, '{"arg_0": "c54091da-e0ee-4157-8de7-678594be0098"}', '{}', '{"error": "No updates found", "eo_id": "c54091da-e0ee-4157-8de7-678594be0098", "date": "2025-09-13"}', NULL, NULL, 0, NULL, NULL, '2025-09-13 21:44:00.11577+00', '2025-09-13 21:44:00.155633+00');
+INSERT INTO public.celery_task_logs VALUES ('74e80b07-c7da-4b0f-afbd-716b2860ea55', 'f34f92de-9759-4af2-9be4-a3267b08061f', 'src.workflow.tasks.send_daily_reminders', 'success', 'celery@20f344c0d9f6', '2025-09-15 02:42:59.232457+00', '2025-09-15 02:42:59.273868+00', 0.041416, '{}', '{}', '{"success": true, "date": "2025-09-15", "reminders_sent": 0}', NULL, NULL, 0, NULL, NULL, '2025-09-15 02:42:59.264466+00', '2025-09-15 02:42:59.273457+00');
+INSERT INTO public.celery_task_logs VALUES ('a4f0939c-0bcd-48b2-a886-f1f9414fb0a8', 'f3fea229-b7fd-49e3-9da8-ae7de8528106', 'src.workflow.tasks.aggregate_daily_updates', 'success', 'celery@20f344c0d9f6', '2025-09-15 02:42:59.233891+00', '2025-09-15 02:42:59.276658+00', 0.042773, '{"arg_0": "c54091da-e0ee-4157-8de7-678594be0098"}', '{}', '{"error": "No updates found", "eo_id": "c54091da-e0ee-4157-8de7-678594be0098", "date": "2025-09-15"}', NULL, NULL, 0, NULL, NULL, '2025-09-15 02:42:59.264464+00', '2025-09-15 02:42:59.276151+00');
+INSERT INTO public.celery_task_logs VALUES ('c5b4980e-6958-4730-854a-6d24ecbc9f62', '51b03e58-37cd-4dc5-8c3e-fe7490f25f7c', 'src.workflow.tasks.send_daily_reminders', 'success', 'celery@20f344c0d9f6', '2025-09-15 17:21:59.379101+00', '2025-09-15 17:21:59.395077+00', 0.015982, '{}', '{}', '{"success": true, "date": "2025-09-15", "reminders_sent": 0}', NULL, NULL, 0, NULL, NULL, '2025-09-15 17:21:59.385219+00', '2025-09-15 17:21:59.394654+00');
+INSERT INTO public.celery_task_logs VALUES ('a6dc1dc6-a691-478d-8192-36260fd9ed37', '73f37f09-2a66-42f7-8af1-b36a4977f070', 'src.workflow.tasks.aggregate_daily_updates', 'success', 'celery@20f344c0d9f6', '2025-09-15 21:44:00.02815+00', '2025-09-15 21:44:00.053647+00', 0.025505, '{"arg_0": "c54091da-e0ee-4157-8de7-678594be0098"}', '{}', '{"error": "No updates found", "eo_id": "c54091da-e0ee-4157-8de7-678594be0098", "date": "2025-09-15"}', NULL, NULL, 0, NULL, NULL, '2025-09-15 21:44:00.033753+00', '2025-09-15 21:44:00.053166+00');
+INSERT INTO public.celery_task_logs VALUES ('dd4f1fe9-de27-46d5-bf07-895c0cc4a8a1', 'a9ae6d7b-9629-4bae-b1aa-258b7464081d', 'src.workflow.tasks.send_daily_reminders', 'success', 'celery@20f344c0d9f6', '2025-09-16 17:28:34.521497+00', '2025-09-16 17:28:34.534726+00', 0.013235, '{}', '{}', '{"success": true, "date": "2025-09-16", "reminders_sent": 0}', NULL, NULL, 0, NULL, NULL, '2025-09-16 17:28:34.526444+00', '2025-09-16 17:28:34.534393+00');
+INSERT INTO public.celery_task_logs VALUES ('06b41424-c1f9-42ae-bda1-17c290eb26ae', 'c29d3bd6-529b-4f43-8772-2c21f3780c9f', 'src.workflow.tasks.aggregate_daily_updates', 'success', 'celery@20f344c0d9f6', '2025-09-16 21:44:00.10925+00', '2025-09-16 21:44:00.124411+00', 0.015169, '{"arg_0": "c54091da-e0ee-4157-8de7-678594be0098"}', '{}', '{"error": "No updates found", "eo_id": "c54091da-e0ee-4157-8de7-678594be0098", "date": "2025-09-16"}', NULL, NULL, 0, NULL, NULL, '2025-09-16 21:44:00.114471+00', '2025-09-16 21:44:00.123953+00');
 
 
 --
@@ -1077,11 +1083,17 @@ INSERT INTO public.token_blacklist VALUES ('d5ac14ba-2b78-49c5-93b6-a629780d1a4c
 INSERT INTO public.token_blacklist VALUES ('ea3e782c-95ce-4ebd-8d56-94e01d1c224c', '59031a7831d5e53e205cebf6558261e353bedd689591f02683565f9d49dee01a', '06c5ea3f-2af1-492b-bd12-9e2850bd6f74', '2025-08-30 21:59:08+00', '2025-08-30 21:32:14.276042+00');
 INSERT INTO public.token_blacklist VALUES ('5ac359dd-53fc-445b-9ff9-302f48aa8063', 'd46d1178144b35bc5affdba63889f03fbed2bf4a0c03d8909d5b497e2f2d1899', 'dd878b12-9bec-4d74-a72a-a20735072212', '2025-08-30 22:02:21+00', '2025-08-30 21:38:52.588614+00');
 INSERT INTO public.token_blacklist VALUES ('d9dcaaf9-6ac5-47bc-8f11-41838ba48b41', 'eaf243b4ae36895b9f6016d42bce31284eab8d17158db9cb71c8a173723d6e9f', '498f3d26-6c1c-4c25-ae04-537a0e25f8f8', '2025-08-30 22:09:08+00', '2025-08-30 21:43:53.027523+00');
+INSERT INTO public.token_blacklist VALUES ('0bac7d8f-2a61-41a1-9229-4d82b5909bcd', 'd7ecfaa9ebbd3f151a2ed04d06d3c78a39f7de076c6f3eda37ba0e59ffce5de5', '06c5ea3f-2af1-492b-bd12-9e2850bd6f74', '2025-09-16 19:41:49+00', '2025-09-16 19:23:11.500376+00');
+INSERT INTO public.token_blacklist VALUES ('07ebbf4e-0fc1-41a1-a447-09a95b5df366', '40f73f8e7e4395030e3521e30e7e01f0ac11cc5e22dce1d16ec5c515c76b5b97', 'dd878b12-9bec-4d74-a72a-a20735072212', '2025-09-16 19:53:38+00', '2025-09-16 19:47:41.617093+00');
+INSERT INTO public.token_blacklist VALUES ('d566d189-6e62-48d7-b0a2-8a3069edbf0f', '9ffc1112fc6e34bf64bec932f954775aa045ff3d42b49beee8f229a270cc7f16', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', '2025-09-16 20:18:05+00', '2025-09-16 19:49:39.47353+00');
+INSERT INTO public.token_blacklist VALUES ('1ecb5970-26f5-4b0c-87ba-6bda5e0c9f0c', '85fac93881aa54aa1c08fffd71059855b7872106e18ec2cfa767327ca3de91f7', '498f3d26-6c1c-4c25-ae04-537a0e25f8f8', '2025-09-16 20:19:50+00', '2025-09-16 20:06:50.588469+00');
+INSERT INTO public.token_blacklist VALUES ('4a426af5-644b-4f06-93da-be6c13d00507', 'bba69ed8ed763f3bbd252128126470828cd83c72f0843b78164277f76812b2a6', 'dd878b12-9bec-4d74-a72a-a20735072212', '2025-09-16 20:22:07+00', '2025-09-16 20:19:07.695021+00');
+INSERT INTO public.token_blacklist VALUES ('714dddf6-d772-4e07-8826-57a5bc04b741', 'abd8cf7afe3a5d5108f0e7b7afdeaf56589fa008520dead9987d9de0c2863cdf', 'de426ad5-2b3a-4522-a6c0-c3153ece9bb2', '2025-09-16 20:49:22+00', '2025-09-16 20:24:55.805159+00');
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict GS05fgcst8LhOlYNXvLQXbeh9fwymgqMCaD1qcKuybx0YjlZ6QUHqDy4ONCHIVQ
+\unrestrict zdHj7I5zVgYFuLEV0sfZx7aEob2DJBDRL2Lsrr3OQF0fXbpwZh5jOKWALOco48j
 

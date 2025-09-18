@@ -5,6 +5,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 30000, // 30 seconds timeout for all requests
 });
 
 // Request interceptor to add auth token
@@ -31,7 +32,14 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     const url = error.config?.url || '';
+    const isTimeout = error.code === 'ECONNABORTED' || error.message.includes('timeout');
+    
     console.error(`API Error [${url}]:`, error.response?.data || error.message);
+    
+    // Handle timeout errors with user-friendly messages
+    if (isTimeout) {
+      error.userMessage = 'Request timed out. The server is taking too long to respond. Please try again.';
+    }
     
     // ⛔ Don't hard-redirect on 401 from the login (or me) endpoints.
     const isAuthEndpoint = url.includes('/auth/login') || url.includes('/auth/me');
