@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
+import datetime as dt
 from src.core.dependencies import get_current_active_user
 from src.db.session import get_db
 from src.models.user import User
 from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
 from src.models.email_log import EmailLog
-from src.models.daily_update import DailyUpdate
+from src.models.task_update import TaskUpdate
 from src.models.eo_pmo_assignment import EOPMOAssignment
 from src.workflow.dto import DailyUpdateCreate, TaskAssigneeUpdate, EOPMOUpdate, EOPMOAssignmentResponse
 from src.db.eo_pmo_operations import assign_pmos_to_eo, get_pmos_for_eo, remove_pmo_from_eo
@@ -137,11 +138,33 @@ def get_user_tasks(
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db),
     status: Optional[str] = None,
+    assignee: Optional[str] = None,
     limit: int = 50,
     offset: int = 0
 ):
-    """Get tasks assigned to the current user"""
-    query = db.query(Task).filter(Task.assignee_id == current_user.id)
+    """Get tasks - current user's tasks or specific assignee's tasks (for reviewers)"""
+    
+    # If assignee parameter is provided and user is a reviewer, get that assignee's tasks
+    if assignee and current_user.role == "reviewer":
+        # Verify the assignee exists and is under this reviewer's supervision
+        assignee_user = db.query(User).filter(User.id == assignee).first()
+        if not assignee_user:
+            raise HTTPException(status_code=404, detail="Assignee not found")
+        
+        # Get tasks for the specified assignee
+        query = db.query(Task).filter(Task.assignee_id == assignee)
+        
+        # Get assignee info for response
+        assignee_info = {
+            "id": str(assignee_user.id),
+            "name": assignee_user.name,
+            "email": assignee_user.email,
+            "org_role": assignee_user.org_role
+        }
+    else:
+        # Get current user's tasks
+        query = db.query(Task).filter(Task.assignee_id == current_user.id)
+        assignee_info = None
     
     if status:
         query = query.filter(Task.status == status)
@@ -162,6 +185,12 @@ def get_user_tasks(
                     "category": task.category,
                     "due_date": task.due_date.isoformat() if task.due_date else None,
                     "remarks": task.remarks,
+                    "assignee": {
+                        "id": str(task.assignee.id),
+                        "name": task.assignee.name,
+                        "email": task.assignee.email,
+                        "org_role": task.assignee.org_role
+                    } if task.assignee else None,
                     "executive_order": {
                         "id": str(task.executive_order.id),
                         "title": task.executive_order.title
@@ -169,6 +198,7 @@ def get_user_tasks(
                 }
                 for task in tasks
             ],
+            "assignee": assignee_info,
             "pagination": {
                 "total": total,
                 "limit": limit,
@@ -559,20 +589,23 @@ def get_pmo_employees(
     limit: int = 50,
     offset: int = 0
 ):
-    """Get employees under PMO"""
+    """Get executors who have tasks from EOs assigned to this PMO"""
     if current_user.role != "reviewer":
         raise HTTPException(status_code=403, detail="Access denied - PMO role required")
     
-    # Get employees under this PMO (executors)
-    query = db.query(User).filter(User.role == "executor")
+    # Get executors who have tasks from EOs assigned to this PMO
+    # This ensures PMOs only see executors relevant to their assigned EOs
+    query = db.query(User).distinct().join(Task).join(ExecutiveOrder).join(EOPMOAssignment).filter(
+        User.role == "executor",
+        EOPMOAssignment.pmo_id == current_user.id
+    )
     
-    # For now, we'll get all executors - implement proper hierarchy logic
     total = query.count()
     employees = query.offset(offset).limit(limit).all()
     
     return {
         "success": True,
-        "message": f"Retrieved {len(employees)} employees under PMO",
+        "message": f"Retrieved {len(employees)} executors with tasks from your assigned EOs",
         "data": {
             "employees": [
                 {
@@ -603,8 +636,11 @@ def get_pmo_daily_updates(
     if current_user.role != "reviewer":
         raise HTTPException(status_code=403, detail="Access denied - PMO role required")
     
-    # Get daily updates from employees under this PMO
-    query = db.query(DailyUpdate).join(User).filter(User.role == "executor")
+    # Get task updates from employees under this PMO (via EO assignments)
+    query = db.query(TaskUpdate).join(User).join(ExecutiveOrder).join(EOPMOAssignment).filter(
+        User.role == "executor",
+        EOPMOAssignment.pmo_id == current_user.id
+    )
     
     total = query.count()
     updates = query.offset(offset).limit(limit).all()
@@ -618,13 +654,13 @@ def get_pmo_daily_updates(
                     "id": str(update.id),
                     "task_id": str(update.task_id),
                     "user_id": str(update.user_id),
-                    "update_text": update.update_text,
+                    "update_text": update.notes or "",  # Map notes to update_text
                     "progress_pct": update.progress_pct,
-                    "hours_spent": update.hours_spent,
-                    "status_note": update.status_note,
-                    "blockers": update.blockers,
-                    "risks": update.risks,
-                    "next_actions": update.next_actions,
+                    "hours_spent": update.spent_hours,  # Map spent_hours to hours_spent
+                    "status_note": update.status or "",  # Map status to status_note
+                    "blockers": update.blockers or [],  # Ensure it's a list/dict for compatibility
+                    "risks": update.risks or [],  # Ensure it's a list/dict for compatibility
+                    "next_actions": [],  # TaskUpdate doesn't have next_actions, return empty
                     "created_at": update.created_at.isoformat(),
                     "employee": {
                         "id": str(update.user.id),
@@ -694,7 +730,7 @@ def get_employee_updates(
     if current_user.role != "executor":
         raise HTTPException(status_code=403, detail="Access denied - Employee role required")
     
-    query = db.query(DailyUpdate).filter(DailyUpdate.user_id == current_user.id)
+    query = db.query(TaskUpdate).filter(TaskUpdate.user_id == current_user.id)
     total = query.count()
     updates = query.offset(offset).limit(limit).all()
     
@@ -706,13 +742,13 @@ def get_employee_updates(
                 {
                     "id": str(update.id),
                     "task_id": str(update.task_id),
-                    "update_text": update.update_text,
+                    "update_text": update.notes or "",  # Map notes to update_text
                     "progress_pct": update.progress_pct,
-                    "hours_spent": update.hours_spent,
-                    "status_note": update.status_note,
-                    "blockers": update.blockers,
-                    "risks": update.risks,
-                    "next_actions": update.next_actions,
+                    "hours_spent": update.spent_hours,  # Map spent_hours to hours_spent
+                    "status_note": update.status or "",  # Map status to status_note
+                    "blockers": update.blockers or [],  # Ensure it's a list/dict for compatibility
+                    "risks": update.risks or [],  # Ensure it's a list/dict for compatibility
+                    "next_actions": [],  # TaskUpdate doesn't have next_actions, return empty
                     "created_at": update.created_at.isoformat(),
                     "task": {
                         "id": str(update.task.id),
@@ -794,37 +830,59 @@ def create_daily_update(
     if not task:
         raise HTTPException(status_code=404, detail="Task not found or not assigned to you")
     
-    # Create daily update
-    daily_update = DailyUpdate(
+    # Validate and convert status to TaskUpdate enum values
+    valid_statuses = ["NotStarted", "InProgress", "Blocked", "Completed"]
+    mapped_status = None
+    if update.status_note:
+        # Simple mapping of common status terms to enum values
+        status_mapping = {
+            "not started": "NotStarted",
+            "pending": "NotStarted", 
+            "in progress": "InProgress",
+            "working": "InProgress",
+            "blocked": "Blocked",
+            "stuck": "Blocked",
+            "completed": "Completed",
+            "done": "Completed",
+            "finished": "Completed"
+        }
+        mapped_status = status_mapping.get(update.status_note.lower().strip())
+        if not mapped_status and update.status_note in valid_statuses:
+            mapped_status = update.status_note
+
+    # Create task update (using TaskUpdate instead of DailyUpdate)
+    task_update = TaskUpdate(
+        eo_id=task.eo_id,  # Get EO ID from the task
         task_id=update.task_id,
         user_id=current_user.id,
-        update_text=update.update_text,
+        date=dt.date.today(),  # Set current date
+        notes=update.update_text,  # Map update_text to notes
         progress_pct=update.progress_pct,
-        hours_spent=update.hours_spent,
-        status_note=update.status_note,
-        blockers=update.blockers,
-        risks=update.risks,
-        next_actions=update.next_actions
+        spent_hours=update.hours_spent,  # Map hours_spent to spent_hours
+        status=mapped_status,  # Use validated/mapped status
+        blockers=update.blockers if isinstance(update.blockers, list) else (list(update.blockers.values()) if update.blockers else []),  # Ensure it's a list
+        risks=update.risks if isinstance(update.risks, list) else (list(update.risks.values()) if update.risks else [])  # Ensure it's a list
+        # Note: next_actions is not in TaskUpdate model, so we skip it
     )
     
-    db.add(daily_update)
+    db.add(task_update)
     db.commit()
-    db.refresh(daily_update)
+    db.refresh(task_update)
     
     return {
         "success": True,
         "message": "Daily update created successfully",
         "data": {
-            "id": str(daily_update.id),
-            "task_id": str(daily_update.task_id),
-            "update_text": daily_update.update_text,
-            "progress_pct": daily_update.progress_pct,
-            "hours_spent": daily_update.hours_spent,
-            "status_note": daily_update.status_note,
-            "blockers": daily_update.blockers,
-            "risks": daily_update.risks,
-            "next_actions": daily_update.next_actions,
-            "created_at": daily_update.created_at.isoformat()
+            "id": str(task_update.id),
+            "task_id": str(task_update.task_id),
+            "update_text": task_update.notes or "",  # Map notes back to update_text
+            "progress_pct": task_update.progress_pct,
+            "hours_spent": task_update.spent_hours,  # Map spent_hours back to hours_spent
+            "status_note": task_update.status or "",  # Map status back to status_note
+            "blockers": task_update.blockers or [],
+            "risks": task_update.risks or [],
+            "next_actions": [],  # TaskUpdate doesn't have next_actions, return empty
+            "created_at": task_update.created_at.isoformat()
         }
     }
 

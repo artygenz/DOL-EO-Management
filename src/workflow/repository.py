@@ -2,7 +2,7 @@
 import uuid
 from sqlalchemy.inspection import inspect
 from sqlalchemy import select, update
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 from src.db.session import get_engine, get_session_maker
 from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
@@ -212,6 +212,34 @@ def get_pending_task_ids_by_eo(eo_id: str | uuid.UUID) -> list[str]:
         print(f"Found {len(task_ids)} pending tasks for EO {eo_id}: {task_ids}")
         return task_ids
 
+def get_task_ids_by_eo_and_status(eo_id: str | uuid.UUID, status: str) -> list[str]:
+    """
+    Get task IDs for an EO that have a specific status.
+    This is used when sending improved tasks to PMO - we only send rejected tasks that have been improved.
+    """
+    try:
+        eo_uuid = uuid.UUID(str(eo_id))
+    except Exception:
+        eo_uuid = eo_id
+    
+    with SessionLocal() as db:
+        # First verify the EO exists
+        eo = db.execute(select(ExecutiveOrder).where(ExecutiveOrder.id == eo_uuid)).scalar_one_or_none()
+        if not eo:
+            print(f"ERROR: EO with ID '{eo_id}' not found in database")
+            return []
+        
+        tasks = db.execute(
+            select(Task.id).where(
+                Task.eo_id == eo_uuid,
+                Task.status == status
+            ).order_by(Task.created_at)
+        ).scalars().all()
+        
+        task_ids = [str(task_id) for task_id in tasks]
+        print(f"Found {len(task_ids)} {status} tasks for EO {eo_id}: {task_ids}")
+        return task_ids
+
 def map_simple_task_ids_to_uuids(eo_id: str | uuid.UUID, simple_task_ids: list[str]) -> list[str]:
     """
     Map simple task IDs (1, 2, 3, etc.) to actual database UUIDs.
@@ -318,6 +346,17 @@ def update_tasks_with_improved_data(task_updates: dict[str, dict]) -> int:
                     db_task.category = improved_data.get("category_dept", db_task.category)
                     db_task.status = "Pending PMO approval"  # Reset to pending for re-review
                     db_task.remarks = improved_data.get("remarks", db_task.remarks)
+                    
+                    # Handle assignee updates from LLM rewiring
+                    if "assignee" in improved_data and improved_data["assignee"]:
+                        assignee_name = improved_data["assignee"]
+                        assignee_id = resolve_assignee_name_to_id(assignee_name)
+                        if assignee_id:
+                            db_task.assignee_id = assignee_id
+                            print(f"[DEBUG] Updated assignee for task {task_id_str}: '{assignee_name}' -> {assignee_id}")
+                        else:
+                            print(f"[WARNING] Could not resolve assignee '{assignee_name}' for task {task_id_str}")
+                    
                     db_task.updated_at = datetime.now(timezone.utc)
                     updated_count += 1
                     
@@ -328,3 +367,306 @@ def update_tasks_with_improved_data(task_updates: dict[str, dict]) -> int:
         db.commit()
     
     return updated_count
+
+# Task Updates Repository Functions
+def get_user_active_tasks(user_id: str | uuid.UUID) -> list[dict]:
+    """Get all active tasks assigned to a user."""
+    try:
+        user_uuid = uuid.UUID(str(user_id))
+    except Exception:
+        return []
+    
+    with SessionLocal() as db:
+        tasks = db.execute(
+            select(Task)
+            .where(Task.assignee_id == user_uuid)
+        ).scalars().all()
+        
+        return [
+            {
+                "id": str(task.id),
+                "title": task.title,
+                "description": task.description,
+                "eo_id": str(task.eo_id),
+                "status": task.status
+            }
+            for task in tasks
+        ]
+
+def resolve_user_by_email(email: str) -> str | None:
+    """Resolve user ID by email address."""
+    with SessionLocal() as db:
+        from src.models.user import User
+        from sqlalchemy import func
+        
+        # Case-insensitive email lookup
+        user = db.execute(
+            select(User).where(func.lower(User.email) == email.lower())
+        ).scalar_one_or_none()
+        
+        return str(user.id) if user else None
+
+def save_task_updates(updates: list[dict]) -> int:
+    """Save multiple task updates to database with proper deduplication."""
+    print(f"[DEBUG] save_task_updates: received {len(updates)} updates")
+    if not updates:
+        print(f"[DEBUG] save_task_updates: no updates to save")
+        return 0
+    
+    saved_count = 0
+    replaced_count = 0
+    with SessionLocal() as db:
+        from src.models.task_update import TaskUpdate
+        from datetime import date
+        
+        for update_data in updates:
+            print(f"[DEBUG] Processing update: {update_data}")
+            try:
+                # Convert date string to date object if needed
+                update_date = update_data['date']
+                if isinstance(update_date, str):
+                    update_date = date.fromisoformat(update_date)
+                
+                # Convert ETA string to date object if needed
+                eta = update_data.get('eta')
+                if eta and isinstance(eta, str):
+                    eta = date.fromisoformat(eta)
+                
+                # Check for existing updates for the same task, user, and date
+                existing_updates = db.execute(
+                    select(TaskUpdate)
+                    .where(TaskUpdate.task_id == uuid.UUID(update_data['task_id']))
+                    .where(TaskUpdate.user_id == uuid.UUID(update_data['user_id']))
+                    .where(TaskUpdate.date == update_date)
+                ).scalars().all()
+                
+                if existing_updates:
+                    # Delete all existing records for this task, user, and date
+                    for existing_update in existing_updates:
+                        db.delete(existing_update)
+                    
+                    replaced_count += len(existing_updates)
+                    print(f"[DEBUG] Deleted {len(existing_updates)} existing task updates for task {update_data['task_id']}, user {update_data['user_id']}, date {update_date}")
+                
+                # Always create a new task update (either replacing old ones or creating first one)
+                # Create new task update
+                task_update = TaskUpdate(
+                    eo_id=uuid.UUID(update_data['eo_id']),
+                    task_id=uuid.UUID(update_data['task_id']),
+                    user_id=uuid.UUID(update_data['user_id']),
+                    date=update_date,
+                    progress_pct=update_data.get('progress_pct'),
+                    status=update_data.get('status'),
+                    notes=update_data.get('notes'),
+                    blockers=update_data.get('blockers'),
+                    risks=update_data.get('risks'),
+                    eta=eta,
+                    spent_hours=update_data.get('spent_hours'),
+                    source_email_message_id=update_data.get('source_email_message_id'),
+                    dedupe_hash=update_data.get('dedupe_hash'),
+                    is_late=update_data.get('is_late', False),
+                    ai_summary=update_data.get('ai_summary')
+                )
+                
+                db.add(task_update)
+                saved_count += 1
+                print(f"[DEBUG] Added new task update for task {update_data['task_id']}, user {update_data['user_id']}, date {update_date}")
+                
+            except Exception as e:
+                print(f"Error saving task update: {e}")
+                continue
+        
+        db.commit()
+        print(f"[DEBUG] Saved {saved_count} new updates, replaced {replaced_count} existing updates")
+    
+    return saved_count + replaced_count
+
+def get_task_updates_for_eo_date(eo_id: str | uuid.UUID, target_date: date) -> list[dict]:
+    """Get all task updates for a specific EO and date."""
+    try:
+        eo_uuid = uuid.UUID(str(eo_id))
+    except Exception:
+        return []
+    
+    with SessionLocal() as db:
+        from src.models.task_update import TaskUpdate
+        from src.models.task import Task
+        from src.models.user import User
+        
+        updates = db.execute(
+            select(TaskUpdate, Task.title.label('task_title'), User.name.label('user_name'))
+            .join(Task, TaskUpdate.task_id == Task.id)
+            .join(User, TaskUpdate.user_id == User.id)
+            .where(TaskUpdate.eo_id == eo_uuid)
+            .where(TaskUpdate.date == target_date)
+        ).all()
+        
+        return [
+            {
+                "id": str(update.TaskUpdate.id),
+                "task_id": str(update.TaskUpdate.task_id),
+                "task_title": update.task_title,
+                "user_id": str(update.TaskUpdate.user_id),
+                "user_name": update.user_name,
+                "progress_pct": update.TaskUpdate.progress_pct,
+                "status": update.TaskUpdate.status,
+                "notes": update.TaskUpdate.notes,
+                "blockers": update.TaskUpdate.blockers,
+                "risks": update.TaskUpdate.risks,
+                "eta": update.TaskUpdate.eta,
+                "spent_hours": update.TaskUpdate.spent_hours,
+                "is_late": update.TaskUpdate.is_late,
+                "ai_summary": update.TaskUpdate.ai_summary
+            }
+            for update in updates
+        ]
+
+def get_expected_updates_for_eo_date(eo_id: str | uuid.UUID, target_date: date) -> list[dict]:
+    """Get list of users who should provide updates for an EO on a given date."""
+    try:
+        eo_uuid = uuid.UUID(str(eo_id))
+    except Exception:
+        return []
+    
+    with SessionLocal() as db:
+        from src.models.task import Task
+        from src.models.user import User
+        
+        # Get all active tasks for this EO with assignees
+        tasks = db.execute(
+            select(Task, User.email.label('user_email'), User.name.label('user_name'))
+            .join(User, Task.assignee_id == User.id)
+            .where(Task.eo_id == eo_uuid)
+            .where(Task.status.in_(["pending", "in_progress", "Pending PMO approval"]))
+        ).all()
+        
+        # Group by user
+        user_tasks = {}
+        for task in tasks:
+            user_email = task.user_email
+            if user_email not in user_tasks:
+                user_tasks[user_email] = {
+                    "user_email": user_email,
+                    "user_name": task.user_name,
+                    "task_count": 0,
+                    "tasks": []
+                }
+            user_tasks[user_email]["task_count"] += 1
+            user_tasks[user_email]["tasks"].append({
+                "id": str(task.Task.id),
+                "title": task.Task.title
+            })
+        
+        return list(user_tasks.values())
+
+def save_daily_eo_summary(summary_data: dict) -> str:
+    """Save a daily EO summary to database."""
+    with SessionLocal() as db:
+        from src.models.daily_eo_summary import DailyEOSummary
+        from datetime import date
+        
+        # Convert date string to date object if needed
+        summary_date = summary_data['date']
+        if isinstance(summary_date, str):
+            summary_date = date.fromisoformat(summary_date)
+        
+        summary = DailyEOSummary(
+            eo_id=uuid.UUID(summary_data['eo_id']),
+            date=summary_date,
+            progress_summary=summary_data.get('progress_summary'),
+            key_blockers=summary_data.get('key_blockers'),
+            risks=summary_data.get('risks'),
+            attention_items=summary_data.get('attention_items'),
+            missing_updates=summary_data.get('missing_updates'),
+            total_tasks=summary_data.get('total_tasks', 0),
+            updated_tasks=summary_data.get('updated_tasks', 0)
+        )
+        
+        db.add(summary)
+        db.commit()
+        db.refresh(summary)
+        
+        return str(summary.id)
+
+def get_daily_eo_summary(eo_id: str | uuid.UUID, target_date: date) -> dict | None:
+    """Get daily EO summary for a specific date."""
+    try:
+        eo_uuid = uuid.UUID(str(eo_id))
+    except Exception:
+        return None
+    
+    with SessionLocal() as db:
+        from src.models.daily_eo_summary import DailyEOSummary
+        
+        summary = db.execute(
+            select(DailyEOSummary)
+            .where(DailyEOSummary.eo_id == eo_uuid)
+            .where(DailyEOSummary.date == target_date)
+        ).scalar_one_or_none()
+        
+        if summary:
+            return {
+                "id": str(summary.id),
+                "eo_id": str(summary.eo_id),
+                "date": summary.date,
+                "progress_summary": summary.progress_summary,
+                "key_blockers": summary.key_blockers,
+                "risks": summary.risks,
+                "attention_items": summary.attention_items,
+                "missing_updates": summary.missing_updates,
+                "total_tasks": summary.total_tasks,
+                "updated_tasks": summary.updated_tasks,
+                "summary_email_sent": summary.summary_email_sent,
+                "summary_email_sent_at": summary.summary_email_sent_at
+            }
+        
+        return None
+
+def get_daily_eo_summary_by_id(summary_id: str | uuid.UUID) -> dict | None:
+    """Get daily EO summary by its ID."""
+    try:
+        summary_uuid = uuid.UUID(str(summary_id))
+    except Exception:
+        return None
+    
+    with SessionLocal() as db:
+        from src.models.daily_eo_summary import DailyEOSummary
+        
+        summary = db.get(DailyEOSummary, summary_uuid)
+        
+        if summary:
+            return {
+                "id": str(summary.id),
+                "eo_id": str(summary.eo_id),
+                "date": summary.date,
+                "progress_summary": summary.progress_summary,
+                "key_blockers": summary.key_blockers,
+                "risks": summary.risks,
+                "attention_items": summary.attention_items,
+                "missing_updates": summary.missing_updates,
+                "total_tasks": summary.total_tasks,
+                "updated_tasks": summary.updated_tasks,
+                "summary_email_sent": summary.summary_email_sent,
+                "summary_email_sent_at": summary.summary_email_sent_at
+            }
+        
+        return None
+
+def mark_summary_email_sent(summary_id: str | uuid.UUID) -> bool:
+    """Mark a daily summary as having been emailed."""
+    try:
+        summary_uuid = uuid.UUID(str(summary_id))
+    except Exception:
+        return False
+    
+    with SessionLocal() as db:
+        from src.models.daily_eo_summary import DailyEOSummary
+        
+        summary = db.get(DailyEOSummary, summary_uuid)
+        if summary:
+            summary.summary_email_sent = True
+            summary.summary_email_sent_at = datetime.now(timezone.utc)
+            db.commit()
+            return True
+        
+        return False

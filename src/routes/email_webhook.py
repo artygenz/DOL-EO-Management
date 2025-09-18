@@ -198,7 +198,8 @@ async def detect_email_intent(payload: EmailWebhookPayload, db: Session = None) 
         if db and sender:
             try:
                 from src.models.user import User
-                sender_user = db.query(User).filter(User.email == sender).first()
+                from sqlalchemy import func
+                sender_user = db.query(User).filter(func.lower(User.email) == sender.lower()).first()
                 if sender_user:
                     sender_role = sender_user.role
                     logger.info(f"Found sender role: {sender_role} for email: {sender}")
@@ -324,7 +325,30 @@ async def process_email_with_intent(
         elif intent_result.intent == EmailIntent.PMO_RESPONSE:
             await process_pmo_response(payload, intent_result, db)
         elif intent_result.intent == EmailIntent.TASK_UPDATE:
-            await process_task_update(payload, intent_result, db)
+            # Check if this is a daily update (multiple tasks) or specific task update
+            subject = payload.subject.lower() if payload.subject else ""
+            
+            # Check for specific task update patterns (EO/Task IDs in subject)
+            import re
+            has_specific_task_pattern = (
+                re.search(r'\[EO-[a-f0-9-]+\]', subject) or 
+                re.search(r'\[TASK-[a-f0-9-]+\]', subject) or
+                re.search(r'EO-[a-f0-9-]+', subject) or
+                re.search(r'TASK-[a-f0-9-]+', subject)
+            )
+            
+            # Check for daily update patterns
+            has_daily_pattern = any(keyword in subject for keyword in ["daily update", "daily task update"])
+            
+            if has_specific_task_pattern:
+                # Specific task update with EO/Task IDs
+                await process_task_update(payload, intent_result, db)
+            elif has_daily_pattern or "task update" in subject:
+                # Daily task update (general update about multiple tasks)
+                await process_daily_task_update(payload, intent_result, db)
+            else:
+                # Default to daily task update for executor role
+                await process_daily_task_update(payload, intent_result, db)
         else:
             await process_unknown_email(payload, intent_result, db)
         
@@ -588,7 +612,8 @@ async def process_task_update(
         from src.models.user import User
         
         # Find user by email (sender)
-        user = db.query(User).filter(User.email == payload.sender).first()
+        from sqlalchemy import func
+        user = db.query(User).filter(func.lower(User.email) == payload.sender.lower()).first()
         if not user:
             logger.warning(f"User not found for email: {payload.sender}")
             # For now, skip creating daily update if user not found
@@ -626,6 +651,46 @@ async def process_task_update(
         logger.error(f"Error processing task update: {e}")
         if db:
             db.rollback()
+        raise
+
+async def process_daily_task_update(
+    payload: EmailWebhookPayload,
+    intent_result: EmailProcessingResult,
+    db: Session = None
+):
+    """Process daily task update email - uses AI to extract updates for all user's tasks"""
+    try:
+        logger.info(f"Processing daily task update: {payload.subject}")
+        
+        # Convert to DailyUpdateEmailPayload format for Celery task
+        from src.workflow.dto import DailyUpdateEmailPayload
+        from datetime import datetime
+        
+        daily_update_data = DailyUpdateEmailPayload(
+            message_id=payload.message_id or payload.id,
+            subject=payload.subject,
+            sender=payload.sender,
+            recipients=payload.recipients,
+            body_text=payload.raw_content,
+            body_html=payload.raw_content,  # For now, use same as text
+            received_at=datetime.fromisoformat(payload.timestamp.replace('Z', '+00:00')) if payload.timestamp else datetime.now(),
+            raw_mime_s3_key=None
+        )
+        
+        # Queue daily update for processing using Celery task
+        from src.workflow.tasks import process_daily_update_email
+        
+        try:
+            process_daily_update_email.delay(daily_update_data.model_dump())
+            logger.info(f"Daily task update queued for processing: {daily_update_data.message_id}")
+        except Exception as e:
+            logger.error(f"Failed to queue daily update for processing: {e}")
+            raise HTTPException(status_code=500, detail="Failed to queue daily update for processing")
+        
+        logger.info(f"Daily task update queued successfully: {daily_update_data.message_id}")
+        
+    except Exception as e:
+        logger.error(f"Error processing daily task update: {e}")
         raise
 
 async def process_unknown_email(

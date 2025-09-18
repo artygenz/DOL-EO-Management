@@ -25,4 +25,5 @@ class User(Base):
     task_logs = relationship("TaskLog", back_populates="actor")
     tokens = relationship("AuthToken", back_populates="user", cascade="all,delete-orphan")
     daily_updates = relationship("DailyUpdate", back_populates="user")
+    task_updates = relationship("TaskUpdate", back_populates="user", cascade="all,delete-orphan")
     eo_pmo_assignments = relationship("EOPMOAssignment", foreign_keys="EOPMOAssignment.pmo_id", back_populates="pmo")
