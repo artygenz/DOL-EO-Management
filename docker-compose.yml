@@ -1,7 +1,4 @@
-
-
 services:
-
   worker:
     build: .
     command: celery -A src.workflow.celery_app worker --loglevel=info -Q ingest,ai,db,email,review
@@ -43,8 +40,6 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
-
-      
 
   db:
     image: postgres:13

@@ -1,1 +1,7 @@
-# Make 'app' a package for absolute imports like 'from app.langchain import extract_tasks'
+"""
+App module for DOL EO Management
+
+Contains process management and infrastructure:
+- processes/: Celery worker, beat, IMAP listener
+- chat/: Chat functionality (separate from LLM tasks)
+"""

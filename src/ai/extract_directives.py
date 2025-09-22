@@ -279,18 +279,13 @@ def extract_directives(eo_pdf_text: str, roles_text: str = ROLES_WITH_MEMBERS_DE
     """
     try:
         # Delegate to our LangChain orchestrator that binds prompts and structured parsing.
-        print(f"[DEBUG] Calling lc_extract_tasks with EO text length: {len(eo_pdf_text)}")
-        print(f"[DEBUG] Roles text length: {len(roles_text)}")
         tasks_model: TasksModel = lc_extract_tasks(
             eo_text=eo_pdf_text,
             roles_text=roles_text,
             # eo_date and now_utc are auto-detected/filled when omitted.
         )
-        print(f"[DEBUG] TasksModel returned: {tasks_model}")
-        print(f"[DEBUG] TasksModel type: {type(tasks_model)}")
         # Convert to a plain dict for downstream assignment logic / transport.
         result = tasks_model.model_dump()
-        print(f"[DEBUG] Model dump result: {result}")
         # Validate that result is a dict with a "tasks" key that is a list of dicts
         if not isinstance(result, dict) or "tasks" not in result or not isinstance(result["tasks"], list):
             raise ValueError("Malformed output: missing or invalid 'tasks' key")

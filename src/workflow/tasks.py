@@ -496,7 +496,7 @@ def handle_rejected_tasks(eo_id: str | None, rejected_ids: list[str] | None, glo
         }
         
         # Use LLM to rewire tasks based on PMO remarks
-        from src.app.rewire_tasks import rewire_tasks_with_remarks
+        from src.ai.rewire_tasks import rewire_tasks_with_remarks
         improved_result = rewire_tasks_with_remarks(
             eo=eo.description or "",
             remarks=global_remarks or "Tasks need improvement",
@@ -514,7 +514,7 @@ def handle_rejected_tasks(eo_id: str | None, rejected_ids: list[str] | None, glo
         # Assign tasks based on category_dept (the LLM leaves assignee empty)
         if improved_tasks:
             print("Assigning tasks based on category_dept...")
-            from src.app.extract_directives import assign_tasks
+            from src.ai.extract_directives import assign_tasks
             improved_result_with_assignments = assign_tasks(improved_result, roles_text)
             improved_tasks = improved_result_with_assignments.get("tasks", improved_tasks)
             print(f"Task assignment completed")
@@ -567,56 +567,43 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_ta
     improved_task_ids : list[str], optional
         Specific task IDs that were improved. If not provided, falls back to looking for rejected tasks.
     """
-    print(f"[DEBUG] send_improved_tasks_to_pmo started with eo_id: {eo_id}")
     
     if not eo_id:
         return {"error": "eo_id is required"}
     
     try:
-        print(f"[DEBUG] Loading EO from database...")
         # Load EO from database
         eo = repo.get_executive_order(eo_id)
         if not eo:
             return {"error": f"ExecutiveOrder not found for id={eo_id}"}
         
-        print(f"[DEBUG] EO loaded successfully: {eo.id}")
-        print(f"[DEBUG] EO type: {type(eo)}")
         # Remove the problematic line that triggers lazy loading
-        # print(f"[DEBUG] EO has relationships: {hasattr(eo, 'tasks')}")
         
         # Load specific improved task IDs, or fall back to rejected tasks
         if improved_task_ids:
-            print(f"[DEBUG] Using provided improved task IDs: {len(improved_task_ids)} tasks")
             task_ids = improved_task_ids
         else:
-            print(f"[DEBUG] No improved task IDs provided, falling back to rejected tasks...")
             task_ids = repo.get_task_ids_by_eo_and_status(eo_id, "rejected")
             
         if not task_ids:
             return {"error": "No tasks found to send for improved review"}
         
-        print(f"[DEBUG] Found {len(task_ids)} improved task IDs: {task_ids[:3]}...")  # Show first 3
         
         # Convert tasks to format expected by email template
-        print(f"[DEBUG] Converting tasks to dict format...")
         task_list = []
         with SessionLocal() as db:
             # Reload tasks in this session to avoid session issues
             for i, task_id in enumerate(task_ids):
-                print(f"[DEBUG] Processing task {i+1}/{len(task_ids)}: {task_id}")
                 task = db.get(Task, task_id)
                 if task:
-                    print(f"[DEBUG] Task {task_id} loaded, type: {type(task)}")
                     
                     # Get assignee name directly to avoid circular reference
                     assignee_name = "Unassigned"
                     if task.assignee_id:
-                        print(f"[DEBUG] Task has assignee_id: {task.assignee_id}")
                         from src.models.user import User
                         assignee = db.get(User, task.assignee_id)
                         if assignee:
                             assignee_name = assignee.name
-                            print(f"[DEBUG] Assignee name: {assignee_name}")
                     
                     task_dict = {
                         "id": str(task.id),  # Convert UUID to string
@@ -628,21 +615,15 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_ta
                         "remarks": task.remarks,
                         "assignee": assignee_name
                     }
-                    print(f"[DEBUG] Task dict created: {task_dict['id']} - {task_dict['title'][:50]}...")
                     task_list.append(task_dict)
                 else:
-                    print(f"[DEBUG] Task {task_id} not found in database")
-        
-        print(f"[DEBUG] Task list created with {len(task_list)} tasks")
-        print(f"[DEBUG] First task dict: {task_list[0] if task_list else 'None'}")
+                    pass
         
         # Resolve PMO recipient
         import os
         pmo_email = os.getenv("PMO_EMAIL_ADDRESS", "kevin.brown@lumenlighthouse.ai")  # fallback for backward compatibility
-        print(f"[DEBUG] PMO email: {pmo_email}")
         
         # Convert EO to simple dict to avoid circular reference issues
-        print(f"[DEBUG] Converting EO to dict...")
         eo_dict = {
             "id": eo.id,
             "title": eo.title,
@@ -655,22 +636,15 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_ta
             "created_at": eo.created_at,
             "updated_at": eo.updated_at
         }
-        print(f"[DEBUG] EO dict created: {eo_dict['id']} - {eo_dict['title']}")
-        print(f"[DEBUG] EO dict type: {type(eo_dict)}")
         
         # Build email with improved tasks
-        print(f"[DEBUG] Building email template...")
         try:
             built = EmailTemplateBuilder.build_improved_tasks_review(eo_dict, task_list, improvement_summary)
-            print(f"[DEBUG] Email template built successfully")
-            print(f"[DEBUG] Built object type: {type(built)}")
-            print(f"[DEBUG] Built object attributes: {dir(built)}")
         except Exception as e:
             print(f"[ERROR] Failed to build email template: {e}")
             raise
         
         # Save email log first to get the ID for organized file structure
-        print(f"[DEBUG] Saving email log...")
         try:
             email_log = repo.save_email_log(
                 direction="outgoing",
@@ -681,24 +655,19 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_ta
                 related_eo_id=eo_dict["id"],
             )
             email_log_id = str(email_log.id)
-            print(f"[DEBUG] Email log saved with ID: {email_log_id}")
         except Exception as e:
             print(f"Warning: Could not save email log: {e}")
             email_log_id = None
         
         # Send email
-        print(f"[DEBUG] Creating EmailService...")
         svc = QueuedEmailService()
         
-        print(f"[DEBUG] Creating attachments...")
         try:
             attachments = [Attachment(fn, ct, data) for (fn, ct, data) in built.attachments]
-            print(f"[DEBUG] Created {len(attachments)} attachments")
         except Exception as e:
             print(f"[ERROR] Failed to create attachments: {e}")
             raise
         
-        print(f"[DEBUG] Sending email...")
         try:
             message_id = svc.send_and_save(
                 to=[pmo_email],
@@ -710,12 +679,10 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_ta
                 email_log_id=email_log_id,
                 email_type="improved_review"
             )
-            print(f"[DEBUG] Email sent successfully with message_id: {message_id}")
         except Exception as e:
             print(f"[ERROR] Failed to send email: {e}")
             raise
         
-        print(f"[DEBUG] Creating return dict...")
         result = {
             "eo_id": eo_id,
             "sent_to": pmo_email,
@@ -723,9 +690,7 @@ def send_improved_tasks_to_pmo(eo_id: str, improvement_summary: str, improved_ta
             "tasks": len(task_list),
             "improvement_summary": improvement_summary
         }
-        print(f"[DEBUG] Return dict created: {result}")
         
-        print(f"[DEBUG] send_improved_tasks_to_pmo completed successfully")
         return result
         
     except Exception as e:

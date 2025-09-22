@@ -4,7 +4,7 @@ LangChain orchestration for extracting structured tasks from an EO string and re
 
 This module encapsulates:
 - Pydantic schemas (TaskModel, TasksModel) that define the strict output contract
-- Prompt wiring (system + human) sourced from app.prompts
+- Prompt wiring (system + human) sourced from ai.prompts
 - ChatOpenAI configuration (model=gpt-4.1) with structured output
 - Convenience functions to parse EO dates and invoke the chain
 - New: Utility functions for task rewiring, update extraction, summaries, and weekly reports
@@ -119,11 +119,6 @@ def extract_tasks(
     structured_llm = _build_llm(model_name=model_name).with_structured_output(TasksModel)
     chain = prompt | structured_llm
     
-    # Log the input parameters for debugging
-    print(f"[DEBUG] EO Date: {eo_date_final}")
-    print(f"[DEBUG] Now UTC: {now_utc_final}")
-    print(f"[DEBUG] EO Text length: {len(eo_text)} characters")
-    print(f"[DEBUG] Roles Text length: {len(roles_text)} characters")
     
     try:
         result: TasksModel = chain.invoke({
@@ -133,21 +128,12 @@ def extract_tasks(
             "now_utc": now_utc_final,
         })
         
-        # Log the raw result
-        print(f"[DEBUG] Raw LLM Result: {result}")
-        print(f"[DEBUG] Raw LLM Result Type: {type(result)}")
-        print(f"[DEBUG] Raw LLM Result Dict: {result.model_dump() if hasattr(result, 'model_dump') else result}")
-        print(f"[DEBUG] Number of tasks extracted: {len(result.tasks) if hasattr(result, 'tasks') else 'No tasks attribute'}")
         
         for t in result.tasks:
             t.assignee = ""
         return result
         
     except Exception as e:
-        print(f"[DEBUG] LLM Extraction Error: {e}")
-        print(f"[DEBUG] Error Type: {type(e)}")
-        import traceback
-        print(f"[DEBUG] Full Traceback: {traceback.format_exc()}")
         # Return empty result on error
         return TasksModel(tasks=[])
 

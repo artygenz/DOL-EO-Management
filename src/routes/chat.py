@@ -19,7 +19,7 @@ from src.models.user import User
 from src.core.dependencies import get_current_active_user
 from src.app.chat.brain.pre_router import classify
 from src.app.chat.brain.selector import select_tools
-from src.app.chat.brain.query_runner import run_query_with_tools, run_query_with_tools_streaming
+from src.app.chat.brain.query_runner import run_query_with_tools
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
