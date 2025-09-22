@@ -9,6 +9,8 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  Box,
+  Container,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
@@ -60,14 +62,77 @@ export default function LoginPage() {
   };
 
   return (
-    <Card sx={{ maxWidth: 480, mx: "auto", mt: 8 }}>
-      <CardContent>
-        <Typography variant="h5" fontWeight={700} gutterBottom>
-          Secure Access
+    <Container maxWidth="sm">
+      {/* LLILA Branding Header */}
+      <Box sx={{ textAlign: "center", mb: 4, mt: 4 }}>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2, mb: 2 }}>
+          <Box
+            component="img"
+            src="/llila-logo.jpeg"
+            alt="LLILA Logo"
+            sx={{
+              height: 80,
+              width: 80,
+              objectFit: "contain",
+              filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.1))"
+            }}
+          />
+          <Box sx={{ textAlign: "left" }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontWeight: 800, 
+                lineHeight: 1.1,
+                background: "linear-gradient(135deg, #1976d2 0%, #00acc1 50%, #ffb300 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textShadow: "0 1px 2px rgba(0,0,0,0.1)"
+              }}
+            >
+              LLILA
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: "rgba(0,0,0,0.7)", 
+                fontSize: "0.8rem", 
+                fontWeight: 500,
+                fontStyle: "italic",
+                letterSpacing: "0.5px"
+              }}
+            >
+              Let LLILA light the way
+            </Typography>
+          </Box>
+        </Box>
+        <Typography 
+          variant="h6" 
+          sx={{ 
+            color: "rgba(0,0,0,0.8)", 
+            fontSize: "1.1rem", 
+            fontWeight: 600,
+            fontStyle: "italic",
+            letterSpacing: "0.5px",
+            textShadow: "0 1px 2px rgba(0,0,0,0.1)",
+            mb: 1
+          }}
+        >
+          Lumen Lighthouse Intelligence Logistics Agent
         </Typography>
-        <Typography color="text.secondary" sx={{ mb: 2 }}>
-          Sign in to access your dashboard.
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          Intelligent Executive Order Management System
         </Typography>
+      </Box>
+
+      <Card sx={{ maxWidth: 480, mx: "auto" }}>
+        <CardContent>
+          <Typography variant="h5" fontWeight={700} gutterBottom>
+            Secure Access
+          </Typography>
+          <Typography color="text.secondary" sx={{ mb: 2 }}>
+            Sign in to access your dashboard.
+          </Typography>
 
         <form onSubmit={handleSubmit} noValidate>
           <Stack spacing={2}>
@@ -142,6 +207,7 @@ export default function LoginPage() {
           {error}
         </Alert>
       </Snackbar>
-    </Card>
+      </Card>
+    </Container>
   );
 }

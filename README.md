@@ -1,8 +1,8 @@
-# DOL-EO-Management: Executive Order Task Management System
+# LLILA - Lumen Lighthouse Intelligence Logistics Agent
 
 ## 🚀 Project Overview
 
-A comprehensive **Executive Order management system** for the U.S. Department of Labor that automates task assignment, tracking, and daily update workflows through email integration and AI-powered processing.
+**Let LLILA light the way** - A comprehensive **Executive Order management system** for the U.S. Department of Labor that automates task assignment, tracking, and daily update workflows through email integration and AI-powered processing.
 
 **Key Features:**
 - 📧 **Email-driven workflow** with IMAP integration
@@ -34,9 +34,9 @@ The authentication system provides secure, role-based access:
 - **Role-based Filtering**: Data access based on user roles
 - **Permission Validation**: Ensures users can only access authorized data
 
-### 📋 Task Management Workflow
+### 📋 Executive Order Processing Workflow
 
-![Task Management Workflow](diagrams/images/task-management-workflow.png)
+![Executive Order Processing Workflow](diagrams/images/task-management-workflow.png)
 
 The complete task lifecycle from creation to completion:
 - **EO Processing**: AI extracts tasks from Executive Orders
@@ -122,7 +122,7 @@ Before starting, ensure you have the following installed:
 
 ```bash
 git clone <repository-url>
-cd DOL-EO-Management
+cd U.S.-DoL-EOFlow-AI
 ```
 
 ### 2. Environment Setup
@@ -437,7 +437,7 @@ OPENAI_API_KEY=your_openai_api_key
 ### Project Structure
 
 ```
-DOL-EO-Management/
+U.S.-DoL-EOFlow-AI/
 ├── src/
 │   ├── main.py              # FastAPI application entry point
 │   ├── routes/              # API endpoint modules
@@ -470,4 +470,4 @@ DOL-EO-Management/
 
 ---
 
-*This system is actively maintained and used for DOL Executive Order management workflows.*
+*This system is actively maintained and used for U.S. Department of Labor Executive Order management workflows.*

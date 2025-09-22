@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -19,10 +19,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import api from "../services/api";
 import SectionHeader from "../ui/SectionHeader";
+import { formatDateUSA, getTodayKey } from "../utils/dateUtils";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import HistoryIcon from "@mui/icons-material/History";
 
-export default function ExecutorDashboard() {
+export default function ResourceDashboard() {
   const { user } = useAuth();
 
   // Tasks state
@@ -46,19 +47,15 @@ export default function ExecutorDashboard() {
   const [dailyUpdatesLoading, setDailyUpdatesLoading] = useState(false);
   const [dailyUpdatesError, setDailyUpdatesError] = useState("");
 
-  useEffect(() => {
-    fetchExecutorData();
-    fetchDailyUpdatesHistory();
-    checkTodayUpdateStatus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // PMO assignments state
+  const [pmoAssignments, setPmoAssignments] = useState([]);
 
-  const fetchExecutorData = async () => {
+  const fetchResourceData = async () => {
     setTasksLoading(true);
     setTasksError("");
 
     try {
-      // Fetch tasks assigned to this executor (all statuses)
+      // Fetch tasks assigned to this resource (all statuses)
       const tasksResponse = await api.get("/dashboard/tasks");
 
       if (tasksResponse.data?.success) {
@@ -67,12 +64,67 @@ export default function ExecutorDashboard() {
         setTasksError("Failed to fetch assigned tasks");
       }
     } catch (err) {
-      console.error("Error fetching executor data:", err);
+      console.error("Error fetching resource data:", err);
       setTasksError(err?.response?.data?.detail || "Failed to fetch assigned tasks");
     } finally {
       setTasksLoading(false);
     }
   };
+
+  const fetchPMOAssignments = useCallback(async () => {
+    if (!assignedTasks || assignedTasks.length === 0) return;
+    
+    try {
+      const allAssignments = [];
+      
+      // Get unique EO IDs from assigned tasks
+      const eoIds = [...new Set(assignedTasks.map(task => task.executive_order?.id).filter(Boolean))];
+      
+      // Fetch PMO assignments for each EO
+      for (const eoId of eoIds) {
+        try {
+          const response = await api.get(`/dashboard/cfo/eo-pmo-assignments/${eoId}`);
+          if (response.data.success && response.data.data.assignments) {
+            // Add eo_id to each assignment for easier lookup
+            const assignmentsWithEOId = response.data.data.assignments.map(assignment => ({
+              ...assignment,
+              eo_id: eoId
+            }));
+            allAssignments.push(...assignmentsWithEOId);
+          }
+        } catch (err) {
+          console.warn(`Failed to fetch PMO assignments for EO ${eoId}:`, err);
+        }
+      }
+      
+      setPmoAssignments(allAssignments);
+    } catch (err) {
+      console.error('Error fetching PMO assignments:', err);
+    }
+  }, [assignedTasks]);
+
+  // Helper function to get PMO name for a specific EO
+  const getPMONameForEO = (eoId) => {
+    const assignment = pmoAssignments.find(assignment => assignment.eo_id === eoId);
+    if (assignment) {
+      return assignment.pmo_name || 'Unknown PMO';
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    fetchResourceData();
+    fetchDailyUpdatesHistory();
+    checkTodayUpdateStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Fetch PMO assignments when assigned tasks change
+  useEffect(() => {
+    if (assignedTasks && assignedTasks.length > 0) {
+      fetchPMOAssignments();
+    }
+  }, [assignedTasks, fetchPMOAssignments]);
 
   const fetchDailyUpdatesHistory = async () => {
     setDailyUpdatesLoading(true);
@@ -97,7 +149,7 @@ export default function ExecutorDashboard() {
   };
 
   const checkTodayUpdateStatus = () => {
-    const todayKey = new Date().toDateString();
+    const todayKey = getTodayKey();
     const flag = localStorage.getItem(`dailyUpdate_${user?.id}_${todayKey}`);
     setTodayUpdateSubmitted(!!flag);
   };
@@ -134,12 +186,12 @@ export default function ExecutorDashboard() {
         setNextActions("");
 
         // Mark as submitted today
-        const todayKey = new Date().toDateString();
+        const todayKey = getTodayKey();
         localStorage.setItem(`dailyUpdate_${user?.id}_${todayKey}`, "true");
         setTodayUpdateSubmitted(true);
 
         // Refresh lists
-        fetchExecutorData();
+        fetchResourceData();
         fetchDailyUpdatesHistory();
         console.log("Daily update submitted successfully!");
       } else {
@@ -195,23 +247,14 @@ export default function ExecutorDashboard() {
         <Card sx={{ minWidth: 200, flex: 1 }}>
           <CardContent sx={{ textAlign: "center" }}>
             <Typography color="text.secondary" gutterBottom>
-              Team Role
-            </Typography>
-            <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
-              {user?.org_role || "Executor"}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ minWidth: 200, flex: 1 }}>
-          <CardContent sx={{ textAlign: "center" }}>
-            <Typography color="text.secondary" gutterBottom>
               Department
             </Typography>
-            <Typography variant="h6" color="secondary.main">
-              {(user?.department || "Team") + " Member"}
+            <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
+              {user?.org_role || "Resource"}
             </Typography>
           </CardContent>
         </Card>
+        
       </Stack>
 
       {/* Daily Update Form */}
@@ -223,7 +266,7 @@ export default function ExecutorDashboard() {
           <Typography color="text.secondary" sx={{ mb: 3 }}>
             {todayUpdateSubmitted
               ? "Your daily update has been submitted for today. Check back tomorrow for the next update."
-              : "Keep your reviewer updated on your progress"}
+              : "Keep your PMO updated on your progress"}
           </Typography>
 
           {todayUpdateSubmitted && (
@@ -243,7 +286,16 @@ export default function ExecutorDashboard() {
               >
                 {assignedTasks.map((task) => (
                   <MenuItem key={task.id} value={task.id}>
-                    {task.title}
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <Typography variant="body2" fontWeight={500}>
+                        {task.title}
+                      </Typography>
+                      {task.executive_order && (
+                        <Typography variant="caption" color="text.secondary">
+                          EO: {task.executive_order.title} • PMO: {getPMONameForEO(task.executive_order.id) || 'No PMO'}
+                        </Typography>
+                      )}
+                    </Box>
                   </MenuItem>
                 ))}
               </Select>
@@ -292,10 +344,10 @@ export default function ExecutorDashboard() {
 
             <TextField
               fullWidth
-              label="Blockers/Challenges"
+              label="Show Stoppers"
               value={blockers}
               onChange={(e) => setBlockers(e.target.value)}
-              placeholder="What's blocking your progress?"
+              placeholder="What's stopping you from making progress?"
               disabled={todayUpdateSubmitted}
             />
 
@@ -376,20 +428,24 @@ export default function ExecutorDashboard() {
             </Box>
           ) : (
             <Stack spacing={2}>
-              {dailyUpdates.map((update) => (
-                <Card key={update.id} variant="outlined" sx={{ p: 2 }}>
-                  <Typography variant="h6" fontWeight={600} color="primary.main" gutterBottom>
-                    {update.task?.title || "Task Title Not Available"}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Date: {update.date ? new Date(update.date).toLocaleDateString() : "N/A"}
-                  </Typography>
-                  <Typography variant="body2">Progress: {update.progress_pct ?? 0}%</Typography>
-                  <Typography variant="body2">Hours: {update.hours_spent ?? "N/A"}</Typography>
-                  <Typography variant="body2">Status: {update.status_note || "N/A"}</Typography>
-                  <Typography variant="body2">Notes: {update.notes || "N/A"}</Typography>
-                </Card>
-              ))}
+              {dailyUpdates
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort by date, most recent first
+                .map((update) => (
+                  <Card key={update.id} variant="outlined" sx={{ p: 2 }}>
+                    <Typography variant="h6" fontWeight={600} color="primary.main" gutterBottom>
+                      {update.task?.title || "Task Title Not Available"}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                      Date: {update.created_at ? formatDateUSA(update.created_at) : "N/A"}
+                    </Typography>
+                    <Typography variant="body2">Progress: {update.progress_pct ?? 0}%</Typography>
+                    <Typography variant="body2">Hours: {update.hours_spent ?? "N/A"}</Typography>
+                    <Typography variant="body2">
+                      Status: {update.status_note && update.status_note.trim() ? update.status_note : "N/A"}
+                    </Typography>
+                    <Typography variant="body2">Notes: {update.update_text || "N/A"}</Typography>
+                  </Card>
+                ))}
             </Stack>
           )}
         </CardContent>

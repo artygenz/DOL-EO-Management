@@ -8,6 +8,7 @@ import { Link as RouterLink } from "react-router-dom";
 import SectionHeader from "../ui/SectionHeader";
 import { fetchAllTasks } from '../store/slices/taskSlice';
 import { useAuth } from '../hooks/useAuth';
+import { formatDateUSA } from '../utils/dateUtils';
 
 export default function AllTasksPage() {
   const dispatch = useDispatch();
@@ -20,6 +21,17 @@ export default function AllTasksPage() {
 
   // Debug logging
   console.log('AllTasksPage State:', { allTasks, loading, error });
+
+  const formatTaskStatus = (status) => {
+    switch (status) {
+      case 'completed': return 'Completed';
+      case 'in_progress': return 'In Progress';
+      case 'approved': return 'Approved';
+      case 'rejected': return 'Rejected';
+      case 'pending': return 'Pending';
+      default: return status;
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -65,7 +77,7 @@ export default function AllTasksPage() {
                     <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
                       {task.due_date && (
                         <Typography variant="body2" color="text.secondary">
-                          📅 Due: {new Date(task.due_date).toLocaleDateString()}
+                          📅 Due: {formatDateUSA(task.due_date)}
                         </Typography>
                       )}
                       {task.category && (
@@ -79,7 +91,7 @@ export default function AllTasksPage() {
                   
                   <Stack spacing={1} alignItems="flex-end">
                     <Chip 
-                      label={typeof task.status === 'string' ? task.status : 'Unknown'} 
+                      label={typeof task.status === 'string' ? formatTaskStatus(task.status) : 'Unknown'} 
                       size="small" 
                       color={task.status === 'completed' ? 'success' : task.status === 'in_progress' ? 'warning' : 'default'}
                     />

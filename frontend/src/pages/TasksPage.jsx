@@ -11,6 +11,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
 import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
+import { formatDateUSA } from '../utils/dateUtils';
 
 export default function TasksPage() {
   const { user } = useAuth();
@@ -32,7 +33,7 @@ export default function TasksPage() {
     try {
       let endpoint = '';
       
-      // If we have an assignee ID, fetch tasks for that specific executor
+      // If we have an assignee ID, fetch tasks for that specific resource
       if (assigneeId) {
         endpoint = `/dashboard/tasks?assignee=${assigneeId}`;
       } else {
@@ -78,11 +79,22 @@ export default function TasksPage() {
     }
   };
 
+  const formatTaskStatus = (status) => {
+    switch (status) {
+      case 'completed': return 'Completed';
+      case 'in_progress': return 'In Progress';
+      case 'approved': return 'Approved';
+      case 'rejected': return 'Rejected';
+      case 'pending': return 'Pending';
+      default: return status;
+    }
+  };
+
   const getPageTitle = () => {
     if (assigneeId && assigneeInfo) {
       return `${assigneeInfo.name}'s Tasks`;
     } else if (user?.role === 'admin') {
-      return 'All System Tasks';
+      return 'All Tasks';
     } else if (user?.role === 'reviewer') {
       return 'PMO Assigned Tasks';
     } else {
@@ -92,7 +104,7 @@ export default function TasksPage() {
 
   const getPageSubtitle = () => {
     if (assigneeId && assigneeInfo) {
-      return `Tasks assigned to ${assigneeInfo.name} (${assigneeInfo.org_role || 'Executor'})`;
+      return `Tasks assigned to ${assigneeInfo.name} (${assigneeInfo.org_role || 'Resource'})`;
     } else if (user?.role === 'admin') {
       return 'View and manage all tasks across the system';
     } else if (user?.role === 'reviewer') {
@@ -158,7 +170,7 @@ export default function TasksPage() {
           </Typography>
           {assigneeId && assigneeInfo && (
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              {assigneeInfo.org_role || 'Executor'} • {assigneeInfo.email}
+              {assigneeInfo.org_role || 'Resource'} • {assigneeInfo.email}
             </Typography>
           )}
           <Button
@@ -201,7 +213,7 @@ export default function TasksPage() {
                         {task.title}
                       </Typography>
                       <Chip 
-                        label={task.status} 
+                        label={formatTaskStatus(task.status)} 
                         size="small" 
                         color={getTaskStatusColor(task.status)}
                       />
@@ -223,7 +235,7 @@ export default function TasksPage() {
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                           <BusinessIcon fontSize="small" color="action" />
                           <Typography variant="body2" color="text.secondary">
-                            EO: {task.executive_order.title}
+                             {task.executive_order.title}
                           </Typography>
                         </Box>
                       )}
@@ -232,34 +244,26 @@ export default function TasksPage() {
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                           <PersonIcon fontSize="small" color="action" />
                           <Typography variant="body2" color="text.secondary">
-                            Assigned to: {task.assignee.name} ({task.assignee.org_role})
+                            Assigned to: {task.assignee.name}{task.assignee.org_role ? ` (${task.assignee.org_role})` : ''}
                           </Typography>
                         </Box>
                       )}
                       
                       {task.due_date && (
                         <Typography variant="body2" color="text.secondary">
-                          📅 Due: {new Date(task.due_date).toLocaleDateString()}
+                          📅 Due: {formatDateUSA(task.due_date)}
                         </Typography>
                       )}
                     </Stack>
                   </Box>
                   
                   <Stack spacing={1} alignItems="flex-end">
-                    <Button
-                      component={RouterLink}
-                      to={`/task/${task.id}`}
-                      size="small"
-                      variant="outlined"
-                    >
-                      View Details
-                    </Button>
-                    
                     {user?.role === 'executor' && (
                       <Button
                         size="small"
                         variant="contained"
                         startIcon={<AssignmentIndIcon />}
+                        onClick={() => window.location.href = '/dashboard/executor'}
                       >
                         Update Progress
                       </Button>
@@ -267,25 +271,6 @@ export default function TasksPage() {
                   </Stack>
                 </Stack>
 
-                {/* Progress Bar for Executors */}
-                {user?.role === 'executor' && (
-                  <Box sx={{ mt: 2 }}>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Progress: {task.progress_pct || 0}%
-                    </Typography>
-                    <Box sx={{ width: '100%', bgcolor: 'grey.200', borderRadius: 1, height: 8 }}>
-                      <Box
-                        sx={{
-                          width: `${task.progress_pct || 0}%`,
-                          bgcolor: 'primary.main',
-                          height: '100%',
-                          borderRadius: 1,
-                          transition: 'width 0.3s ease'
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                )}
               </CardContent>
             </Card>
           ))}

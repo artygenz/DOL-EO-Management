@@ -1,7 +1,7 @@
 {
-  "name": "dol-eo-management-frontend",
+  "name": "llila-frontend",
   "version": "1.0.0",
-  "description": "Frontend for DOL Executive Order Management System",
+  "description": "LLILA - Lumen Lighthouse Intelligence Logistics Agent: Let LLILA light the way for intelligent Executive Order Management",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",

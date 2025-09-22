@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Stack, Card, CardContent, Typography, Button, Chip, TextField, MenuItem, Alert,
@@ -17,6 +17,7 @@ import {
 } from '../store/slices/dashboardSlice';
 import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
+import { formatDateUSA } from '../utils/dateUtils';
 
 export default function AdminDashboard() {
   const dispatch = useDispatch();
@@ -27,27 +28,39 @@ export default function AdminDashboard() {
 
   // EO assignment state
   const [executiveOrders, setExecutiveOrders] = useState([]);
-  const [availableReviewers, setAvailableReviewers] = useState([]);
+  const [availablePMOs, setAvailablePMOs] = useState([]);
   const [selectedEO, setSelectedEO] = useState("");
-  const [selectedReviewer, setSelectedReviewer] = useState("");
+  const [selectedPMO, setSelectedPMO] = useState("");
   const [assignmentDialogOpen, setAssignmentDialogOpen] = useState(false);
   const [assigningEO, setAssigningEO] = useState(false);
   
-  // Available PMOs state
-  const [availablePMOs, setAvailablePMOs] = useState([]);
+  // PMO loading states
   const [pmosLoading, setPmosLoading] = useState(false);
   const [pmosError, setPmosError] = useState("");
+  
+  // PMO assignment calculations
+  const [assignedPMOsCount, setAssignedPMOsCount] = useState(0);
+  const [pmoAssignments, setPmoAssignments] = useState([]);
+  
+  // Resource data
+  const [allResources, setAllResources] = useState([]);
+  const [assignedResourcesCount, setAssignedResourcesCount] = useState(0);
+  const [resourcesLoading, setResourcesLoading] = useState(false);
+  const [resourcesError, setResourcesError] = useState("");
   
   // EO details dialog state
   const [eoDetailsDialogOpen, setEoDetailsDialogOpen] = useState(false);
   const [selectedEoForDetails, setSelectedEoForDetails] = useState(null);
+  
+  // All tasks data for counting
+  const [allTasks, setAllTasks] = useState([]);
 
   useEffect(() => {
     dispatch(fetchDashboardStats());
     dispatch(fetchEmailLogs());
     fetchAvailablePMOs();
+    fetchAllResources();
     fetchExecutiveOrders();
-    fetchAvailableReviewers();
   }, [dispatch]);
 
   const fetchExecutiveOrders = async () => {
@@ -61,28 +74,14 @@ export default function AdminDashboard() {
     }
   };
 
-  const fetchAvailableReviewers = async () => {
-    try {
-      const response = await api.get('/dashboard/cfo/employees');
-      if (response.data.success) {
-        // Filter to only show reviewers (PMOs)
-        const reviewers = response.data.data.employees.filter(emp => emp.role === 'reviewer');
-        setAvailableReviewers(reviewers);
-      }
-    } catch (err) {
-      console.error('Error fetching reviewers:', err);
-    }
-  };
-
   const fetchAvailablePMOs = async () => {
     setPmosLoading(true);
     setPmosError("");
     
     try {
       const response = await api.get('/dashboard/cfo/employees');
-      
       if (response.data.success) {
-        // Filter to only show reviewers (PMOs)
+        // Filter to only show PMOs
         const pmos = response.data.data.employees.filter(emp => emp.role === 'reviewer');
         setAvailablePMOs(pmos);
       } else {
@@ -96,20 +95,165 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchAllResources = async () => {
+    setResourcesLoading(true);
+    setResourcesError("");
+    
+    try {
+      const response = await api.get('/dashboard/cfo/employees');
+      if (response.data.success) {
+        // Filter to only show resources (executors)
+        const resources = response.data.data.employees.filter(emp => emp.role === 'executor');
+        console.log('Filtered Resources:', resources);
+        setAllResources(resources);
+      } else {
+        setResourcesError('Failed to fetch resources');
+      }
+    } catch (err) {
+      console.error('Error fetching resources:', err);
+      setResourcesError(err.response?.data?.detail || 'Failed to fetch resources');
+    } finally {
+      setResourcesLoading(false);
+    }
+  };
+
+
+  const fetchPMOAssignments = useCallback(async () => {
+    if (!executiveOrders || executiveOrders.length === 0) return;
+    
+    try {
+      const allAssignments = [];
+      
+      // Fetch PMO assignments for each EO
+      for (const eo of executiveOrders) {
+        try {
+          console.log(`Fetching PMO assignments for EO ${eo.id}`);
+          const response = await api.get(`/dashboard/cfo/eo-pmo-assignments/${eo.id}`);
+          console.log(`Response for EO ${eo.id}:`, response.data);
+          if (response.data.success && response.data.data.assignments) {
+            // Add eo_id to each assignment for easier lookup
+            const assignmentsWithEOId = response.data.data.assignments.map(assignment => ({
+              ...assignment,
+              eo_id: eo.id
+            }));
+            allAssignments.push(...assignmentsWithEOId);
+          }
+        } catch (err) {
+          console.warn(`Failed to fetch PMO assignments for EO ${eo.id}:`, err);
+        }
+      }
+      
+      console.log('All PMO assignments collected in AdminDashboard:', allAssignments);
+      setPmoAssignments(allAssignments);
+    } catch (err) {
+      console.error('Error fetching PMO assignments:', err);
+    }
+  }, [executiveOrders]);
+
+  // Calculate assigned PMOs from PMO assignments data
+  const calculatePMOAssignments = useCallback(() => {
+    const assignedPMOIds = new Set();
+    
+    // Use the fetched PMO assignments data
+    pmoAssignments.forEach(assignment => {
+      assignedPMOIds.add(assignment.pmo_id);
+    });
+    
+    const assignedCount = assignedPMOIds.size;
+    
+    setAssignedPMOsCount(assignedCount);
+  }, [pmoAssignments]);
+
+  // Calculate resource engagement
+  const calculateResourceEngagement = useCallback(() => {
+    if (allResources.length === 0 || allTasks.length === 0) {
+      return;
+    }
+    
+    const assignedResourceIds = new Set();
+    
+    allTasks.forEach(task => {
+      if (task.assignee && task.assignee.id) {
+        // Only count if this assignee is actually a resource (executor)
+        const isResource = allResources.some(resource => resource.id === task.assignee.id);
+        if (isResource) {
+          assignedResourceIds.add(task.assignee.id);
+        }
+      }
+    });
+    
+    setAssignedResourcesCount(assignedResourceIds.size);
+  }, [allResources, allTasks]);
+
+  // Fetch PMO assignments when executive orders change
+  useEffect(() => {
+    if (executiveOrders && executiveOrders.length > 0) {
+      fetchPMOAssignments();
+    }
+  }, [fetchPMOAssignments]);
+
+  // Calculate PMO assignments when data changes
+  useEffect(() => {
+    calculatePMOAssignments();
+  }, [calculatePMOAssignments]);
+
+  // Fetch all tasks for EO counting
+  useEffect(() => {
+    const fetchAllTasks = async () => {
+      try {
+        const response = await api.get('/dashboard/cfo/tasks?limit=1000');
+        if (response.data.success) {
+          const tasks = response.data.data.tasks || [];
+          setAllTasks(tasks);
+        }
+      } catch (err) {
+        console.error('Error fetching all tasks:', err);
+      }
+    };
+    
+    fetchAllTasks();
+  }, []);
+
+  // Calculate resource engagement when resources or tasks change
+  useEffect(() => {
+    calculateResourceEngagement();
+  }, [calculateResourceEngagement]);
+
+  // Helper function to count tasks for a specific EO
+  const getTaskCountForEO = (eoId) => {
+    return allTasks.filter(task => {
+      if (!task.executive_order) return false;
+      // Handle both string and number comparisons
+      return task.executive_order.id === eoId || task.executive_order.id === String(eoId) || String(task.executive_order.id) === eoId;
+    }).length;
+  };
+
+  // Helper function to get PMO name for a specific EO
+  const getPMONameForEO = (eoId) => {
+    console.log(`Looking for PMO for EO ${eoId}`);
+    console.log('Available pmoAssignments:', pmoAssignments);
+    const assignment = pmoAssignments.find(assignment => assignment.eo_id === eoId);
+    console.log(`Found assignment for EO ${eoId}:`, assignment);
+    if (assignment) {
+      return assignment.pmo_name || 'Unknown PMO';
+    }
+    return null;
+  };
+
   const handleEOAssignment = () => {
-    if (!selectedEO || !selectedReviewer) return;
+    if (!selectedEO || !selectedPMO) return;
     setAssignmentDialogOpen(true);
   };
 
-  const assignEOToReviewer = async () => {
-    if (!selectedEO || !selectedReviewer) return;
+  const assignEOToPMO = async () => {
+    if (!selectedEO || !selectedPMO) return;
     
     setAssigningEO(true);
     
     try {
       const assignmentData = {
-        pmo_ids: [selectedReviewer],
-        primary_pmo_id: selectedReviewer
+        pmo_ids: [selectedPMO],
+        primary_pmo_id: selectedPMO
       };
       
       const response = await api.post(`/dashboard/cfo/assign-pmos/${selectedEO}`, assignmentData);
@@ -118,7 +262,7 @@ export default function AdminDashboard() {
         // Close dialog and refresh data
         setAssignmentDialogOpen(false);
         setSelectedEO("");
-        setSelectedReviewer("");
+        setSelectedPMO("");
         
         // Refresh data to show updated assignments
         fetchExecutiveOrders();
@@ -177,6 +321,12 @@ export default function AdminDashboard() {
         </Alert>
       )}
       
+      {resourcesError && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          Resource Data Warning: {resourcesError}
+        </Alert>
+      )}
+      
       {stats && (
         <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
           <Card sx={{ minWidth: 200, flex: 1 }}>
@@ -202,10 +352,10 @@ export default function AdminDashboard() {
           <Card sx={{ minWidth: 200, flex: 1 }}>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography color="text.secondary" gutterBottom>
-                Active PMOs
+                Active PMOs Engaged
               </Typography>
-              <Typography variant="h4" color="secondary.main">
-                {pmosLoading ? '...' : availablePMOs.length}
+              <Typography variant="h4" color="primary.main">
+                {pmosLoading ? '...' : `${assignedPMOsCount}/${availablePMOs.length}`}
               </Typography>
               {pmosLoading && (
                 <Typography variant="caption" color="text.secondary">
@@ -217,20 +367,26 @@ export default function AdminDashboard() {
           <Card sx={{ minWidth: 200, flex: 1 }}>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography color="text.secondary" gutterBottom>
-                System Status
+                Active Resources Engaged
               </Typography>
-              <Typography variant="h6" color="success.main">
-                Operational
+              <Typography variant="h4" color="secondary.main">
+                {resourcesLoading ? '...' : `${assignedResourcesCount || 0}/${allResources.length || 0}`}
               </Typography>
+              {resourcesLoading && (
+                <Typography variant="caption" color="text.secondary">
+                  Loading Resources...
+                </Typography>
+              )}
             </CardContent>
           </Card>
+          
         </Stack>
       )}
 
       {/* EO Assignment Section */}
       <SectionHeader
         title="Executive Order Assignment"
-        subtitle="Assign Executive Orders to Reviewers (PMOs) for management"
+        subtitle="Assign Executive Orders to PMOs for management"
       />
       
       <Card sx={{ borderRadius: 3, mb: 3 }}>
@@ -238,10 +394,10 @@ export default function AdminDashboard() {
           <Stack spacing={3}>
             <Box>
               <Typography variant="h6" fontWeight={600} gutterBottom>
-                Assign EO to Reviewer
+                Assign EO to PMO
               </Typography>
               <Typography color="text.secondary" sx={{ mb: 2 }}>
-                Select an Executive Order and assign it to a Reviewer who will manage all tasks and executors.
+                Select an Executive Order and assign it to a PMO who will manage all tasks and resources.
               </Typography>
             </Box>
             
@@ -265,17 +421,17 @@ export default function AdminDashboard() {
               </FormControl>
               
               <FormControl sx={{ minWidth: 300 }}>
-                <InputLabel>Select Reviewer (PMO)</InputLabel>
+                <InputLabel>Select PMO</InputLabel>
                 <Select
-                  value={selectedReviewer}
-                  onChange={(e) => setSelectedReviewer(e.target.value)}
-                  label="Select Reviewer (PMO)"
+                  value={selectedPMO}
+                  onChange={(e) => setSelectedPMO(e.target.value)}
+                  label="Select PMO"
                 >
-                  {availableReviewers.map((reviewer) => (
-                    <MenuItem key={reviewer.id} value={reviewer.id}>
+                  {availablePMOs.map((pmo) => (
+                    <MenuItem key={pmo.id} value={pmo.id}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <PeopleIcon fontSize="small" />
-                        {reviewer.name} ({reviewer.org_role || 'Reviewer'})
+                        {pmo.name} ({pmo.org_role || 'PMO'})
                       </Box>
                     </MenuItem>
                   ))}
@@ -285,7 +441,7 @@ export default function AdminDashboard() {
               <Button
                 variant="contained"
                 onClick={handleEOAssignment}
-                disabled={!selectedEO || !selectedReviewer}
+                disabled={!selectedEO || !selectedPMO}
                 startIcon={<AssignmentIndIcon />}
               >
                 Assign EO
@@ -333,7 +489,7 @@ export default function AdminDashboard() {
                           )}
                         </Stack>
                         <Typography color="text.secondary" variant="body2">
-                          Status: {eo.status} • Created: {new Date(eo.created_at).toLocaleDateString()}
+                          Status: {eo.status} • Created: {formatDateUSA(eo.created_at)}
                         </Typography>
                         {eo.description && (
                           <Typography color="text.secondary" variant="body2" sx={{ mt: 1 }}>
@@ -344,7 +500,13 @@ export default function AdminDashboard() {
                       
                       <Stack direction="row" spacing={1} alignItems="center">
                         <Chip 
-                          label={`${eo.tasks?.length || 0} Tasks`} 
+                          label={getPMONameForEO(eo.id) || "No PMO"} 
+                          size="small" 
+                          color={getPMONameForEO(eo.id) ? "success" : "default"}
+                          variant="outlined"
+                        />
+                        <Chip 
+                          label={`${getTaskCountForEO(eo.id)} Tasks`} 
                           size="small" 
                           color="primary" 
                           variant="outlined"
@@ -401,7 +563,7 @@ export default function AdminDashboard() {
       {/* Available PMOs Section */}
       <SectionHeader
         title="Available PMOs"
-        subtitle="Reviewers available for Executive Order assignments"
+        subtitle="PMOs available for Executive Order assignments"
       />
       
       <Card sx={{ borderRadius: 3, mb: 3 }}>
@@ -414,7 +576,7 @@ export default function AdminDashboard() {
             <Stack spacing={2}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h6" fontWeight={600}>
-                  Available Reviewers ({availablePMOs.length})
+                  Available PMOs ({availablePMOs.length})
                 </Typography>
                 <Button
                   size="small"
@@ -430,7 +592,7 @@ export default function AdminDashboard() {
                 {availablePMOs.map((pmo) => (
                   <Chip
                     key={pmo.id}
-                    label={`${pmo.name} (${pmo.org_role || 'Reviewer'})`}
+                    label={`${pmo.name} (${pmo.org_role || 'PMO'})`}
                     variant="outlined"
                     color="primary"
                     icon={<PeopleIcon />}
@@ -442,7 +604,7 @@ export default function AdminDashboard() {
           ) : (
             <Box sx={{ textAlign: 'center', py: 2 }}>
               <Typography color="text.secondary">
-                No PMOs available. Please create reviewer accounts first.
+                No PMOs available. Please create PMO accounts first.
               </Typography>
             </Box>
           )}
@@ -460,7 +622,7 @@ export default function AdminDashboard() {
             Quick Actions
           </Typography>
           <Typography color="text.secondary" sx={{ mb: 2 }}>
-            Use the assignment interface above to assign Executive Orders to Reviewers, then view tasks and manage assignments.
+            Use the assignment interface above to assign Executive Orders to PMOs, then view tasks and manage assignments.
           </Typography>
           <Stack direction="row" spacing={2}>
             <Button
@@ -493,7 +655,7 @@ export default function AdminDashboard() {
           <Stack direction="row" spacing={1} alignItems="center">
             <AssignmentIndIcon color="primary" />
             <Typography variant="h6">
-              Assign Executive Order to Reviewer
+              Assign Executive Order to PMO
             </Typography>
           </Stack>
         </DialogTitle>
@@ -520,18 +682,18 @@ export default function AdminDashboard() {
 
             <Box>
               <Typography variant="subtitle1" fontWeight={600} gutterBottom>
-                Selected Reviewer
+                Selected PMO
               </Typography>
-              {selectedReviewer && availableReviewers.find(r => r.id === selectedReviewer) && (
+              {selectedPMO && availablePMOs.find(p => p.id === selectedPMO) && (
                 <>
                   <Typography variant="body2" color="text.secondary">
-                    Name: {availableReviewers.find(r => r.id === selectedReviewer)?.name}
+                    Name: {availablePMOs.find(p => p.id === selectedPMO)?.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Role: {availableReviewers.find(r => r.id === selectedReviewer)?.org_role || 'Reviewer'}
+                    Role: {availablePMOs.find(p => p.id === selectedPMO)?.org_role || 'PMO'}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Email: {availableReviewers.find(r => r.id === selectedReviewer)?.email}
+                    Email: {availablePMOs.find(p => p.id === selectedPMO)?.email}
                   </Typography>
                 </>
               )}
@@ -539,11 +701,11 @@ export default function AdminDashboard() {
 
             <Alert severity="info">
               <Typography variant="body2">
-                This assignment will allow the selected Reviewer to:
+                This assignment will allow the selected PMO to:
               </Typography>
               <ul>
                 <li>View all tasks from this Executive Order</li>
-                <li>See which executors are assigned to each task</li>
+                <li>See which resources are assigned to each task</li>
                 <li>Monitor task progress and daily updates</li>
                 <li>Manage task assignments and approvals</li>
               </ul>
@@ -556,9 +718,9 @@ export default function AdminDashboard() {
             Cancel
           </Button>
           <Button 
-            onClick={assignEOToReviewer}
+            onClick={assignEOToPMO}
             variant="contained"
-            disabled={!selectedEO || !selectedReviewer || assigningEO}
+            disabled={!selectedEO || !selectedPMO || assigningEO}
             startIcon={assigningEO ? null : <AssignmentIndIcon />}
           >
             {assigningEO ? 'Assigning...' : 'Assign Executive Order'}
@@ -613,7 +775,7 @@ export default function AdminDashboard() {
                     Created
                   </Typography>
                   <Typography variant="body2">
-                    {new Date(selectedEoForDetails.created_at).toLocaleDateString()}
+                    {formatDateUSA(selectedEoForDetails.created_at)}
                   </Typography>
                 </Box>
                 
@@ -634,7 +796,7 @@ export default function AdminDashboard() {
                   Tasks
                 </Typography>
                 <Chip 
-                  label={`${selectedEoForDetails.tasks?.length || 0} Total Tasks`} 
+                  label={`${getTaskCountForEO(selectedEoForDetails.id)} Total Tasks`} 
                   color="primary"
                   size="medium"
                 />

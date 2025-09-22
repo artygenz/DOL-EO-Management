@@ -4,8 +4,8 @@ import { ThemeModeProvider } from './ui/ThemeModeProvider';
 import AppShell from './components/AppShell';
 import LoginPage from './pages/LoginPage';
 import AdminDashboard from './pages/AdminDashboard';
-import ReviewerDashboard from './pages/ReviewerDashboard';
-import ExecutorDashboard from './pages/ExecutorDashboard';
+import PMODashboard from './pages/PMODashboard';
+import ResourceDashboard from './pages/ResourceDashboard';
 import EOsPage from './pages/EOsPage';
 import TasksPage from './pages/TasksPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -48,8 +48,8 @@ function App() {
         >
           <Route index element={<RoleBasedRedirect />} />
           <Route path="admin" element={<AdminDashboard />} />
-          <Route path="reviewer" element={<ReviewerDashboard />} />
-          <Route path="executor" element={<ExecutorDashboard />} />
+          <Route path="reviewer" element={<PMODashboard />} />
+          <Route path="executor" element={<ResourceDashboard />} />
         </Route>
 
         {/* Standalone pages for EOs and Tasks */}

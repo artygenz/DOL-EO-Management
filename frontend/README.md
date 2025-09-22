@@ -6,8 +6,8 @@ A modern React-based frontend for the Department of Labor Executive Order Manage
 
 ### **Role-Based Dashboards**
 - **Admin Dashboard**: Full system overview, user management, comprehensive statistics
-- **Reviewer Dashboard**: EO review, task approval/rejection, oversight capabilities
-- **Executor Dashboard**: Task management, status updates, progress tracking
+- **PMO Dashboard**: EO review, task approval/rejection, oversight capabilities
+- **Resource Dashboard**: Task management, status updates, progress tracking
 
 ### **Key Functionality**
 - 🔐 **Authentication**: JWT-based login/logout with role-based access control
@@ -39,8 +39,8 @@ frontend/
 │   │   └── layout/        # Layout components
 │   ├── pages/             # Page components
 │   │   ├── AdminDashboard.js
-│   │   ├── ReviewerDashboard.js
-│   │   ├── ExecutorDashboard.js
+│   │   ├── PMODashboard.js
+│   │   ├── ResourceDashboard.js
 │   │   └── LoginPage.js
 │   ├── store/             # Redux store and slices
 │   │   ├── slices/        # Redux slices
@@ -94,13 +94,13 @@ npm run build
 - Full dashboard overview
 - System statistics and reports
 
-#### **Reviewer Users**
+#### **PMO Users**
 - EO review and approval
 - Task oversight and approval
 - Limited access to system data
 - PMO approval workflows
 
-#### **Executor Users**
+#### **Resource Users**
 - Task execution and updates
 - Progress tracking
 - Status updates and remarks
@@ -121,14 +121,14 @@ Use the credentials from your backend system:
 - Email log access
 - Quick action buttons
 
-### **Reviewer Dashboard**
+### **PMO Dashboard**
 - Pending task approvals
 - EO review interface
 - Approval/rejection actions
 - Task oversight
 - Email communication logs
 
-### **Executor Dashboard**
+### **Resource Dashboard**
 - Personal task list
 - Task status updates
 - Progress tracking

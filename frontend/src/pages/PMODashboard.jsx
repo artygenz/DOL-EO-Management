@@ -27,11 +27,12 @@ import TaskIcon from "@mui/icons-material/Task";
 import BusinessIcon from "@mui/icons-material/Business";
 import SectionHeader from "../ui/SectionHeader";
 import { fetchDashboardStats, fetchExecutiveOrders } from "../store/slices/dashboardSlice";
-import { assignTaskToExecutor } from "../store/slices/taskSlice";
+import { assignTaskToResource } from "../store/slices/taskSlice";
 import { useAuth } from "../hooks/useAuth";
 import api from "../services/api";
+import { formatDateUSA } from "../utils/dateUtils";
 
-export default function ReviewerDashboard() {
+export default function PMODashboard() {
   const dispatch = useDispatch();
   const { user } = useAuth();
   const { loading, stats, error, executiveOrders } = useSelector((state) => state.dashboard);
@@ -61,7 +62,7 @@ export default function ReviewerDashboard() {
   const [taskProgressError, setTaskProgressError] = useState("");
 
   // Debug logging
-  console.log("ReviewerDashboard State:", { loading, stats, error, executiveOrders });
+  console.log("PMODashboard State:", { loading, stats, error, executiveOrders });
 
   useEffect(() => {
     dispatch(fetchDashboardStats());
@@ -85,7 +86,7 @@ export default function ReviewerDashboard() {
         setPmosError("Failed to fetch assigned EOs");
       }
 
-      // Fetch team members (executors) under this PMO
+      // Fetch team members (resources) under this PMO
       const teamResponse = await api.get("/dashboard/pmo/employees");
 
       if (teamResponse.data.success) {
@@ -107,14 +108,14 @@ export default function ReviewerDashboard() {
     setAssignmentDialogOpen(true);
   };
 
-  const handleTaskAssignmentToExecutor = async () => {
+  const handleTaskAssignmentToResource = async () => {
     if (!selectedAssignee) return;
 
     setAssigningTask(true);
 
     try {
       await dispatch(
-        assignTaskToExecutor({
+        assignTaskToResource({
           taskId: selectedTask.id,
           assigneeId: selectedAssignee,
         })
@@ -131,24 +132,14 @@ export default function ReviewerDashboard() {
     }
   };
 
-  const getAvailableExecutors = () => {
-    // TODO: replace with backend data if needed; right now we show PMO team list
-    if (teamMembers.length > 0) {
-      return teamMembers.map((e) => ({
-        id: e.id,
-        name: e.name,
-        role: e.org_role || "Executor",
-        email: e.email,
-      }));
-    }
-    // Fallback mock
-    return [
-      { id: "exec1", name: "Dylan Sachetti", role: "Director of Compliance", email: "Dylan.Sachetti@lumenlighthouse.ai" },
-      { id: "exec2", name: "Ayesha Ahsan", role: "Director of Division of Business Process Improvement", email: "Ayesha.Ahsan@lumenlighthouse.ai" },
-      { id: "exec3", name: "Hibbi Iqbal", role: "Director of Financial Reporting", email: "Hibbi.Iqbal@lumenlighthouse.ai" },
-      { id: "exec4", name: "Robert Springfiled", role: "Director of Security and Technology", email: "Robert.Springfiled@lumenlighthouse.ai" },
-      { id: "exec5", name: "Sophia Carty", role: "Director of Accounting", email: "Sophia.Carty@lumenlighthouse.ai" },
-    ];
+  const getAvailableResources = () => {
+    // Use dynamic data from backend
+    return teamMembers.map((e) => ({
+      id: e.id,
+      name: e.name,
+      role: e.org_role || "Resource",
+      email: e.email,
+    }));
   };
 
   const getTaskStatusColor = (status) => {
@@ -162,6 +153,17 @@ export default function ReviewerDashboard() {
         return "error";
       default:
         return "default";
+    }
+  };
+
+  const formatTaskStatus = (status) => {
+    switch (status) {
+      case "completed": return "Completed";
+      case "in_progress": return "In Progress";
+      case "approved": return "Approved";
+      case "rejected": return "Rejected";
+      case "pending": return "Pending";
+      default: return status;
     }
   };
 
@@ -221,7 +223,7 @@ export default function ReviewerDashboard() {
       {/* Welcome Header */}
       <Box sx={{ textAlign: "center", py: 2, mb: 3 }}>
         <Typography variant="h4" fontWeight={700} color="primary.main">
-          Welcome back, {user?.name?.split(" ")[0] || "Reviewer"}
+          Welcome back, {user?.name?.split(" ")[0] || "PMO"}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
           Manage your assigned Executive Orders and team
@@ -260,14 +262,14 @@ export default function ReviewerDashboard() {
           <Card sx={{ minWidth: 200, flex: 1 }}>
             <CardContent sx={{ textAlign: "center" }}>
               <Typography color="text.secondary" gutterBottom>
-                Executors with Tasks
+                Resources with Tasks
               </Typography>
               <Typography variant="h4" color="info.main">
                 {pmosLoading ? "..." : teamMembers.length}
               </Typography>
               {pmosLoading && (
                 <Typography variant="caption" color="text.secondary">
-                  Loading executors...
+                  Loading resources...
                 </Typography>
               )}
             </CardContent>
@@ -287,16 +289,6 @@ export default function ReviewerDashboard() {
                   Loading tasks...
                 </Typography>
               )}
-            </CardContent>
-          </Card>
-          <Card sx={{ minWidth: 200, flex: 1 }}>
-            <CardContent sx={{ textAlign: "center" }}>
-              <Typography color="text.secondary" gutterBottom>
-                Team Status
-              </Typography>
-              <Typography variant="h6" color="success.main">
-                Active
-              </Typography>
             </CardContent>
           </Card>
         </Stack>
@@ -324,11 +316,6 @@ export default function ReviewerDashboard() {
                 View Full EO
               </Button>
             )}
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-              {assignedEOsWithTasks[0]?.description
-                ? truncateTitle(assignedEOsWithTasks[0].description, 100)
-                : "Executive Order Management"}
-            </Typography>
             <Stack direction="row" spacing={2} justifyContent="center" alignItems="center">
               <Chip label={`${assignedEOsWithTasks.length} EOs`} size="large" color="primary" icon={<BusinessIcon />} />
               <Chip
@@ -337,11 +324,11 @@ export default function ReviewerDashboard() {
                 color="secondary"
                 icon={<TaskIcon />}
               />
-              <Chip label={`${teamMembers.length} Executors`} size="large" color="info" icon={<PeopleIcon />} />
+              <Chip label={`${teamMembers.length} Resources`} size="large" color="info" icon={<PeopleIcon />} />
             </Stack>
             {assignedEOsWithTasks[0]?.pmo_assignment && (
               <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-                Assigned on: {new Date(assignedEOsWithTasks[0].pmo_assignment.assigned_at).toLocaleDateString()}
+                Assigned on: {formatDateUSA(assignedEOsWithTasks[0].pmo_assignment.assigned_at)}
               </Typography>
             )}
           </CardContent>
@@ -349,19 +336,19 @@ export default function ReviewerDashboard() {
       )}
 
       {/* Team Overview */}
-      <SectionHeader title="Executors with Tasks" subtitle="Executors who have tasks from your assigned Executive Orders" />
+      <SectionHeader title="Resources with Tasks" subtitle="Resources who have tasks from your assigned Executive Orders" />
 
       <Card sx={{ borderRadius: 3, mb: 3 }}>
         <CardContent>
           {pmosLoading ? (
             <Box sx={{ textAlign: "center", py: 3 }}>
-              <Typography>Loading executors...</Typography>
+              <Typography>Loading resources...</Typography>
             </Box>
           ) : teamMembers.length > 0 ? (
             <Stack spacing={2}>
-              {teamMembers.map((executor) => (
+              {teamMembers.map((resource) => (
                 <Box
-                  key={executor.id}
+                  key={resource.id}
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -374,32 +361,32 @@ export default function ReviewerDashboard() {
                 >
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Avatar sx={{ bgcolor: "primary.main" }}>
-                      {executor.name?.split(" ").map((n) => n[0]).join("")}
+                      {resource.name?.split(" ").map((n) => n[0]).join("")}
                     </Avatar>
                     <Box>
                       <Typography variant="subtitle1" fontWeight={600}>
-                        {executor.name}
+                        {resource.name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {executor.org_role || "Executor"}
+                        {resource.org_role || "Resource"}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {executor.email}
+                        {resource.email}
                       </Typography>
                       <Typography variant="caption" color="primary.main" sx={{ display: "block", mt: 0.5 }}>
-                        {executor.assigned_tasks_count || 0} tasks assigned
+                        {resource.assigned_tasks_count || 0} tasks assigned
                       </Typography>
                     </Box>
                   </Box>
 
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Chip
-                      label={`${executor.assigned_tasks_count || 0} Tasks`}
+                      label={`${resource.assigned_tasks_count || 0} Tasks`}
                       size="small"
                       color="primary"
                       variant="outlined"
                     />
-                    <Button component={RouterLink} to={`/tasks?assignee=${executor.id}`} size="small" variant="outlined">
+                    <Button component={RouterLink} to={`/tasks?assignee=${resource.id}`} size="small" variant="outlined">
                       View Tasks
                     </Button>
                   </Box>
@@ -408,60 +395,12 @@ export default function ReviewerDashboard() {
             </Stack>
           ) : (
             <Box sx={{ textAlign: "center", py: 3 }}>
-              <Typography color="text.secondary">No executors with tasks from your assigned EOs yet.</Typography>
+              <Typography color="text.secondary">No resources with tasks from your assigned EOs yet.</Typography>
             </Box>
           )}
         </CardContent>
       </Card>
 
-      {/* Assigned Executive Orders */}
-      <SectionHeader title="Your Executive Orders" subtitle="EOs assigned to you for management" />
-
-      {executiveOrders && executiveOrders.length > 0 ? (
-        <Stack spacing={2}>
-          {executiveOrders.map((eo) => (
-            <Card key={eo.id} sx={{ borderRadius: 3 }}>
-              <CardContent>
-                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6" fontWeight={600}>
-                      {eo.title || "Untitled EO"}
-                    </Typography>
-                    <Typography color="text.secondary" sx={{ mt: 0.5 }}>
-                      ID: {eo.id}
-                    </Typography>
-                    <Typography color="text.secondary" sx={{ mt: 0.5 }}>
-                      Created: {new Date(eo.created_at).toLocaleDateString()}
-                    </Typography>
-                    <Typography color="text.secondary" sx={{ mt: 0.5 }}>
-                      Tasks: {eo.task_count || 0}
-                    </Typography>
-                  </Box>
-
-                  <Stack spacing={1} alignItems="flex-end">
-                    <Chip
-                      label={eo.status || "Unknown"}
-                      size="small"
-                      color={eo.status === "processed" ? "success" : "default"}
-                    />
-                    <Button component={RouterLink} to={`/eos/${eo.id}`} size="small" variant="outlined">
-                      View Details
-                    </Button>
-                  </Stack>
-                </Stack>
-              </CardContent>
-            </Card>
-          ))}
-        </Stack>
-      ) : (
-        <Card>
-          <CardContent>
-            <Typography color="text.secondary" textAlign="center">
-              No executive orders assigned to you yet.
-            </Typography>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Task Management Section */}
       <SectionHeader title="Task Management" subtitle="Assign and manage tasks for your team" />
@@ -472,7 +411,7 @@ export default function ReviewerDashboard() {
             Quick Actions
           </Typography>
           <Typography color="text.secondary" sx={{ mb: 2 }}>
-            Use the navigation buttons above to view and manage tasks, or assign new tasks to your team members.
+            Use the navigation buttons above to view and manage tasks, or assign new tasks to your resources.
           </Typography>
           <Stack direction="row" spacing={2}>
             <Button component={RouterLink} to="/tasks" variant="contained" startIcon={<TaskIcon />}>
@@ -485,36 +424,6 @@ export default function ReviewerDashboard() {
         </CardContent>
       </Card>
 
-      {/* Unassigned Tasks Section */}
-      <SectionHeader title="Unassigned Tasks" subtitle="Tasks that need to be assigned to team members" />
-
-      <Card sx={{ borderRadius: 3, mb: 3 }}>
-        <CardContent>
-          <Typography color="text.secondary" textAlign="center">
-            This section will show tasks that need assignment. Currently using mock data - will be connected to backend.
-          </Typography>
-          <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
-            In the future, you'll be able to assign these tasks directly to your team members.
-          </Typography>
-        </CardContent>
-      </Card>
-
-      {/* Quick Access to Tasks */}
-      <SectionHeader title="Quick Access" subtitle="Navigate to your tasks and other sections" />
-
-      <Card sx={{ borderRadius: 3, mb: 3 }}>
-        <CardContent>
-          <Stack direction="row" spacing={2}>
-            <Button component={RouterLink} to="/tasks" variant="contained" startIcon={<AssignmentIndIcon />}>
-              View My Tasks (
-              {assignedEOsWithTasks.reduce((total, eo) => total + (eo.tasks?.length || 0), 0)})
-            </Button>
-            <Button component={RouterLink} to="/eos" variant="outlined">
-              View Executive Orders
-            </Button>
-          </Stack>
-        </CardContent>
-      </Card>
 
       {/* Individual Tasks Section */}
       <SectionHeader title="Individual Tasks" subtitle="View and manage individual tasks assigned to your team" />
@@ -545,7 +454,7 @@ export default function ReviewerDashboard() {
                                 <Typography variant="body2" color="text.secondary">
                                   Status:
                                 </Typography>
-                                <Chip size="small" label={task.status} color={getTaskStatusColor(task.status)} />
+                                <Chip size="small" label={formatTaskStatus(task.status)} color={getTaskStatusColor(task.status)} />
                               </Stack>
                               {task.assignee && (
                                 <Typography variant="caption" color="text.secondary">
@@ -582,7 +491,7 @@ export default function ReviewerDashboard() {
         <DialogTitle>
           <Stack direction="row" spacing={1} alignItems="center">
             <AssignmentIndIcon color="primary" />
-            <Typography variant="h6">Assign Task to Executor</Typography>
+            <Typography variant="h6">Assign Task to Resource</Typography>
           </Stack>
         </DialogTitle>
 
@@ -605,14 +514,14 @@ export default function ReviewerDashboard() {
 
               <Box>
                 <Typography variant="subtitle1" fontWeight={600} gutterBottom>
-                  Select Executor
+                  Select Resource
                 </Typography>
                 <FormControl fullWidth>
                   <InputLabel>Assign to</InputLabel>
                   <Select value={selectedAssignee} onChange={(e) => setSelectedAssignee(e.target.value)} label="Assign to">
-                    {getAvailableExecutors().map((executor) => (
-                      <MenuItem key={executor.id} value={executor.id}>
-                        {executor.name} - {executor.role}
+                    {getAvailableResources().map((resource) => (
+                      <MenuItem key={resource.id} value={resource.id}>
+                        {resource.name} - {resource.role}
                       </MenuItem>
                     ))}
                   </Select>
@@ -627,7 +536,7 @@ export default function ReviewerDashboard() {
             Cancel
           </Button>
           <Button
-            onClick={handleTaskAssignmentToExecutor}
+            onClick={handleTaskAssignmentToResource}
             variant="contained"
             disabled={!selectedAssignee || assigningTask}
             startIcon={assigningTask ? null : <AssignmentIndIcon />}
@@ -677,7 +586,7 @@ export default function ReviewerDashboard() {
                     Created
                   </Typography>
                   <Typography variant="body2">
-                    {new Date(selectedEoForDetails.created_at).toLocaleDateString()}
+                    {formatDateUSA(selectedEoForDetails.created_at)}
                   </Typography>
                 </Box>
 
@@ -733,7 +642,7 @@ export default function ReviewerDashboard() {
                   </Typography>
                   <Chip
                     size="small"
-                    label={selectedTaskForDetails.status || "Unknown"}
+                    label={formatTaskStatus(selectedTaskForDetails.status) || "Unknown"}
                     color={getTaskStatusColor(selectedTaskForDetails.status)}
                   />
                 </Stack>
@@ -748,7 +657,7 @@ export default function ReviewerDashboard() {
 
               <Box>
                 <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                  Executor Progress Updates
+                  Resource Progress Updates
                 </Typography>
 
                 {taskProgressLoading ? (
@@ -767,7 +676,7 @@ export default function ReviewerDashboard() {
                               {update.employee?.name || "Unknown Employee"}
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
-                              {new Date(update.created_at).toLocaleDateString()}
+                              {formatDateUSA(update.created_at)}
                             </Typography>
                           </Box>
                           <Typography variant="body2">Progress: {update.progress_pct ?? 0}%</Typography>

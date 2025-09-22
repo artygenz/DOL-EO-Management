@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Stack, Card, CardContent, Typography, Button, Chip, Alert,
@@ -14,6 +14,7 @@ import {
 } from '../store/slices/dashboardSlice';
 import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
+import { formatDateUSA } from '../utils/dateUtils';
 
 export default function EOsPage() {
   const dispatch = useDispatch();
@@ -33,22 +34,23 @@ export default function EOsPage() {
   const [availablePMOs, setAvailablePMOs] = useState([]);
   const [pmosLoading, setPmosLoading] = useState(false);
   const [pmosError, setPmosError] = useState("");
-
-  useEffect(() => {
-    dispatch(fetchExecutiveOrders());
-    fetchAvailablePMOs();
-  }, [dispatch]);
+  
+  // PMO assignments state
+  const [pmoAssignments, setPmoAssignments] = useState([]);
 
   const fetchAvailablePMOs = async () => {
     setPmosLoading(true);
     setPmosError("");
     
     try {
+      console.log('Fetching available PMOs...');
       const response = await api.get('/dashboard/cfo/employees');
+      console.log('PMOs response:', response.data);
       
       if (response.data.success) {
-        // Filter to only show reviewers (PMOs)
+        // Filter to only show PMOs
         const pmos = response.data.data.employees.filter(emp => emp.role === 'reviewer');
+        console.log('Filtered PMOs:', pmos);
         setAvailablePMOs(pmos);
       } else {
         setPmosError('Failed to fetch PMOs');
@@ -59,6 +61,122 @@ export default function EOsPage() {
     } finally {
       setPmosLoading(false);
     }
+  };
+
+  const fetchPMOAssignments = useCallback(async () => {
+    console.log('fetchPMOAssignments called with executiveOrders:', executiveOrders);
+    console.log('Current user role:', user?.role);
+    
+    if (!executiveOrders || executiveOrders.length === 0) return;
+    
+    try {
+      const allAssignments = [];
+      
+      if (user?.role === 'admin') {
+        // Admin users: Fetch PMO assignments for each EO using CFO endpoint
+        for (const eo of executiveOrders) {
+          try {
+            console.log(`Fetching PMO assignments for EO ${eo.id}`);
+            const response = await api.get(`/dashboard/cfo/eo-pmo-assignments/${eo.id}`);
+            console.log(`Response for EO ${eo.id}:`, response.data);
+            if (response.data.success && response.data.data.assignments) {
+              // Add eo_id to each assignment for easier lookup
+              const assignmentsWithEOId = response.data.data.assignments.map(assignment => ({
+                ...assignment,
+                eo_id: eo.id
+              }));
+              allAssignments.push(...assignmentsWithEOId);
+            }
+          } catch (err) {
+            console.warn(`Failed to fetch PMO assignments for EO ${eo.id}:`, err);
+          }
+        }
+      } else if (user?.role === 'reviewer') {
+        // PMO users: Use PMO-specific endpoint that includes PMO assignment info
+        try {
+          console.log('Fetching PMO assigned EOs with assignment info');
+          const response = await api.get('/dashboard/pmo/assigned-eos');
+          console.log('PMO assigned EOs response:', response.data);
+          
+          if (response.data.success && response.data.data.executive_orders) {
+            // Extract PMO assignment info from the response
+            response.data.data.executive_orders.forEach(eo => {
+              if (eo.pmo_assignment) {
+                allAssignments.push({
+                  eo_id: eo.id,
+                  pmo_name: user.name, // Current PMO user's name
+                  pmo_id: user.id,
+                  assigned_at: eo.pmo_assignment.assigned_at,
+                  is_primary: eo.pmo_assignment.is_primary
+                });
+              }
+            });
+          }
+        } catch (err) {
+          console.warn('Failed to fetch PMO assigned EOs:', err);
+        }
+      } else {
+        // Resource users: Try to get PMO info through tasks endpoint
+        try {
+          console.log('Fetching tasks to get PMO info for Resource user');
+          const response = await api.get('/dashboard/tasks');
+          console.log('Tasks response:', response.data);
+          
+          if (response.data.success && response.data.data.tasks) {
+            // Group tasks by EO and try to infer PMO info
+            const eoToPMOMap = new Map();
+            
+            response.data.data.tasks.forEach(task => {
+              if (task.executive_order && task.executive_order.id) {
+                // For Resource users, we can't get actual PMO names
+                // But we can show that there is a PMO assigned
+                if (!eoToPMOMap.has(task.executive_order.id)) {
+                  eoToPMOMap.set(task.executive_order.id, {
+                    eo_id: task.executive_order.id,
+                    pmo_name: 'PMO Assigned', // Generic indicator
+                    pmo_id: null,
+                    assigned_at: null,
+                    is_primary: false
+                  });
+                }
+              }
+            });
+            
+            allAssignments.push(...Array.from(eoToPMOMap.values()));
+          }
+        } catch (err) {
+          console.warn('Failed to fetch tasks for PMO info:', err);
+        }
+      }
+      
+      console.log('All assignments collected:', allAssignments);
+      setPmoAssignments(allAssignments);
+    } catch (err) {
+      console.error('Error fetching PMO assignments:', err);
+    }
+  }, [executiveOrders, user?.role, user?.id, user?.name]);
+
+  useEffect(() => {
+    dispatch(fetchExecutiveOrders());
+    fetchAvailablePMOs();
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchPMOAssignments();
+  }, [fetchPMOAssignments]);
+
+  const getPMONameForEO = (eoId) => {
+    console.log('Getting PMO name for EO:', eoId);
+    console.log('Available assignments:', pmoAssignments);
+    
+    const assignment = pmoAssignments.find(assignment => assignment.eo_id === eoId);
+    console.log('Found assignment:', assignment);
+    
+    if (assignment) {
+      // Use pmo_name directly from the assignment
+      return assignment.pmo_name || 'Unknown PMO';
+    }
+    return null;
   };
 
   const handlePMOAssignment = (eo) => {
@@ -159,7 +277,7 @@ export default function EOsPage() {
               <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="h6" fontWeight={600}>
-                    {eo.number || 'EO-' + eo.id.slice(0, 8)} — {eo.title || 'Untitled'}
+                    {eo.title || 'Untitled'}
                   </Typography>
                   <Typography color="text.secondary" sx={{ mt: 0.5 }}>
                     {eo.summary || 'No summary available'}
@@ -168,7 +286,7 @@ export default function EOsPage() {
                   <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
                     {eo.created_at && (
                       <Typography variant="body2" color="text.secondary">
-                        📅 Created: {new Date(eo.created_at).toLocaleDateString()}
+                        📅 Created: {formatDateUSA(eo.created_at)}
                       </Typography>
                     )}
                     {eo.source && (
@@ -187,10 +305,10 @@ export default function EOsPage() {
                 <Stack spacing={1} alignItems="flex-end">
                   <Chip label={eo.status} size="small" color={getEOStatusColor(eo.status)} />
                   <Chip 
-                    label={eo.pmo_id ? `PMO Assigned` : "No PMO"} 
+                    label={getPMONameForEO(eo.id) || (user?.role === 'executor' ? "PMO Assigned" : "No PMO")} 
                     size="small" 
                     variant="outlined"
-                    color={eo.pmo_id ? "success" : "default"}
+                    color={getPMONameForEO(eo.id) ? "success" : "default"}
                   />
                   {eo.task_count && (
                     <Chip 
@@ -318,7 +436,7 @@ export default function EOsPage() {
                                 {pmo.name}
                               </Typography>
                               <Typography variant="body2" color="text.secondary">
-                                {pmo.org_role || 'Reviewer'}
+                                {pmo.org_role || 'PMO'}
                               </Typography>
                             </Box>
                             
@@ -343,7 +461,7 @@ export default function EOsPage() {
                 ) : (
                   <Box sx={{ textAlign: 'center', py: 3 }}>
                     <Typography color="text.secondary">
-                      No PMOs available. Please create reviewer accounts first.
+                      No PMOs available. Please create PMO accounts first.
                     </Typography>
                   </Box>
                 )}

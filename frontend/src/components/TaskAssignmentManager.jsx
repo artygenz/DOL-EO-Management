@@ -26,6 +26,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import PersonIcon from '@mui/icons-material/Person';
 import BusinessIcon from '@mui/icons-material/Business';
 import api from '../services/api';
+import { formatDateUSA } from '../utils/dateUtils';
 
 export default function TaskAssignmentManager({ 
   assignedEOsWithTasks, 
@@ -200,7 +201,7 @@ export default function TaskAssignmentManager({
                           {task.due_date && (
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                               <Typography variant="body2" color="text.secondary">
-                                📅 Due: {new Date(task.due_date).toLocaleDateString()}
+                                📅 Due: {formatDateUSA(task.due_date)}
                               </Typography>
                             </Box>
                           )}
@@ -305,7 +306,7 @@ export default function TaskAssignmentManager({
                               {member.name}
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
-                              {member.org_role || 'Executor'}
+                              {member.org_role || 'Resource'}
                             </Typography>
                           </Box>
                         </Box>

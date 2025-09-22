@@ -64,8 +64,8 @@ export const submitDailyUpdate = createAsyncThunk(
   }
 );
 
-export const assignTaskToExecutor = createAsyncThunk(
-  'task/assignTaskToExecutor',
+export const assignTaskToResource = createAsyncThunk(
+  'task/assignTaskToResource',
   async ({ taskId, assigneeId }, { rejectWithValue }) => {
     try {
       const response = await api.put(`/dashboard/pmo/tasks/${taskId}/assignee`, {
@@ -193,11 +193,11 @@ const taskSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(assignTaskToExecutor.pending, (state) => {
+      .addCase(assignTaskToResource.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(assignTaskToExecutor.fulfilled, (state, action) => {
+      .addCase(assignTaskToResource.fulfilled, (state, action) => {
         state.loading = false;
         // Extract data from the API response structure {success, message, data}
         const updatedTask = action.payload?.data || action.payload;
@@ -210,7 +210,7 @@ const taskSlice = createSlice({
         );
         state.error = null;
       })
-      .addCase(assignTaskToExecutor.rejected, (state, action) => {
+      .addCase(assignTaskToResource.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

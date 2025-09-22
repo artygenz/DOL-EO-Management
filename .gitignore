@@ -79,6 +79,7 @@ celerybeat-schedule
 *.tmp
 *.temp
 env.txt
+.cursor
 
 # Diagrams
 diagrams/*.mmd
