@@ -12,9 +12,9 @@ router = APIRouter(prefix="/app", tags=["Application"])
 @router.post("/workflow/eo", status_code=status.HTTP_202_ACCEPTED)
 def queue_eo(eo: EOIn):
     """Queue EO for processing"""
-    from src.workflow.tasks import store_email
+    from src.workflow.chains.eo_processing_chain import process_eo_chain
     try:
-        store_email.delay(eo.model_dump())
+        process_eo_chain.delay(eo.model_dump())
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to queue EO for processing")
     return {
@@ -28,7 +28,7 @@ def queue_eo(eo: EOIn):
 @router.post("/webhook/pmo_email", status_code=status.HTTP_202_ACCEPTED)
 def webhook_pmo_email(email: PMOEmailIn):
     """PMO email webhook for processing responses"""
-    from src.workflow.tasks import process_pmo_response
+    from src.workflow.chains.pmo_response_chain import process_pmo_response_chain
     
     # Extract EO ID from subject if not provided
     related_eo_id = email.related_eo_id or extract_eo_id_from_subject(email.subject)
@@ -82,7 +82,7 @@ def webhook_pmo_email(email: PMOEmailIn):
     email_payload["related_eo_id"] = related_eo_id  # Ensure EO ID is set
     
     try:
-        process_pmo_response.delay(email_payload)
+        process_pmo_response_chain.delay(email_payload)
     except Exception as e:
         print(f"ERROR: Failed to queue PMO email for processing: {e}")
         raise HTTPException(status_code=500, detail="Failed to queue PMO email for processing")

@@ -290,8 +290,8 @@ class PMOResponseService:
     
     def _send_improved_tasks_to_pmo(self, eo_id: str, improvement_summary: str, improved_task_ids: List[str]):
         """Send improved tasks back to PMO for review"""
-        from src.workflow.tasks import send_improved_tasks_to_pmo
-        send_improved_tasks_to_pmo.delay(eo_id, improvement_summary, improved_task_ids)
+        # Call the service method directly instead of queuing a task
+        return self.send_improved_tasks_to_pmo(eo_id, improvement_summary, improved_task_ids)
     
     def send_improved_tasks_to_pmo(self, eo_id: str, improvement_summary: str, improved_task_ids: Optional[List[str]] = None) -> Dict:
         """

@@ -14,8 +14,7 @@ celery_app = Celery(
     broker=BROKER_URL,
     backend=RESULT_BACKEND,
     include=[
-        "src.workflow.tasks",  # Original tasks (kept for backward compatibility)
-        "src.workflow.chains",  # New orchestrated chains
+        "src.workflow.chains",  # Orchestrated chains
     ],
 )
 
@@ -26,21 +25,7 @@ celery_app.conf.update(
     task_soft_time_limit=280,
     broker_connection_retry_on_startup=True,
     task_routes={
-        # Original individual tasks (kept for backward compatibility)
-        "src.workflow.tasks.store_email": {"queue": "ingest"},
-        "src.workflow.tasks.ai_extract_tasks": {"queue": "ai"},
-        "src.workflow.tasks.persist_tasks": {"queue": "db"},
-        "src.workflow.tasks.send_pmo_review_email": {"queue": "email"},
-        "src.workflow.tasks.process_pmo_response": {"queue": "review"},
-        "src.workflow.tasks.notify_assignees": {"queue": "email"},
-        "src.workflow.tasks.handle_rejected_tasks": {"queue": "ai"},
-        "src.workflow.tasks.send_improved_tasks_to_pmo": {"queue": "email"},
-        "src.workflow.tasks.process_daily_update_email": {"queue": "ai"},
-        "src.workflow.tasks.aggregate_daily_updates": {"queue": "ai"},
-        "src.workflow.tasks.send_daily_summary_email": {"queue": "email"},
-        "src.workflow.tasks.send_daily_reminders": {"queue": "email"},
-        
-        # New orchestrated chains
+        # Orchestrated chains
         "src.workflow.chains.eo_processing_chain.process_eo_chain": {"queue": "ingest"},
         "src.workflow.chains.eo_processing_chain.process_eo_with_auto_approval": {"queue": "ingest"},
         "src.workflow.chains.eo_processing_chain.retry_failed_eo": {"queue": "ingest"},
@@ -68,12 +53,12 @@ celery_app.conf.update(
         
         # Keep original tasks as backup (commented out)
         # 'send-daily-reminders-original': {
-        #     'task': 'src.workflow.tasks.send_daily_reminders',
+        #     'task': 'src.workflow.chains.daily_update_chain.send_daily_reminders_chain',
         #     'schedule': 60 * 60 * 24,
         #     'args': (),
         # },
         # 'aggregate-daily-updates-original': {
-        #     'task': 'src.workflow.tasks.aggregate_daily_updates',
+        #     'task': 'src.workflow.chains.daily_update_chain.aggregate_daily_updates_chain',
         #     'schedule': crontab(minute=44, hour=21),
         #     'args': ('c54091da-e0ee-4157-8de7-678594be0098',),
         # },
