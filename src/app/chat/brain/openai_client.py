@@ -7,26 +7,12 @@ from __future__ import annotations
 """
 
 from typing import Optional
-import os
-
-try:
-	from openai import OpenAI  # type: ignore
-except Exception:  # pragma: no cover
-	OpenAI = None  # type: ignore
-
-
-_client: Optional[object] = None
+from src.core.client_hub import get_openai_client as get_centralized_openai_client
 
 
 def get_openai_client():
 	"""Return a shared OpenAI client instance or None if unavailable.
 
-	Respects OPENAI_API_KEY; if missing or SDK unavailable, returns None.
+	Uses centralized client hub for OpenAI client management.
 	"""
-	global _client
-	if _client is not None:
-		return _client
-	if OpenAI is None or not os.getenv("OPENAI_API_KEY"):
-		return None
-	_client = OpenAI()
-	return _client
+	return get_centralized_openai_client()

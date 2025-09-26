@@ -4,10 +4,10 @@ from __future__ import annotations
 import uuid
 from typing import Iterable, List
 from sqlalchemy import select
-from src.db.session import get_engine, get_session_maker
+from src.core.client_hub import get_database_session_maker
 from src.models.user import User
 
-SessionLocal = get_session_maker(get_engine())
+SessionLocal = get_database_session_maker()
 
 
 def create_user(name: str, email: str, role: str, org_role: str | None = None) -> User:

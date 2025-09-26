@@ -3,7 +3,15 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 import datetime as dt
 from src.core.dependencies import get_current_active_user
-from src.db.session import get_db
+from src.core.client_hub import get_database_session_maker
+
+def get_db():
+    """Get database session generator for FastAPI dependency injection."""
+    db = get_database_session_maker()()
+    try:
+        yield db
+    finally:
+        db.close()
 from src.models.user import User
 from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task

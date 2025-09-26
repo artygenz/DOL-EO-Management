@@ -15,7 +15,16 @@ from src.services.email_processing_service import EmailProcessingService
 
 # Optional imports for authenticated endpoints
 try:
-    from src.db.session import get_db
+    from src.core.client_hub import get_database_session_maker
+    
+    def get_db():
+        """Get database session generator for FastAPI dependency injection."""
+        db = get_database_session_maker()()
+        try:
+            yield db
+        finally:
+            db.close()
+    
     DB_AVAILABLE = True
 except Exception:
     DB_AVAILABLE = False

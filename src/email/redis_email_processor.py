@@ -232,12 +232,26 @@ class RedisEmailProcessor:
                     filename=filename
                 )
         
-        # Send email (single attempt)
-        context = ssl.create_default_context()
-        with smtplib.SMTP(smtp_host, smtp_port, timeout=30) as smtp:
-            smtp.starttls(context=context)
-            smtp.login(username, password)
-            smtp.send_message(msg)
+        # Send email using centralized SMTP client (creates fresh connection)
+        from src.core.client_hub import create_smtp_connection
+        
+        smtp_client = create_smtp_connection()
+        if smtp_client:
+            try:
+                smtp_client.send_message(msg)
+                smtp_client.quit()  # Close the connection
+            except Exception as e:
+                logger.error(f"Failed to send email via centralized SMTP: {e}")
+                smtp_client.quit()
+                raise
+        else:
+            # Fallback to direct SMTP connection
+            logger.warning("No SMTP client available from client hub, falling back to direct connection")
+            context = ssl.create_default_context()
+            with smtplib.SMTP(smtp_host, smtp_port, timeout=30) as smtp:
+                smtp.starttls(context=context)
+                smtp.login(username, password)
+                smtp.send_message(msg)
         
         logger.info(f"SMTP send successful to: {', '.join(to)}")
     

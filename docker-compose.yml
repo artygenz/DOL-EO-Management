@@ -1,0 +1,61 @@
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  dol-eo-service:
+    build: .
+    container_name: dol-eo-service
+    ports:
+      - "8000:80"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./outbox:/tmp/outbox
+      - ./attachments:/app/attachments
+      - ./logs:/app/logs
+    working_dir: /app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health_check')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # migrate:
+  #   build: .
+  #   environment:
+  #     - POSTGRES_HOST=db
+  #     - POSTGRES_USER=dol_user
+  #     - POSTGRES_PASSWORD=artygenz
+  #     - POSTGRES_DB=dol_db
+  #   command: alembic upgrade head
+  #   volumes:
+  #     - .:/app
+  #   working_dir: /app
+
+  # pytest:
+  #   build: .
+  #   environment:
+  #     - POSTGRES_HOST=db
+  #     - REDIS_HOST=redis
+  #     - PYTHONPATH=/app
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   command: pytest -q tests
+  #   volumes:
+  #     - .:/app
+  #   working_dir: /app
+
+

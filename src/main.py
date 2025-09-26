@@ -1,9 +1,6 @@
 import logging
 import os
 import time
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Configure logging with file handler for API
 log_dir = os.getenv("APP_LOG_DIR", "/app/logs")

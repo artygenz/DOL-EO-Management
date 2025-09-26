@@ -1,7 +1,15 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from src.db.session import get_db
+from src.core.client_hub import get_database_session_maker
+
+def get_db():
+    """Get database session generator for FastAPI dependency injection."""
+    db = get_database_session_maker()()
+    try:
+        yield db
+    finally:
+        db.close()
 from src.models.user import User
 from src.core.auth import verify_token, is_token_blacklisted
 

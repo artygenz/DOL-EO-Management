@@ -42,7 +42,6 @@ class Settings(BaseSettings):
         return self.REDIS_URL
 
     class Config:
-        env_file = ".env"
         case_sensitive = False
 
 settings = Settings()

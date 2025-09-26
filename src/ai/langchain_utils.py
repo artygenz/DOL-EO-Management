@@ -21,7 +21,7 @@ import re
 from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any
 
-from dotenv import load_dotenv
+# dotenv removed - using environment variables only
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
@@ -51,8 +51,7 @@ except ImportError:
         EO_WEEKLY_SUMMARY_SYSTEM_PROMPT, EO_WEEKLY_SUMMARY_HUMAN_TEMPLATE
     )
 
-# Load environment variables from .env if present
-load_dotenv()
+# Environment variables are loaded from Docker environment
 
 # ----------------------------- Pydantic output data models -----------------------------
 
@@ -93,8 +92,20 @@ def _now_utc_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 def _build_llm(model_name: Optional[str] = None, temperature: float = 0):
+    from src.core.client_hub import get_langchain_client
     resolved_model = model_name or os.getenv("OPENAI_MODEL", "gpt-4.1")
-    return ChatOpenAI(model=resolved_model, temperature=temperature)
+    # Use centralized LangChain client from client hub
+    langchain_client = get_langchain_client()
+    if langchain_client:
+        # Create a new instance with custom parameters
+        return ChatOpenAI(
+            model=resolved_model,
+            temperature=temperature,
+            openai_api_key=langchain_client.openai_api_key
+        )
+    else:
+        # Fallback to direct creation if centralized client not available
+        return ChatOpenAI(model=resolved_model, temperature=temperature)
 
 # ----------------------------- Chain construction -----------------------------
 

@@ -3,14 +3,14 @@ import uuid
 from sqlalchemy.inspection import inspect
 from sqlalchemy import select, update
 from datetime import datetime, timezone, date
-from src.db.session import get_engine, get_session_maker
+from src.core.client_hub import get_database_engine, get_database_session_maker
 from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
 from src.models.email_log import EmailLog
 from src.workflow.dto import EOIn, LLMTask
 from src.db.users import resolve_assignee_name_to_id
 
-SessionLocal = get_session_maker(get_engine())
+SessionLocal = get_database_session_maker()
 
 def _eo_columns() -> set[str]:
     return {c.key for c in inspect(ExecutiveOrder).mapper.column_attrs}

@@ -4,7 +4,9 @@ from src.workflow.dto import UserLogin, UserLoginResponse
 from src.db.user_operations import authenticate_user
 from src.core.auth import create_access_token, blacklist_token
 from src.core.dependencies import get_current_active_user, security
-from src.db.session import SessionLocal
+from src.core.client_hub import get_database_session_maker
+
+SessionLocal = get_database_session_maker()
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 

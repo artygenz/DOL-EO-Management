@@ -3,12 +3,12 @@ S3 service for handling EO attachments and PDF processing.
 """
 
 import os
-import boto3
 from typing import Optional, Tuple
 from botocore.exceptions import ClientError, NoCredentialsError
 import PyPDF2
 import pdfplumber
 from io import BytesIO
+from src.core.client_hub import get_s3_client
 
 class S3Service:
     def __init__(self, bucket_name: Optional[str] = None):
@@ -22,17 +22,13 @@ class S3Service:
         if not self.bucket_name:
             raise ValueError("S3 bucket name must be provided or set in AWS_S3_BUCKET env var")
         
-        # Initialize S3 client
+        # Initialize S3 client using centralized client hub
         try:
-            self.s3_client = boto3.client(
-                's3',
-                aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-                aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-                region_name=os.getenv("AWS_REGION", "us-east-1")
-            )
-        except NoCredentialsError:
-            # Try using IAM roles if no explicit credentials
-            self.s3_client = boto3.client('s3')
+            self.s3_client = get_s3_client()
+            if not self.s3_client:
+                raise ValueError("S3 client not available - check AWS credentials")
+        except Exception as e:
+            raise ValueError(f"Failed to initialize S3 client: {e}")
     
     def upload_file(self, file_path: str, s3_key: str) -> bool:
         """

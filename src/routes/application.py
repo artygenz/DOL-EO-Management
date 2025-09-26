@@ -5,7 +5,9 @@ from src.workflow import repository as repo
 from src.workflow.parse_pmo import extract_eo_id_from_subject
 from src.db.users import create_user as db_create_user, create_users_bulk as db_create_users_bulk
 from src.db.user_operations import create_user_with_password
-from src.db.session import SessionLocal
+from src.core.client_hub import get_database_session_maker
+
+SessionLocal = get_database_session_maker()
 
 router = APIRouter(prefix="/app", tags=["Application"])
 
