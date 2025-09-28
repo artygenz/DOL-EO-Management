@@ -43,7 +43,6 @@ def process_pmo_response_chain(self, email_payload: Dict[str, Any]) -> Dict[str,
         logger.info("PMO response chain start: message_id=%s", email_payload.get('message_id', 'unknown'))
         
         # Step 1: Process PMO response
-        logger.debug("Step 1: Processing PMO response")
         pmo_result = pmo_response_service.process_pmo_response(email_payload)
         
         if not pmo_result.get("eo_id"):
@@ -59,7 +58,6 @@ def process_pmo_response_chain(self, email_payload: Dict[str, Any]) -> Dict[str,
         # Step 2: Handle approved tasks (notify assignees)
         notification_result = None
         if approved_count > 0 or intent in ("APPROVE_ALL", "APPROVE_SOME"):
-            logger.debug("Step 2: Notifying assignees of approved tasks")
             notification_result = notification_service.notify_assignees(eo_id)
             notified_count = notification_result.get("notified", 0)
             logger.info("Notified assignees: count=%d", notified_count)
@@ -69,7 +67,6 @@ def process_pmo_response_chain(self, email_payload: Dict[str, Any]) -> Dict[str,
         # Step 3: Handle rejected tasks (rewire if needed)
         rewire_result = None
         if rejected_count > 0:
-            logger.debug("Step 3: Handling rejected tasks")
             
             # Get rejected task details from the PMO result
             rejected_ids = pmo_result.get("reject_task_ids", [])
@@ -81,7 +78,6 @@ def process_pmo_response_chain(self, email_payload: Dict[str, Any]) -> Dict[str,
             )
             
             if rewire_result.get("rewired") and rewire_result.get("updated_count", 0) > 0:
-                logger.debug("Step 3a: Sending improved tasks to PMO")
                 improved_result = pmo_response_service.send_improved_tasks_to_pmo(
                     eo_id,
                     rewire_result.get("improvement_summary", ""),
@@ -90,7 +86,7 @@ def process_pmo_response_chain(self, email_payload: Dict[str, Any]) -> Dict[str,
                 rewire_result["improved_email_sent"] = improved_result.get("message_id")
                 logger.info("Improved tasks email sent to PMO")
             else:
-                logger.debug("No rewiring needed or possible")
+                pass
         else:
             logger.info("Step 3 skipped: No rejected tasks to handle")
         
@@ -129,7 +125,6 @@ def process_pmo_response_chain(self, email_payload: Dict[str, Any]) -> Dict[str,
             "failed_step": "unknown"
         }
         
-        logger.debug("PMO response chain error result: %s", error_result)
         return error_result
 
 

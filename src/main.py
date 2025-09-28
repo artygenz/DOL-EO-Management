@@ -29,7 +29,8 @@ from fastapi import FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from src.routes import auth, application, dashboard, email_webhook, monitoring, chat
 # Redis email processor runs in Celery worker, not API
-from typing import Optional
+from typing import Optional, Dict, Any
+import time
 
 # Modular process starters
 from src.app.processes import (
@@ -121,16 +122,134 @@ async def shutdown_event():
     except Exception as e:
         logging.error(f"Failed to stop Celery worker: {e}")
 
-@app.get("/health_check", status_code=status.HTTP_200_OK)
-def check_health():
+# Import connection testing functions from monitoring module
+from src.routes.monitoring import (
+    test_redis_connection,
+    test_celery_connection,
+    test_database_connection,
+    test_email_configuration,
+    test_openai_connection
+)
+
+def test_imap_listener_connection() -> Dict[str, Any]:
+    """Test IMAP listener service health"""
+    try:
+        # Check if IMAP listener process is running
+        imap_healthy = bool(getattr(imap_listener_proc, "poll", None) is not None and imap_listener_proc.poll() is None) if imap_listener_proc else False
+        
+        # Use the existing email configuration test for IMAP settings
+        email_config = test_email_configuration()
+        
+        return {
+            "connected": imap_healthy and email_config.get("connected", False),
+            "process_running": imap_healthy,
+            "configuration": email_config,
+            "status": "healthy" if imap_healthy and email_config.get("connected", False) else "unhealthy"
+        }
+        
+    except Exception as e:
+        return {
+            "connected": False,
+            "error": str(e),
+            "status": "unhealthy"
+        }
+
+def test_email_notification_service() -> Dict[str, Any]:
+    """Test email notification service (SMTP configuration and Redis email queue)"""
+    try:
+        # Test Redis email queue
+        redis_status = test_redis_connection()
+        
+        # Test SMTP configuration
+        email_config = test_email_configuration()
+        
+        return {
+            "connected": redis_status.get("connected", False) and email_config.get("connected", False),
+            "redis_queue": redis_status,
+            "smtp_configuration": email_config,
+            "status": "healthy" if redis_status.get("connected", False) and email_config.get("connected", False) else "unhealthy"
+        }
+        
+    except Exception as e:
+        return {
+            "connected": False,
+            "error": str(e),
+            "status": "unhealthy"
+        }
+
+@app.get("/health")
+def simple_health_check():
+    """Simple health check for ALB - only checks if server is up"""
     return {
-        "success": True,
-        "message": "Server is up and running",
-        "services": {
-            "celery_worker": bool(getattr(celery_worker_proc, "poll", None) is not None and celery_worker_proc.poll() is None) if celery_worker_proc else False,
-            "celery_beat": bool(getattr(celery_beat_proc, "poll", None) is not None and celery_beat_proc.poll() is None) if celery_beat_proc else False,
-            "imap_listener": bool(getattr(imap_listener_proc, "poll", None) is not None and imap_listener_proc.poll() is None) if imap_listener_proc else False,
-        },
+        "status": "healthy",
+        "message": "Server is running",
+        "timestamp": time.time()
     }
+
+@app.get("/health_check")
+def comprehensive_health_check():
+    """Comprehensive health check that returns error if any critical service fails"""
+    results = {
+        "timestamp": time.time(),
+        "overall_status": "healthy",
+        "services": {}
+    }
+    
+    # Test all critical services
+    redis_status = test_redis_connection()
+    results["services"]["redis"] = redis_status
+    
+    celery_status = test_celery_connection()
+    results["services"]["celery"] = celery_status
+    
+    db_status = test_database_connection()
+    results["services"]["database"] = db_status
+    
+    imap_status = test_imap_listener_connection()
+    results["services"]["imap_listener"] = imap_status
+    
+    email_status = test_email_notification_service()
+    results["services"]["email_notification"] = email_status
+    
+    # Test OpenAI connection
+    openai_status = test_openai_connection()
+    results["services"]["openai"] = openai_status
+    
+    # Check Celery worker and beat processes
+    celery_worker_healthy = bool(getattr(celery_worker_proc, "poll", None) is not None and celery_worker_proc.poll() is None) if celery_worker_proc else False
+    celery_beat_healthy = bool(getattr(celery_beat_proc, "poll", None) is not None and celery_beat_proc.poll() is None) if celery_beat_proc else False
+    
+    results["services"]["celery_worker"] = {
+        "connected": celery_worker_healthy,
+        "process_running": celery_worker_healthy,
+        "status": "healthy" if celery_worker_healthy else "unhealthy"
+    }
+    
+    results["services"]["celery_beat"] = {
+        "connected": celery_beat_healthy,
+        "process_running": celery_beat_healthy,
+        "status": "healthy" if celery_beat_healthy else "unhealthy"
+    }
+    
+    # Determine overall status
+    failed_services = []
+    for service_name, service_status in results["services"].items():
+        if not service_status.get("connected", False):
+            failed_services.append(service_name)
+    
+    if failed_services:
+        results["overall_status"] = "unhealthy"
+        results["failed_services"] = failed_services
+        # Return 503 Service Unavailable if any service fails
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail={
+                "message": "One or more critical services are unavailable",
+                "failed_services": failed_services,
+                "services": results["services"]
+            }
+        )
+    
+    return results
 
 # Email queue statistics removed - email processing handled entirely by Celery worker

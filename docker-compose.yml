@@ -8,7 +8,15 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
-
+  db:
+    image: postgres:13
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: dol_db
+      POSTGRES_USER: dol_user
+      POSTGRES_PASSWORD: artygenz
+    
   dol-eo-service:
     build: .
     container_name: dol-eo-service

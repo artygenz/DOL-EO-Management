@@ -14,8 +14,11 @@ import redis
 import time
 import subprocess
 import sys
+import logging
 from pathlib import Path
 from celery import Celery
+
+logger = logging.getLogger(__name__)
 
 from src.core.dependencies import get_current_user
 from src.core.client_hub import get_database_session_maker
@@ -438,7 +441,7 @@ def test_openai_connection() -> Dict[str, Any]:
                 "status": "not_configured"
             }
         
-        # Basic validation (don't make actual API call to avoid costs)
+        # Basic validation
         if len(api_key) < 20:
             return {
                 "connected": False,
@@ -446,18 +449,45 @@ def test_openai_connection() -> Dict[str, Any]:
                 "status": "unhealthy"
             }
         
+        # Test actual API connection with a minimal request
+        import openai
+        start_time = time.time()
+        
+        client = openai.OpenAI(api_key=api_key)
+        
+        # Make a simple API call to test the key validity
+        response = client.models.list()
+        
+        response_time = round((time.time() - start_time) * 1000, 2)
+        
         return {
             "connected": True,
-            "api_key_configured": True,
+            "api_key_valid": True,
+            "response_time_ms": response_time,
+            "models_available": len(response.data) if response.data else 0,
             "status": "healthy"
         }
         
     except Exception as e:
-        return {
-            "connected": False,
-            "error": str(e),
-            "status": "unhealthy"
-        }
+        error_msg = str(e)
+        if "401" in error_msg or "invalid_api_key" in error_msg.lower():
+            return {
+                "connected": False,
+                "error": "Invalid API key provided",
+                "status": "unhealthy"
+            }
+        elif "403" in error_msg:
+            return {
+                "connected": False,
+                "error": "API key lacks required permissions",
+                "status": "unhealthy"
+            }
+        else:
+            return {
+                "connected": False,
+                "error": f"API connection failed: {error_msg}",
+                "status": "unhealthy"
+            }
 
 def test_email_configuration() -> Dict[str, Any]:
     """Test email configuration"""
@@ -502,25 +532,39 @@ def test_email_configuration() -> Dict[str, Any]:
         }
 
 @router.post("/migrations/upgrade", response_model=Dict[str, Any])
-def run_database_migrations(
-    current_user: User = Depends(get_current_user)
-):
+def run_database_migrations():
     """Run Alembic database migrations to upgrade database schema"""
     
-    # Only admins can run migrations
-    if current_user.role != "admin":
-        raise HTTPException(status_code=403, detail="Admin access required")
-    
     try:
-        # Get the project root directory
-        project_root = Path(__file__).resolve().parents[3]
+        # Get the project root directory - in Docker container, working dir is /app
+        project_root = Path("/app")
         alembic_ini_path = project_root / "alembic.ini"
         
+        # Debug: Log the paths being checked
+        logger.warning(f"Project root: {project_root}")
+        logger.warning(f"Alembic ini path: {alembic_ini_path}")
+        logger.warning(f"Current working directory: {os.getcwd()}")
+        logger.warning(f"Alembic ini exists: {alembic_ini_path.exists()}")
+        
         if not alembic_ini_path.exists():
-            raise HTTPException(
-                status_code=500, 
-                detail="Alembic configuration file not found"
-            )
+            # Try alternative paths
+            alternative_paths = [
+                Path("/app/alembic.ini"),
+                Path("./alembic.ini"),
+                Path("alembic.ini")
+            ]
+            
+            for alt_path in alternative_paths:
+                logger.warning(f"Checking alternative path: {alt_path} - exists: {alt_path.exists()}")
+                if alt_path.exists():
+                    alembic_ini_path = alt_path
+                    project_root = alt_path.parent
+                    break
+            else:
+                raise HTTPException(
+                    status_code=500, 
+                    detail=f"Alembic configuration file not found. Checked paths: {[str(p) for p in alternative_paths]}"
+                )
         
         # Change to project directory for alembic commands
         original_cwd = os.getcwd()

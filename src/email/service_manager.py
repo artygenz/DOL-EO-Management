@@ -39,7 +39,7 @@ class EmailServiceManager:
                 username=os.getenv("IMAP_USERNAME"),
                 password=os.getenv("IMAP_PASSWORD"),
 
-                webhook_url=os.getenv("EMAIL_WEBHOOK_ENDPOINT", "http://localhost:8000/api/email/webhook"),
+                webhook_url=os.getenv("EMAIL_WEBHOOK_ENDPOINT", "http://localhost:80/api/email/webhook"),
                 check_interval=int(os.getenv("IMAP_CHECK_INTERVAL", "60")),  # 60 seconds between sessions
                 idle_timeout=int(os.getenv("IMAP_IDLE_TIMEOUT", "30")),      # 30 seconds IDLE timeout
                 use_ssl=True

@@ -47,7 +47,6 @@ class NotificationService:
             return {"notified": 0}
         
         try:
-            logger.info(f"Starting employee notification for EO: {eo_id}")
             
             # Load EO
             eo = repo.get_executive_order(eo_id)
@@ -60,11 +59,9 @@ class NotificationService:
                 logger.info(f"No approved tasks found for EO {eo_id}")
                 return {"eo_id": eo_id, "notified": 0}
             
-            logger.info(f"EO Title: {eo.title}, Total approved tasks: {len(approved_tasks)}")
             
             # Group tasks by assignee
             assignee_tasks = self._group_tasks_by_assignee(approved_tasks)
-            logger.info(f"Found {len(assignee_tasks)} assignees to notify")
             
             # Send notification emails to each assignee
             notified_count = self._send_notification_emails(eo, assignee_tasks)
@@ -130,7 +127,6 @@ class NotificationService:
                 # Send email
                 message_id = self._send_employee_notification_email(built, assignee.email, email_log_id)
                 
-                logger.info(f"✓ Notification sent to {assignee.name} ({assignee.email})")
                 notified_count += 1
                 
             except Exception as e:
@@ -178,7 +174,6 @@ class NotificationService:
                 related_eo_id=eo_id,
             )
             email_log_id = str(email_log.id)
-            logger.info(f"Saved employee notification email log with ID: {email_log_id}")
             return email_log_id
         except Exception as e:
             logger.warning(f"Could not save employee notification email log: {e}")

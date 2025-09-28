@@ -50,7 +50,6 @@ class PMOResponseService:
                     "approved": 0, 
                     "rejected": 0
                 }
-            logger.debug("Validated EO exists: %s - %s", related_eo_id, eo.title)
         else:
             error_msg = "No EO ID found in PMO email (neither in related_eo_id nor subject). Cannot process PMO response."
             logger.error(error_msg)
@@ -82,7 +81,7 @@ class PMOResponseService:
         )
 
         # Return data only; orchestration (notify/rewire/email) handled by chain layer
-        return {
+        result = {
             "eo_id": related_eo_id,
             "intent": intent,
             "approved": actual_approved_count,
@@ -91,17 +90,16 @@ class PMOResponseService:
             "remarks": global_remarks,
             "per_task_remarks": per_task_remarks,
         }
+        return result
     
     def _map_task_ids(self, eo_id: str, approve_ids: List[str], reject_ids: List[str], per_task_remarks: Dict[str, str]) -> tuple:
         """Map simple task IDs to database UUIDs"""
         # Check if the IDs are simple numbers (1, 2, 3, etc.)
         if approve_ids and all(tid.isdigit() for tid in approve_ids):
             approve_ids = repo.map_simple_task_ids_to_uuids(eo_id, approve_ids)
-            logger.debug("Mapped approved task IDs: %s", approve_ids)
         
         if reject_ids and all(tid.isdigit() for tid in reject_ids):
             reject_ids = repo.map_simple_task_ids_to_uuids(eo_id, reject_ids)
-            logger.debug("Mapped rejected task IDs: %s", reject_ids)
         
         # Also map the per_task_remarks keys
         if per_task_remarks:
@@ -113,7 +111,6 @@ class PMOResponseService:
                     if mapped_id:
                         mapped_per_task_remarks[mapped_id] = per_task_remarks[simple_id]
                 per_task_remarks = mapped_per_task_remarks
-                logger.debug("Mapped per-task remarks: %s", per_task_remarks)
         
         return approve_ids, reject_ids, per_task_remarks
     
@@ -264,11 +261,9 @@ class PMOResponseService:
         
         # Assign tasks based on category_dept
         if improved_tasks:
-            logger.debug("Assigning tasks based on category_dept...")
             from src.ai.extract_directives import assign_tasks
             improved_result_with_assignments = assign_tasks(improved_result, improved_result.get("roles_text", ""))
             improved_tasks = improved_result_with_assignments.get("tasks", improved_tasks)
-            logger.debug("Task assignment completed")
         
         # Create a mapping from simple task ID to improved task data
         task_updates = {}
@@ -280,7 +275,6 @@ class PMOResponseService:
                 improved_task_copy = improved_task.copy()
                 improved_task_copy['id'] = task_uuid
                 task_updates[task_uuid] = improved_task_copy
-                logger.debug("Mapping improved task %s to database UUID %s", improved_task.get('id'), task_uuid)
         
         # Update tasks using repository method
         updated_count = repo.update_tasks_with_improved_data(task_updates)
@@ -315,11 +309,11 @@ class PMOResponseService:
             if not eo:
                 return {"error": f"ExecutiveOrder not found for id={eo_id}"}
             
-            # Load specific improved task IDs, or fall back to rejected tasks
+            # Load specific improved task IDs, or fall back to improved tasks
             if improved_task_ids:
                 task_ids = improved_task_ids
             else:
-                task_ids = repo.get_task_ids_by_eo_and_status(eo_id, "rejected")
+                task_ids = repo.get_task_ids_by_eo_and_status(eo_id, "Pending PMO approval")
                 
             if not task_ids:
                 return {"error": "No tasks found to send for improved review"}
