@@ -9,7 +9,7 @@ from src.core.client_hub import get_database_session_maker
 
 SessionLocal = get_database_session_maker()
 
-router = APIRouter(prefix="/app", tags=["Application"])
+router = APIRouter(prefix="/api/app", tags=["Application"])
 
 @router.post("/workflow/eo", status_code=status.HTTP_202_ACCEPTED)
 def queue_eo(eo: EOIn):

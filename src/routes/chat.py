@@ -29,7 +29,7 @@ from src.app.chat.brain.pre_router import classify
 from src.app.chat.brain.selector import select_tools
 from src.app.chat.brain.query_runner import run_query_with_tools
 
-router = APIRouter(prefix="/chat", tags=["chat"])
+router = APIRouter(prefix="/api/chat", tags=["chat"])
 
 # Set up logging for streaming metrics
 logger = logging.getLogger(__name__)

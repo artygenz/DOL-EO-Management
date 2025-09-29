@@ -174,7 +174,7 @@ graph TB
 
 ### Authentication Endpoints
 ```http
-POST /auth/login
+POST /api/auth/login
 Content-Type: application/json
 {
   "email": "user@example.com",
@@ -186,7 +186,7 @@ Content-Type: application/json
 
 **Normal Response Mode**
 ```http
-POST /chat/query
+POST /api/chat/query
 Authorization: Bearer <jwt_token>
 Content-Type: application/json
 {
@@ -196,7 +196,7 @@ Content-Type: application/json
 
 **Streaming Response Mode**
 ```http
-POST /chat/stream
+POST /api/chat/stream
 Authorization: Bearer <jwt_token>
 Content-Type: application/json
 {

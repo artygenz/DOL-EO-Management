@@ -21,7 +21,7 @@ from src.models.eo_pmo_assignment import EOPMOAssignment
 from src.workflow.dto import DailyUpdateCreate, TaskAssigneeUpdate, EOPMOUpdate, EOPMOAssignmentResponse
 from src.db.eo_pmo_operations import assign_pmos_to_eo, get_pmos_for_eo, remove_pmo_from_eo
 
-router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
+router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
 
 @router.get("/health", status_code=status.HTTP_200_OK)
 def dashboard_health(current_user: User = Depends(get_current_active_user)):

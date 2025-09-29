@@ -8,7 +8,7 @@ from src.core.client_hub import get_database_session_maker
 
 SessionLocal = get_database_session_maker()
 
-router = APIRouter(prefix="/auth", tags=["Authentication"])
+router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
 @router.post("/login", status_code=status.HTTP_200_OK)
 def login(user_credentials: UserLogin):

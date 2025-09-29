@@ -191,14 +191,14 @@ The DOL EO Management Chatbot is an intelligent conversational interface that pr
 ## API Endpoints
 
 ### Authentication
-- `POST /auth/login` - User authentication
-- `GET /auth/me` - Get current user info
-- `POST /auth/logout` - Token revocation
+- `POST /api/auth/login` - User authentication
+- `GET /api/auth/me` - Get current user info
+- `POST /api/auth/logout` - Token revocation
 
 ### Chat Endpoints
-- `POST /chat/query` - Non-streaming chat
-- `POST /chat/stream` - Streaming chat
-- `GET /chat/health` - Health check
+- `POST /api/chat/query` - Non-streaming chat
+- `POST /api/chat/stream` - Streaming chat
+- `GET /api/chat/health` - Health check
 
 ### Request Format
 ```json

@@ -177,7 +177,7 @@ def test_email_notification_service() -> Dict[str, Any]:
             "status": "unhealthy"
         }
 
-@app.get("/health")
+@app.get("/api/health")
 def simple_health_check():
     """Simple health check for ALB - only checks if server is up"""
     return {
@@ -186,7 +186,7 @@ def simple_health_check():
         "timestamp": time.time()
     }
 
-@app.get("/health_check")
+@app.get("/api/health_check")
 def comprehensive_health_check():
     """Comprehensive health check that returns error if any critical service fails"""
     results = {
