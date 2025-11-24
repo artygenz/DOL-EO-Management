@@ -1,7 +1,7 @@
 from typing import List, Dict
 from src.workflow.dto import LLMTask
-from src.app.extract_directives import extract_directives, assign_tasks
-from src.app.rewire_tasks import generate_task_update_from_update_email, generate_summary_from_list_of_task_updates
+from src.ai.extract_directives import extract_directives, assign_tasks
+from src.ai.rewire_tasks import generate_task_update_from_update_email, generate_summary_from_list_of_task_updates
 from src.workflow.mappers import llm_task_to_taskcreate  # you provide this
 from src.db.users import build_roles_with_members_text
 
@@ -13,31 +13,21 @@ def clean_eo_text(body_text: str) -> str:
     skip_mode = False
     
     for i, line in enumerate(lines):
-        # Debug: Print the first few lines to see what we're dealing with
-        if i < 5:
-            print(f"[DEBUG] Line {i}: {line[:100]}")
-        
         # Stop processing if we hit role-related markers
         if any(marker in line for marker in ['ROLES_DEMO =', 'ROLES_WITH_MEMBERS_DEMO =', 'ROLES_DEMO =']):
-            print(f"[DEBUG] Found ROLES marker on line {i}: {line}")
             skip_mode = True
             continue
         # Look for the specific pattern that indicates the start of hardcoded roles
         if 'Newline-delimited ROLES catalog used by the LLM' in line:
-            print(f"[DEBUG] Found ROLES catalog marker on line {i}: {line}")
             skip_mode = True
             continue
         if skip_mode and line.strip() == '':
-            print(f"[DEBUG] Stopping skip mode on line {i} (empty line)")
             skip_mode = False
             continue
         if not skip_mode:
             cleaned_lines.append(line)
     
     result = '\n'.join(cleaned_lines)
-    print(f"[DEBUG] Original text length: {len(body_text)}")
-    print(f"[DEBUG] Cleaned text length: {len(result)}")
-    print(f"[DEBUG] First 200 chars of cleaned text: {result[:200]}")
     return result
 
 def extract_tasks(body_text: str) -> List:
@@ -50,11 +40,9 @@ def extract_tasks(body_text: str) -> List:
     try:
         # TEMPORARILY: Skip cleaning to see the raw EO text
         cleaned_body_text = body_text
-        print(f"[DEBUG] SKIPPING CLEANING - Using raw body text")
         
         # Get real org roles from database instead of hardcoded demo
         roles_text = build_roles_with_members_text()
-        print(f"[DEBUG] Available roles from DB:\n{roles_text}")
         
         if not roles_text.strip():
             # Fallback to demo roles if no users in DB yet
@@ -70,21 +58,12 @@ Heads of agencies with disbursing authority under 31 U.S.C. 3321(c) (e.g., DoD, 
 Secretary of the Treasury & NTDOs remaining after consolidation process
 Secretary of the Treasury (in coordination with agency heads)
 Agency Heads with authority under 31 U.S.C. 3321(b)"""
-            print(f"[DEBUG] Using fallback roles:\n{roles_text}")
         
         # Step 1: Extract tasks with empty assignees
-        print(f"[DEBUG] Calling extract_directives with cleaned body text length: {len(cleaned_body_text)}")
-        print(f"[DEBUG] Roles text length: {len(roles_text)}")
         data = extract_directives(cleaned_body_text, roles_text)
-        print(f"[DEBUG] LLM extracted {len(data.get('tasks', []))} tasks")
-        print(f"[DEBUG] Raw data from extract_directives: {data}")
         
         # Step 2: Assign team members to tasks
         data = assign_tasks(data, roles_text)
-        
-        # Debug: Check what assignees were assigned
-        for i, task in enumerate(data.get('tasks', [])):
-            print(f"[DEBUG] Task {i+1}: category='{task.get('category_dept')}' -> assignee='{task.get('assignee')}'")
         
     except Exception as e:
         # log and fail soft: return empty, let pipeline continue
@@ -120,7 +99,6 @@ def extract_daily_task_updates(email_body: str, user_tasks: List[Dict]) -> Dict:
         
         # Handle edge cases first
         if not email_body or not email_body.strip():
-            print(f"[DEBUG] Empty email body")
             return {
                 "case": "C1",
                 "updates": [],
@@ -128,7 +106,6 @@ def extract_daily_task_updates(email_body: str, user_tasks: List[Dict]) -> Dict:
             }
         
         if not user_tasks:
-            print(f"[DEBUG] No user tasks")
             return {
                 "case": "C1",
                 "updates": [],
@@ -137,7 +114,6 @@ def extract_daily_task_updates(email_body: str, user_tasks: List[Dict]) -> Dict:
         
         # Determine the case based on email structure
         case = _determine_email_case(email_body, user_tasks)
-        print(f"[DEBUG] Determined case: {case}")
         
         updates = []
         unmatched_mentions = []
@@ -293,27 +269,22 @@ def _extract_consolidated_updates(email_body: str, user_tasks: List[Dict]) -> Li
     """Extract updates for multiple tasks in C1 format."""
     updates = []
     
-    print(f"[DEBUG] _extract_consolidated_updates: processing {len(user_tasks)} tasks")
     
     # For consolidated updates, try to extract updates for each provided task
     # (The calling function has already filtered to relevant tasks)
     for task in user_tasks:
-        print(f"[DEBUG] Processing task: {task['title']}")
         employee_role = "Employee"
         
         try:
-            print(f"[DEBUG] Calling generate_task_update_from_update_email for task: {task['title']}")
             structured_update = generate_task_update_from_update_email(
                 employee_role=employee_role,
                 raw_update=email_body,
                 task=task
             )
-            print(f"[DEBUG] AI returned: {structured_update}")
             
             # Only add update if we got meaningful data and LLM is confident
             if structured_update and isinstance(structured_update, dict):
                 confidence = structured_update.get('extraction_confidence', 0)
-                print(f"[DEBUG] LLM extraction confidence for task '{task['title'][:30]}...': {confidence}%")
                 
                 # Only include updates where LLM is reasonably confident (>20%)
                 if confidence > 20:
@@ -329,18 +300,16 @@ def _extract_consolidated_updates(email_body: str, user_tasks: List[Dict]) -> Li
                         "ai_summary": structured_update.get('summary', ''),  # Store AI-generated summary
                         "extraction_confidence": confidence
                     }
-                    print(f"[DEBUG] Created update for task {task['id']}: confidence {confidence}%")
                     updates.append(update)
                 else:
-                    print(f"[DEBUG] Low confidence ({confidence}%), skipping task {task['title'][:30]}...")
+                    pass
             else:
-                print(f"[DEBUG] No meaningful data returned for task {task['title']}")
+                pass
             
         except Exception as e:
             print(f"[AI] Error processing consolidated update for task {task['title']}: {e}")
             continue
     
-    print(f"[DEBUG] _extract_consolidated_updates: returning {len(updates)} updates")
     return updates
 
 def _map_status(status_note: str) -> str:
@@ -394,6 +363,12 @@ def generate_daily_eo_summary(eo_id: str, task_updates: List[Dict], eo_context: 
         in_progress_tasks = sum(1 for update in task_updates if update.get('status') == 'InProgress')
         blocked_tasks = sum(1 for update in task_updates if update.get('status') == 'Blocked')
         
+        # Get the actual total number of tasks for this EO from the database
+        from src.db.session import SessionLocal
+        from src.models.task import Task
+        with SessionLocal() as db:
+            total_tasks_count = db.query(Task).filter(Task.eo_id == eo_id).count()
+        
         # Collect blockers and risks
         all_blockers = []
         all_risks = []
@@ -424,8 +399,8 @@ Overall Progress: {completed_tasks}/{total_updates} tasks completed
             "key_blockers": list(set(all_blockers)) if all_blockers else None,
             "risks": list(set(all_risks)) if all_risks else None,
             "attention_items": attention_items if attention_items else None,
-            "total_tasks": total_updates,
-            "updated_tasks": total_updates
+            "total_tasks": total_tasks_count,  # ✅ FIXED: Actual total tasks in EO
+            "updated_tasks": total_updates     # ✅ CORRECT: Tasks that received updates today
         }
         
     except Exception as e:
@@ -435,6 +410,6 @@ Overall Progress: {completed_tasks}/{total_updates} tasks completed
             "key_blockers": None,
             "risks": None,
             "attention_items": None,
-            "total_tasks": 0,
-            "updated_tasks": 0
+            "total_tasks": 0,  # Will be 0 on error
+            "updated_tasks": 0  # Will be 0 on error
         }

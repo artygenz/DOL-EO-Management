@@ -1,0 +1,107 @@
+graph TB
+    subgraph "Frontend Layer"
+        UI[Dashboard UI]
+        TEST[Test HTML UI]
+        API_CLIENT[API Clients]
+    end
+    
+    subgraph "API Gateway"
+        AUTH[Authentication<br/>JWT + RBAC]
+        CORS[CORS Middleware]
+    end
+    
+    subgraph "Chat Routes"
+        NORMAL["/chat/query<br/>(Normal Response)"]
+        STREAM["/chat/stream<br/>(Streaming Response)"]
+        HEALTH["/chat/health<br/>(Health Check)"]
+    end
+    
+    subgraph "Chat Brain"
+        PRE[Pre-Router<br/>Intent Classification]
+        SELECT[Tool Selector<br/>RBAC Filtering]
+        RUNNER[Query Runner<br/>Execution Engine]
+    end
+    
+    subgraph "Natural Language Generation"
+        NLG[NLG Engine]
+        STREAMING[Streaming Generator]
+        FORMATTER[Response Formatter]
+    end
+    
+    subgraph "Tool Layer"
+        TASK_TOOLS[Task Tools<br/>search_tasks<br/>get_my_tasks<br/>aggregate_tasks]
+        EO_TOOLS[EO Tools<br/>search_eos<br/>list_eos]
+        UPDATE_TOOLS[Update Tools<br/>search_task_updates<br/>get_updates_with_blockers]
+        USER_TOOLS[User Tools<br/>search_users<br/>get_user_tasks]
+    end
+    
+    subgraph "Data Layer"
+        POSTGRES[(PostgreSQL<br/>Tasks, EOs, Users)]
+        REDIS[(Redis<br/>Sessions, Cache)]
+        FILES[File Storage<br/>Logs, Attachments]
+    end
+    
+    subgraph "External Services"
+        OPENAI[OpenAI API<br/>LLM Processing]
+    end
+    
+    %% Frontend to API
+    UI --> AUTH
+    TEST --> AUTH
+    API_CLIENT --> AUTH
+    
+    %% API Gateway Flow
+    AUTH --> CORS
+    CORS --> NORMAL
+    CORS --> STREAM
+    CORS --> HEALTH
+    
+    %% Chat Brain Flow
+    NORMAL --> PRE
+    STREAM --> PRE
+    PRE --> SELECT
+    SELECT --> RUNNER
+    
+    %% NLG Flow
+    RUNNER --> NLG
+    RUNNER --> STREAMING
+    NLG --> FORMATTER
+    STREAMING --> FORMATTER
+    
+    %% Tool Execution
+    RUNNER --> TASK_TOOLS
+    RUNNER --> EO_TOOLS
+    RUNNER --> UPDATE_TOOLS
+    RUNNER --> USER_TOOLS
+    
+    %% Data Access
+    TASK_TOOLS --> POSTGRES
+    EO_TOOLS --> POSTGRES
+    UPDATE_TOOLS --> POSTGRES
+    USER_TOOLS --> POSTGRES
+    
+    %% External Services
+    PRE --> OPENAI
+    NLG --> OPENAI
+    STREAMING --> OPENAI
+    
+    %% Caching
+    RUNNER --> REDIS
+    AUTH --> REDIS
+    
+    %% Styling
+    classDef frontend fill:#e1f5fe
+    classDef api fill:#f3e5f5
+    classDef brain fill:#e8f5e8
+    classDef nlg fill:#fff3e0
+    classDef tools fill:#fce4ec
+    classDef data fill:#f1f8e9
+    classDef external fill:#fff8e1
+    
+    class UI,TEST,API_CLIENT frontend
+    class AUTH,CORS,NORMAL,STREAM,HEALTH api
+    class PRE,SELECT,RUNNER brain
+    class NLG,STREAMING,FORMATTER nlg
+    class TASK_TOOLS,EO_TOOLS,UPDATE_TOOLS,USER_TOOLS tools
+    class POSTGRES,REDIS,FILES data
+    class OPENAI external

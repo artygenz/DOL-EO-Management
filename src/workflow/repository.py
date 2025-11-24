@@ -3,14 +3,14 @@ import uuid
 from sqlalchemy.inspection import inspect
 from sqlalchemy import select, update
 from datetime import datetime, timezone, date
-from src.db.session import get_engine, get_session_maker
+from src.core.client_hub import get_database_engine, get_database_session_maker
 from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
 from src.models.email_log import EmailLog
 from src.workflow.dto import EOIn, LLMTask
 from src.db.users import resolve_assignee_name_to_id
 
-SessionLocal = get_session_maker(get_engine())
+SessionLocal = get_database_session_maker()
 
 def _eo_columns() -> set[str]:
     return {c.key for c in inspect(ExecutiveOrder).mapper.column_attrs}
@@ -91,7 +91,6 @@ def insert_tasks(eo_id: str | uuid.UUID, tasks: list[LLMTask]) -> int:
 
             # Resolve assignee name to user ID
             assignee_id = resolve_assignee_name_to_id(t.assignee)
-            print(f"[DEBUG] Resolving assignee: '{t.assignee}' -> {assignee_id}")
 
             payload = {
                 "eo_id": eo_uuid,
@@ -113,8 +112,8 @@ def insert_tasks(eo_id: str | uuid.UUID, tasks: list[LLMTask]) -> int:
     return inserted
 
 def update_eo_status(eo_id: str, status: str, error: str | None = None) -> None:
-    if status not in {"processed", "error", "pending"}:
-        status = "error"
+    if status not in {"processed", "pending", "received"}:
+        status = "pending"  # Default to pending instead of error
     with SessionLocal() as db:
         eo = db.get(ExecutiveOrder, eo_id)
         if not eo:
@@ -257,9 +256,7 @@ def map_simple_task_ids_to_uuids(eo_id: str | uuid.UUID, simple_task_ids: list[s
         ).scalars().all()
         
         task_list = list(tasks)
-        print(f"DEBUG: EO {eo_id} has {len(task_list)} tasks in database")
-        print(f"DEBUG: Task IDs in database: {[str(t) for t in task_list]}")
-        print(f"DEBUG: Trying to map simple IDs: {simple_task_ids}")
+        # Mapping simple task IDs to UUIDs
         
         mapped_ids = []
         
@@ -269,14 +266,14 @@ def map_simple_task_ids_to_uuids(eo_id: str | uuid.UUID, simple_task_ids: list[s
                 index = int(simple_id) - 1
                 if 0 <= index < len(task_list):
                     mapped_ids.append(str(task_list[index]))
-                    print(f"DEBUG: Mapped {simple_id} -> {task_list[index]}")
+                    # Mapped simple ID to UUID
                 else:
                     print(f"Warning: Task ID {simple_id} out of range for EO {eo_id} (max: {len(task_list)})")
             except ValueError:
                 print(f"Warning: Invalid task ID format: {simple_id}")
                 continue
         
-        print(f"DEBUG: Final mapped IDs: {mapped_ids}")
+        # Final mapped IDs
         return mapped_ids
 
 
@@ -353,7 +350,6 @@ def update_tasks_with_improved_data(task_updates: dict[str, dict]) -> int:
                         assignee_id = resolve_assignee_name_to_id(assignee_name)
                         if assignee_id:
                             db_task.assignee_id = assignee_id
-                            print(f"[DEBUG] Updated assignee for task {task_id_str}: '{assignee_name}' -> {assignee_id}")
                         else:
                             print(f"[WARNING] Could not resolve assignee '{assignee_name}' for task {task_id_str}")
                     
@@ -408,9 +404,7 @@ def resolve_user_by_email(email: str) -> str | None:
 
 def save_task_updates(updates: list[dict]) -> int:
     """Save multiple task updates to database with proper deduplication."""
-    print(f"[DEBUG] save_task_updates: received {len(updates)} updates")
     if not updates:
-        print(f"[DEBUG] save_task_updates: no updates to save")
         return 0
     
     saved_count = 0
@@ -420,7 +414,6 @@ def save_task_updates(updates: list[dict]) -> int:
         from datetime import date
         
         for update_data in updates:
-            print(f"[DEBUG] Processing update: {update_data}")
             try:
                 # Convert date string to date object if needed
                 update_date = update_data['date']
@@ -446,7 +439,6 @@ def save_task_updates(updates: list[dict]) -> int:
                         db.delete(existing_update)
                     
                     replaced_count += len(existing_updates)
-                    print(f"[DEBUG] Deleted {len(existing_updates)} existing task updates for task {update_data['task_id']}, user {update_data['user_id']}, date {update_date}")
                 
                 # Always create a new task update (either replacing old ones or creating first one)
                 # Create new task update
@@ -470,14 +462,12 @@ def save_task_updates(updates: list[dict]) -> int:
                 
                 db.add(task_update)
                 saved_count += 1
-                print(f"[DEBUG] Added new task update for task {update_data['task_id']}, user {update_data['user_id']}, date {update_date}")
                 
             except Exception as e:
                 print(f"Error saving task update: {e}")
                 continue
         
         db.commit()
-        print(f"[DEBUG] Saved {saved_count} new updates, replaced {replaced_count} existing updates")
     
     return saved_count + replaced_count
 

@@ -5,7 +5,7 @@ from sqlalchemy import String, Text, DateTime, Enum, Column, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.base import Base
 
-EO_STATUS = ("processed", "error", "pending", "received")
+EO_STATUS = ("processed", "pending", "received")
 
 class ExecutiveOrder(Base):
     __tablename__ = "executive_orders"

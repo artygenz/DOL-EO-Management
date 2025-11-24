@@ -12,18 +12,15 @@ def parse_pmo_email(body_text: str) -> Dict:
     # Handle escaped characters
     text = text.replace('\\n', '\n').replace('\\t', '\t').replace('\\r', '\r')
     
-    print(f"DEBUG: Parsing PMO email, length: {len(text)}")
+    # Parse PMO email
     
     # Try regex parsing first (faster)
     regex_result = parse_pmo_with_regex(text)
     if regex_result and regex_result.get("intent") != "UNKNOWN":
-        print(f"DEBUG: Regex parsing successful: {regex_result}")
         return regex_result
-    
-    print("DEBUG: Regex parsing failed, trying LLM")
     # Fall back to LLM parsing
     llm_result = parse_pmo_with_llm(text)
-    print(f"DEBUG: LLM parsing result: {llm_result}")
+    # LLM parsing completed
     return llm_result
 
 def parse_pmo_with_llm(body_text: str) -> Dict:
@@ -31,8 +28,8 @@ def parse_pmo_with_llm(body_text: str) -> Dict:
     Use LLM to parse PMO email response.
     """
     try:
-        from src.app.langchain_utils import _build_llm
-        from src.app.prompts import PMO_PARSING_SYSTEM_PROMPT, PMO_PARSING_HUMAN_TEMPLATE
+        from src.ai.langchain_utils import _build_llm
+        from src.ai.prompts import PMO_PARSING_SYSTEM_PROMPT, PMO_PARSING_HUMAN_TEMPLATE
         
         llm = _build_llm()
         
@@ -47,34 +44,33 @@ def parse_pmo_with_llm(body_text: str) -> Dict:
         import re
         
         content = response.content.strip()
-        print(f"DEBUG: LLM raw response: {content}")
+        # LLM response received
         
         # Try to extract JSON from markdown code blocks
         json_match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', content, re.DOTALL)
         if json_match:
             json_content = json_match.group(1)
-            print(f"DEBUG: Extracted JSON from markdown: {json_content}")
+            # Extracted JSON from markdown
         else:
             # Try to find JSON object directly
             json_match = re.search(r'\{.*\}', content, re.DOTALL)
             if json_match:
                 json_content = json_match.group(0)
-                print(f"DEBUG: Found JSON object directly: {json_content}")
+                # Found JSON object directly
             else:
-                print(f"DEBUG: No JSON found in LLM response")
+                # No JSON found in LLM response
                 return {"intent": "UNKNOWN", "approve_task_ids": [], "reject_task_ids": [], "remarks": None, "per_task_remarks": {}}
         
         try:
             result = json.loads(json_content)
-            print(f"DEBUG: Successfully parsed JSON: {result}")
+            # Successfully parsed JSON
             return result
         except json.JSONDecodeError as e:
-            print(f"DEBUG: JSON parsing failed: {e}")
-            print(f"DEBUG: JSON content: {json_content}")
+            # JSON parsing failed
             return {"intent": "UNKNOWN", "approve_task_ids": [], "reject_task_ids": [], "remarks": None, "per_task_remarks": {}}
             
     except Exception as e:
-        print(f"DEBUG: LLM parsing failed: {e}")
+        # LLM parsing failed
         return {"intent": "UNKNOWN", "approve_task_ids": [], "reject_task_ids": [], "remarks": None, "per_task_remarks": {}}
 
 def parse_pmo_with_regex(body_text: str) -> Dict:
@@ -94,7 +90,7 @@ def parse_pmo_table_format(body_text: str) -> Dict:
     Parse PMO response in table format with Status and Remarks columns.
     Supports both tab-separated and pipe-separated formats.
     """
-    print(f"DEBUG: parse_pmo_table_format called, body length: {len(body_text)}")
+    # Parse PMO table format
     
     # Look for table pattern (both tab and pipe formats)
     table_patterns = [
@@ -109,11 +105,11 @@ def parse_pmo_table_format(body_text: str) -> Dict:
         if re.search(pattern, body_text, re.IGNORECASE):
             table_found = True
             separator = '|' if i == 0 else '\t'  # First pattern is pipe, second is tab
-            print(f"DEBUG: Table pattern {i} matched, separator: '{separator}'")
+            # Table pattern matched
             break
     
     if not table_found:
-        print("DEBUG: No table pattern found")
+        # No table pattern found
         return None
     
     # Extract table rows - be more flexible with line detection
@@ -121,27 +117,27 @@ def parse_pmo_table_format(body_text: str) -> Dict:
     table_started = False
     table_rows = []
     
-    print(f"DEBUG: Processing {len(lines)} lines")
+    # Processing table lines
     
     for line in lines:
         line = line.strip()
         if re.search(table_patterns[0] if separator == '|' else table_patterns[1], line, re.IGNORECASE):
             table_started = True
-            print(f"DEBUG: Table header found: {line}")
+            # Table header found
             continue
         elif table_started and separator in line and not line.startswith('---'):
             # This is a data row
             table_rows.append(line)
-            print(f"DEBUG: Added table row: {line}")
+            # Added table row
         elif table_started and not line:
             # Empty line might end the table
-            print("DEBUG: Empty line, ending table")
+            # Empty line, ending table
             break
     
-    print(f"DEBUG: Found {len(table_rows)} table rows")
+    # Found table rows
     
     if not table_rows:
-        print("DEBUG: No table rows found")
+        # No table rows found
         return None
     
     # Parse table rows
@@ -151,29 +147,31 @@ def parse_pmo_table_format(body_text: str) -> Dict:
     
     for row in table_rows:
         parts = [part.strip() for part in row.split(separator)]
-        print(f"DEBUG: Row '{row}' split into {len(parts)} parts: {parts}")
+        # Row split into parts
         if len(parts) >= 7:
             task_id = parts[0].strip()
             status = parts[5].strip().lower()
             remarks = parts[6].strip()
             
-            print(f"DEBUG: task_id='{task_id}', status='{status}', remarks='{remarks}'")
+            # Processing task row
             
             if task_id.isdigit():
                 if status == 'approve':
                     approve_ids.append(task_id)
-                    print(f"DEBUG: Added approve_id: {task_id}")
+                    # Added approve_id
                 elif status == 'reject':
                     reject_ids.append(task_id)
-                    print(f"DEBUG: Added reject_id: {task_id}")
+                    # Added reject_id
                 
                 if remarks and remarks not in ['[Fill Here]', '']:
                     per_task_remarks[task_id] = remarks
-                    print(f"DEBUG: Added remarks for {task_id}: {remarks}")
+                    # Added remarks
             else:
-                print(f"DEBUG: task_id '{task_id}' is not a digit")
+                # task_id is not a digit
+                pass
         else:
-            print(f"DEBUG: Row has only {len(parts)} parts, need at least 7")
+            # Row has insufficient parts
+            pass
     
     # Determine intent
     if approve_ids and reject_ids:
@@ -193,7 +191,7 @@ def parse_pmo_table_format(body_text: str) -> Dict:
         "per_task_remarks": per_task_remarks,
     }
     
-    print(f"DEBUG: Table parsing result: {result}")
+    # Table parsing completed
     return result
 
 def parse_pmo_command_format(body_text: str) -> Dict:

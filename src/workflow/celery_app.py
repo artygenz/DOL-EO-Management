@@ -13,7 +13,9 @@ celery_app = Celery(
     "dol_eo_workflow",
     broker=BROKER_URL,
     backend=RESULT_BACKEND,
-    include=["src.workflow.tasks"],
+    include=[
+        "src.workflow.chains",  # Orchestrated chains
+    ],
 )
 
 celery_app.conf.update(
@@ -23,31 +25,43 @@ celery_app.conf.update(
     task_soft_time_limit=280,
     broker_connection_retry_on_startup=True,
     task_routes={
-        "src.workflow.tasks.store_email": {"queue": "ingest"},
-        "src.workflow.tasks.ai_extract_tasks": {"queue": "ai"},
-        "src.workflow.tasks.persist_tasks": {"queue": "db"},
-        "src.workflow.tasks.send_pmo_review_email": {"queue": "email"},
-        "src.workflow.tasks.process_pmo_response": {"queue": "review"},
-        "src.workflow.tasks.notify_assignees": {"queue": "email"},
-        "src.workflow.tasks.handle_rejected_tasks": {"queue": "ai"},
-        "src.workflow.tasks.send_improved_tasks_to_pmo": {"queue": "email"},
-        "src.workflow.tasks.process_daily_update_email": {"queue": "ai"},
-        "src.workflow.tasks.aggregate_daily_updates": {"queue": "ai"},
-        "src.workflow.tasks.send_daily_summary_email": {"queue": "email"},
-        "src.workflow.tasks.send_daily_reminders": {"queue": "email"},
+        # Orchestrated chains
+        "src.workflow.chains.eo_processing_chain.process_eo_chain": {"queue": "ingest"},
+        "src.workflow.chains.eo_processing_chain.process_eo_with_auto_approval": {"queue": "ingest"},
+        "src.workflow.chains.eo_processing_chain.retry_failed_eo": {"queue": "ingest"},
+        "src.workflow.chains.pmo_response_chain.process_pmo_response_chain": {"queue": "review"},
+        "src.workflow.chains.pmo_response_chain.handle_bulk_approval": {"queue": "review"},
+        "src.workflow.chains.pmo_response_chain.retry_pmo_response": {"queue": "review"},
+        "src.workflow.chains.daily_update_chain.process_daily_update_chain": {"queue": "ai"},
+        "src.workflow.chains.daily_update_chain.aggregate_daily_updates_chain": {"queue": "ai"},
+        "src.workflow.chains.daily_update_chain.send_daily_reminders_chain": {"queue": "email"},
+        "src.workflow.chains.daily_update_chain.retry_daily_update": {"queue": "ai"},
     },
     # Celery Beat Schedule for periodic tasks
     beat_schedule={
+        # Use new orchestrated chains for scheduled tasks
         'send-daily-reminders': {
-            'task': 'src.workflow.tasks.send_daily_reminders',
+            'task': 'src.workflow.chains.daily_update_chain.send_daily_reminders_chain',
             'schedule': 60 * 60 * 24,  # Daily at 4pm ET (configured via crontab)
             'args': (),
         },
         'aggregate-daily-updates': {
-            'task': 'src.workflow.tasks.aggregate_daily_updates',
+            'task': 'src.workflow.chains.daily_update_chain.aggregate_daily_updates_chain',
             'schedule': crontab(minute=44, hour=21),  # Testing at 01:42 UTC
             'args': ('c54091da-e0ee-4157-8de7-678594be0098',),  # EO ID for EO 14249
         },
+        
+        # Keep original tasks as backup (commented out)
+        # 'send-daily-reminders-original': {
+        #     'task': 'src.workflow.chains.daily_update_chain.send_daily_reminders_chain',
+        #     'schedule': 60 * 60 * 24,
+        #     'args': (),
+        # },
+        # 'aggregate-daily-updates-original': {
+        #     'task': 'src.workflow.chains.daily_update_chain.aggregate_daily_updates_chain',
+        #     'schedule': crontab(minute=44, hour=21),
+        #     'args': ('c54091da-e0ee-4157-8de7-678594be0098',),
+        # },
     },
     # Timezone configuration for ET-based scheduling
     # timezone='America/New_York',

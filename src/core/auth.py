@@ -1,12 +1,12 @@
 import jwt
 import bcrypt
 import hashlib
+import os
 from datetime import datetime, timedelta
 from typing import Optional
-from src.core.settings import settings
 
 # JWT Configuration
-SECRET_KEY = settings.JWT_SECRET or "your-secret-key-change-in-production"
+SECRET_KEY = os.getenv('JWT_SECRET', "your-secret-key-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -47,7 +47,8 @@ def verify_token(token: str) -> Optional[dict]:
 def blacklist_token(token: str, user_id: str) -> bool:
     """Add a token to the blacklist"""
     try:
-        from src.db.session import SessionLocal
+        from src.core.client_hub import get_database_session_maker
+        SessionLocal = get_database_session_maker()
         from src.models.token_blacklist import TokenBlacklist
         
         # Decode token to get expiration
@@ -72,7 +73,8 @@ def blacklist_token(token: str, user_id: str) -> bool:
 def is_token_blacklisted(token: str) -> bool:
     """Check if a token is blacklisted"""
     try:
-        from src.db.session import SessionLocal
+        from src.core.client_hub import get_database_session_maker
+        SessionLocal = get_database_session_maker()
         from src.models.token_blacklist import TokenBlacklist
         
         token_hash = hash_token(token)

@@ -5,64 +5,65 @@
 The FastAPI application has been modularized into separate route files for better organization and maintainability.
 
 ### **🔐 Authentication Routes (`/src/routes/auth.py`)**
-**Prefix**: `/auth`
+**Prefix**: `/api/auth`
 **Authentication**: None (public endpoints)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/auth/login` | POST | User login with email/password |
-| `/auth/me` | GET | Get current user info (requires auth) |
-| `/auth/logout` | POST | Logout and revoke token (requires auth) |
+| `/api/auth/login` | POST | User login with email/password |
+| `/api/auth/me` | GET | Get current user info (requires auth) |
+| `/api/auth/logout` | POST | Logout and revoke token (requires auth) |
 
 ### **🔧 Application Routes (`/src/routes/application.py`)**
-**Prefix**: `/app`
+**Prefix**: `/api/app`
 **Authentication**: None (system endpoints)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/app/workflow/eo` | POST | Queue EO for processing |
-| `/app/webhook/pmo_email` | POST | PMO email webhook |
-| `/app/users` | POST | Create single user |
-| `/app/users/bulk` | POST | Create multiple users |
+| `/api/app/workflow/eo` | POST | Queue EO for processing |
+| `/api/app/webhook/pmo_email` | POST | PMO email webhook |
+| `/api/app/users` | POST | Create single user |
+| `/api/app/users/bulk` | POST | Create multiple users |
 
 ### **📊 Dashboard Routes (`/src/routes/dashboard.py`)**
-**Prefix**: `/dashboard`
+**Prefix**: `/api/dashboard`
 **Authentication**: Required (Bearer token)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/dashboard/health` | GET | Dashboard health check |
-| `/dashboard/executive-orders` | GET | List executive orders |
-| `/dashboard/executive-orders/{eo_id}` | GET | Get EO details |
-| `/dashboard/tasks` | GET | Get user tasks |
-| `/dashboard/tasks/{task_id}` | GET | Get task details |
-| `/dashboard/email-logs` | GET | Get email logs |
-| `/dashboard/stats` | GET | Get dashboard statistics |
+| `/api/dashboard/health` | GET | Dashboard health check |
+| `/api/dashboard/executive-orders` | GET | List executive orders |
+| `/api/dashboard/executive-orders/{eo_id}` | GET | Get EO details |
+| `/api/dashboard/tasks` | GET | Get user tasks |
+| `/api/dashboard/tasks/{task_id}` | GET | Get task details |
+| `/api/dashboard/email-logs` | GET | Get email logs |
+| `/api/dashboard/stats` | GET | Get dashboard statistics |
 
 ### **📋 PMO-Specific Routes (`/src/routes/dashboard.py`)**
-**Prefix**: `/dashboard/pmo`
+**Prefix**: `/api/dashboard/pmo`
 **Authentication**: Required (PMO/Reviewer role only)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/dashboard/pmo/assigned-eos` | GET | Get all EOs assigned to PMO |
-| `/dashboard/pmo/assigned-eos/{eo_id}/tasks` | GET | Get tasks for specific EO |
-| `/dashboard/pmo/assigned-eos-with-tasks` | GET | Get all EOs with tasks (combined) |
-| `/dashboard/pmo/tasks` | GET | Get all tasks for PMO's EOs |
+| `/api/dashboard/pmo/assigned-eos` | GET | Get all EOs assigned to PMO |
+| `/api/dashboard/pmo/assigned-eos/{eo_id}/tasks` | GET | Get tasks for specific EO |
+| `/api/dashboard/pmo/assigned-eos-with-tasks` | GET | Get all EOs with tasks (combined) |
+| `/api/dashboard/pmo/tasks` | GET | Get all tasks for PMO's EOs |
 
 ### **🏥 System Routes (`/src/main.py`)**
-**Prefix**: None
+**Prefix**: `/api`
 **Authentication**: None
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/health_check` | GET | System health check |
+| `/api/health` | GET | Simple health check |
+| `/api/health_check` | GET | Comprehensive system health check |
 | `/docs` | GET | API documentation |
 | `/openapi.json` | GET | OpenAPI schema |
 
 ## **🔐 Authentication Flow**
 
-1. **Login**: `POST /auth/login`
+1. **Login**: `POST /api/auth/login`
    ```json
    {
      "email": "user@example.com",
@@ -86,7 +87,7 @@ The FastAPI application has been modularized into separate route files for bette
 
 4. **Logout**: Revoke token
    ```bash
-   curl -X POST "/auth/logout" -H "Authorization: Bearer eyJ..."
+   curl -X POST "/api/auth/logout" -H "Authorization: Bearer eyJ..."
    ```
 
 ## **👥 Role-Based Access Control**

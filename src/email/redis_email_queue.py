@@ -15,7 +15,7 @@ import uuid
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
-import redis
+from src.core.client_hub import get_redis_client
 from src.email.queue_logger import EmailQueueLogger
 
 logger = logging.getLogger(__name__)
@@ -44,11 +44,8 @@ class RedisEmailQueue:
     
     def __init__(self, redis_url: str = None):
         """Initialize Redis email queue"""
-        if not redis_url:
-            redis_host = os.getenv("REDIS_HOST", "redis")
-            redis_url = f"redis://{redis_host}:6379/0"
-        
-        self.redis_client = redis.from_url(redis_url)
+        # Use centralized Redis client from client hub
+        self.redis_client = get_redis_client()
         self.queue_key = "email_queue"
         self.processing_key = "email_processing"
         

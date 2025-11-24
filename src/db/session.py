@@ -1,22 +1,10 @@
 # src/db/session.py
-import os
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from src.core.client_hub import get_database_engine, get_database_session_maker
 
-# Load once at import time
-DATABASE_URL = os.getenv("DATABASE_URL")  # e.g. postgresql+psycopg2://dol_user:artygenz@db:5432/dol
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not set")
-
-# Engine (sync)
-_engine = create_engine(
-    DATABASE_URL,
-    pool_pre_ping=True,
-    future=True,
-)
-
-# Session maker
-_SessionLocal = sessionmaker(bind=_engine, autoflush=False, autocommit=False, future=True)
+# Get engine and session maker from centralized client hub
+_engine = get_database_engine()
+_SessionLocal = get_database_session_maker()
 
 def get_engine():
     """Return the global engine (used by Alembic, repositories, etc.)."""

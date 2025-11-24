@@ -3,7 +3,15 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 import datetime as dt
 from src.core.dependencies import get_current_active_user
-from src.db.session import get_db
+from src.core.client_hub import get_database_session_maker
+
+def get_db():
+    """Get database session generator for FastAPI dependency injection."""
+    db = get_database_session_maker()()
+    try:
+        yield db
+    finally:
+        db.close()
 from src.models.user import User
 from src.models.executive_order import ExecutiveOrder
 from src.models.task import Task
@@ -13,7 +21,7 @@ from src.models.eo_pmo_assignment import EOPMOAssignment
 from src.workflow.dto import DailyUpdateCreate, TaskAssigneeUpdate, EOPMOUpdate, EOPMOAssignmentResponse
 from src.db.eo_pmo_operations import assign_pmos_to_eo, get_pmos_for_eo, remove_pmo_from_eo
 
-router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
+router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
 
 @router.get("/health", status_code=status.HTTP_200_OK)
 def dashboard_health(current_user: User = Depends(get_current_active_user)):
