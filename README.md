@@ -131,7 +131,7 @@ Create a `.env` file in the root directory:
 
 ```bash
 # Copy the example environment file
-cp .env.local .env
+cp env.development .env
 ```
 
 Edit the `.env` file with your configuration:
