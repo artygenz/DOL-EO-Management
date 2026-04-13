@@ -239,7 +239,7 @@ To capture the current database state for sharing with others:
 docker-compose run --rm export-db
 ```
 
-<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/4e9dd2c7-86e5-4a59-804a-80cd2e8567b3" />
+<iframe width="1800" height="766" src="https://www.youtube.com/embed/D9zdII6YUks" title="Email workflow automation  Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 ### Import Seed Data
