@@ -239,6 +239,9 @@ To capture the current database state for sharing with others:
 docker-compose run --rm export-db
 ```
 
+<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/4e9dd2c7-86e5-4a59-804a-80cd2e8567b3" />
+
+
 ### Import Seed Data
 
 To load pre-configured data:
